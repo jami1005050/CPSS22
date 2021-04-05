@@ -1,0 +1,321 @@
+import numpy
+import sys
+import matplotlib.pyplot as plt
+import csv
+from utility.common import *
+import pandas as pd
+#-0.1275 or -0.1025 0.0975 #hyper parameter 6
+#-0.13 or -0.1075  0.0975 #hyper parameter 8
+#-0.12 or -0.09  0.09 #hyper parameter 4
+#l1(-0.09 or -065 0.065) l2(-0.08 0.08) #hyper parameter 2
+upper_limit = 0.08
+lower_limit = -0.08
+def calculateTmax_ruc_QR(rucFrame):
+    global maxThreshold
+    maxSum = sys.float_info.max
+    # print("minThreshold: ",minThreshold)
+    difference = dict()
+    for taoThreshold in numpy.arange(0.0025, .500, 0.0025):
+        costSum = 0
+        pSum = 0
+        costCount = 0
+        penaltyCount = 0
+        for row in rucFrame:
+            if (row > 0):
+                if (row >  taoThreshold):
+                    # temp = taoThreshold - getattr(row, "ruc" + key)
+                    # costSum += abs(pow(temp, 2)) / 2
+                    costSum += abs(taoThreshold - row) / 2
+                    costCount = costCount + 1
+                else:
+                    # temp = taoThreshold - getattr(row, "ruc" + key)
+                    # pSum += abs(pow(temp, 2)) * 2
+                    pSum += abs(taoThreshold - row) * 2
+                    penaltyCount = penaltyCount + 1
+        if (costSum != 0 and pSum != 0):
+            # print("Both are not zero at least once")
+            # taoSumDiff = abs(costSum - pSum + (costCount-penaltyCount)*taoThreshold)
+            taoSumDiff = abs(costSum - pSum)
+            difference[taoThreshold] = taoSumDiff
+            if (maxSum > taoSumDiff):
+                # print("Original cost: ", costSum, " penalty: ", pSum," taothreshold: ",taoThreshold*(-1))
+                maxSum = taoSumDiff
+                maxThreshold = taoThreshold * (-1)
+        # print("Cost Count: ",costCount," penalty count: ",penaltyCount)
+    lists = sorted(difference.items())  # sorted by key, return a list of tuples
+    # w = csv.writer(open("../plot_helper/under_attack_loss_l2_fgsv.csv", "w"))
+    # for key, val in difference.items():
+    #     w.writerow([key, val])
+    # x, y = zip(*lists)  # unpack a list of pairs into two tuples
+    #
+    # fig = plt.figure()
+    # plt.plot(x, y)
+    # # fig.suptitle('Cost - Penalty Plotting', fontsize=20)
+    # plt.xlabel('Standard Limit')
+    # plt.ylabel('Loss')
+    # # fig.savefig('test.jpg')
+    # plt.show()
+    # print(minThreshold)
+    return maxThreshold,maxSum
+
+def calculateTmin_ruc_QR(rucFrame):
+    global minThreshold
+    minSum = sys.float_info.max
+    # print("minThreshold: ",minThreshold)
+    difference = dict()
+    for taoThreshold in numpy.arange(0.0025, .500, 0.0025):
+        costSum = 0
+        pSum = 0
+        costCount = 0
+        penaltyCount = 0
+        for row in rucFrame:
+            # print(row)
+
+            if (row < 0):
+                if (row > ((-1) * taoThreshold)):
+                    temp = abs(taoThreshold*(-1) - row)/2
+                    costSum += pow(temp, 2)
+                    # costSum += abs(taoThreshold*(-1) - row) / 2
+                    costCount = costCount + 1
+                else:
+                    temp = abs(taoThreshold*(-1) - row)*2
+                    pSum += pow(temp, 2)
+                    # pSum += abs(taoThreshold*(-1) - row) * 2
+                    penaltyCount = penaltyCount + 1
+        if (costSum != 0 and pSum != 0):
+            # print("Both are not zero at least once")
+            # taoSumDiff = abs(costSum - pSum + (costCount-penaltyCount)*taoThreshold)
+            taoSumDiff = abs(costSum - pSum)
+            # taoSumDiff = pow(abs(costSum - pSum),2)
+            difference[taoThreshold] = taoSumDiff
+            if (minSum > taoSumDiff):
+                # print("Original cost: ", costSum, " penalty: ", pSum," taothreshold: ",taoThreshold*(-1))
+                minSum = taoSumDiff
+                minThreshold = taoThreshold * (-1)
+        # print("Cost Count: ",costCount," penalty count: ",penaltyCount)
+    lists = sorted(difference.items())  # sorted by key, return a list of tuples
+    w = csv.writer(open("../plot_helper/under_attack_loss_l1_fgav.csv", "w"))
+    for key, val in difference.items():
+        w.writerow([key, val])
+    x, y = zip(*lists)  # unpack a list of pairs into two tuples
+
+    fig = plt.figure()
+    plt.plot(x, y)
+    # fig.suptitle('Cost - Penalty Plotting', fontsize=20)
+    plt.xlabel('Standard Limit')
+    plt.ylabel('Loss')
+    # fig.savefig('test.jpg')
+    plt.show()
+    print(minThreshold)
+    return minThreshold,minSum
+
+def get_loss_for_fix_target_min_QR(rucFrame, keys):
+    difference = dict()
+    sorted_frame = dict()
+    std_limit_array = []
+    loss_array = []
+    rucFrame_array = []
+    target_t_min = -0.17
+    target_ruc_num = 0
+    is_visited = False
+    day_frame_array = []
+    # data_frame_array =  []  # to keep the dataframes here
+    for key in keys:
+        difference = dict()
+        sorted_frame[key] = rucFrame.sort_values(by=["ruc" + key])
+        sorted_non_zero_ruc = sorted_frame[key][sorted_frame[key]['ruc' + key] < float(0)]
+        # data_frame_array.append(sorted_non_zero_ruc)
+        day_values = sorted_non_zero_ruc['day'].values
+        day_frame_array.append(day_values)
+        non_zero_ruc_array = sorted_non_zero_ruc["ruc" + key].values
+        rucFrame_array.append(non_zero_ruc_array)
+    merged_array = rucFrame_array[0].tolist()
+    # data_frame_array_merged = reduce(lambda left, right: pd.merge(left, right, on=['day']), data_frame_array) #merging the dataframes
+    day_array = day_frame_array[0].tolist()
+    for x in day_frame_array[1]:
+        day_array.append(x)
+    print("Days")
+    print(day_array)
+    for x in rucFrame_array[1]:
+        merged_array.append(x)
+    # df = pd.DataFrame(merged_array_1, columns=['RUC'])
+    # df.to_csv("RUC_min.csv")
+    print("length merged: ",len(merged_array)," lenght 1: ",len(rucFrame_array[0])," length 2: ",len(rucFrame_array[1]))
+    costSum = 0
+    pSum = 0
+    cost_count = 0
+    penalty_count = 0
+    costFunction =[0 for i in range(len(merged_array))]
+    for l in range(len(merged_array)):
+        if (merged_array[l] > lower_limit):
+            # temp = abs(lower_limit - non_zero_ruc_array[l])/2
+            # costSum += pow(temp, 2)
+            costSum += abs(lower_limit - merged_array[l]) / 2
+            cost_count = cost_count+ 1
+        else:
+            # temp = abs(lower_limit - non_zero_ruc_array[l])*2
+            # pSum += pow(temp, 2)
+            pSum += abs(lower_limit - merged_array[l]) * 2
+            penalty_count = penalty_count + 1
+        costFunction[l] =  abs(costSum-pSum)
+    index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
+    non_zero_ruc_array_copied = merged_array.copy()
+    for i in range(len(index_of_sorted_list)):
+        if(gradients[index_of_sorted_list[i]]<0):
+            sign = (-1)*1
+        else:sign = 1
+        # print(sign)
+        costSum = 0
+        pSum = 0
+        cost_count = 0
+        penalty_count = 0
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.15
+        tmin, minSum  = calculateTmin_ruc_QR(non_zero_ruc_array_copied)
+        std_limit_array.append(tmin*(-1))
+        loss_array.append(minSum)
+        if((tmin < target_t_min) and (is_visited == False)):
+            is_visited = True
+            target_ruc_num = i
+            print("For altering: ", i ,"Number of RUCs from ",len(non_zero_ruc_array_copied)," we can reach the targeted max")
+            # break
+        for l in range(len(non_zero_ruc_array_copied)):
+            if (non_zero_ruc_array_copied[l] > lower_limit):
+                # temp = abs(lower_limit - non_zero_ruc_array_copied[l])/2
+                # costSum += pow(temp, 2)
+                costSum += abs(lower_limit - non_zero_ruc_array_copied[l]) / 2
+                cost_count = cost_count + 1
+            else:
+                # temp = abs(lower_limit - non_zero_ruc_array_copied[l])*2
+                # pSum += pow(temp, 2)
+                pSum += abs(lower_limit - non_zero_ruc_array_copied[l]) * 2
+                penalty_count = penalty_count + 1
+        taoSumDiff = abs(pSum - costSum)
+        difference[i] = taoSumDiff
+    lists = (difference.items())  # sorted by key, return a list of tuples
+    x, y = zip(*lists)  # unpack a list of pairs into two tuples
+    # print("Loss When points are taken according to the order of gradient")
+    print("taget ruc number: ",target_ruc_num)
+    df = pd.DataFrame(std_limit_array,columns=['std_limit'])
+    df1 = pd.DataFrame(loss_array,columns=['loss'])
+    merged_fr = pd.concat([df['std_limit'],df1['loss']],axis = 1, keys = ['std_limit','loss'])
+    # print(merged_fr)
+    # merged_fr.to_csv("std_hyper_2_QR_l1.csv")
+    # return non_zero_ruc_array_copied
+
+    # create some x data and some integers for the y axis
+    # y = numpy.array(std_limit_array)
+    # x = numpy.arange(len(std_limit_array))
+    #
+    # # plot the data
+    # plt.plot(x, y)
+    # plt.xlabel("Number of ruc")
+    # plt.ylabel("Standard Limit")
+    # plt.show()
+    return y,target_ruc_num
+
+
+def calculateTmax_QR(rucFrame, keys):
+    # maxSum = (-1)*sys.float_info.max  #commented puposefully as the algorithm says if
+    # the difference between cost and penalty is min
+    maxSum = sys.float_info.max
+    # print("maxSum: ",maxSum)
+    maxRuc2014 = rucFrame['ruc2014'].max()
+    maxRuc2015 = rucFrame['ruc2015'].max()
+    maxThreshold = max(maxRuc2015, maxRuc2014)
+    # print("maxThreshold: ", maxThreshold)
+    difference = dict()
+    for taoThreshold in numpy.arange(0.0000, .500, 0.0025):
+        costSum = 0
+        pSum = 0
+        costCount = 0
+        penaltyCount = 0
+        for row in rucFrame.itertuples():
+            for key in keys:
+                if (getattr(row, "ruc" + key) > 0):  # previously It was greater equal
+                    # tdsc says to iterate only non zero items
+                    if (getattr(row, "ruc" + key) < taoThreshold):
+                        # temp = abs(taoThreshold - getattr(row, "ruc" + key))/2
+                        # costSum += pow(temp,2)
+                        costSum += abs(taoThreshold - getattr(row, "ruc" + key)) / 2
+                        costCount = costCount + 1
+                    else:
+                        # temp = abs(taoThreshold - getattr(row, "ruc" + key))*2
+                        # pSum += pow(temp,2)
+                        pSum += abs(taoThreshold - getattr(row, "ruc" + key)) * 2
+                        penaltyCount = penaltyCount + 1
+        if (pSum != 0 and costSum != 0):
+            # taoSumDiff = abs(costSum - pSum+ (costCount-penaltyCount)*taoThreshold)
+            taoSumDiff = abs(costSum - pSum)
+            # taoSumDiff = pow(abs(costSum - pSum),2)
+            difference[taoThreshold] = taoSumDiff
+            # print("Original cost: ", costSum, " penalty: ", pSum," taothreshold: ",taoThreshold)
+            # print("Cost Sum: ", costSum," psum: ",pSum," maxSum: ",maxSum," taoDifference: ",taoSumDiff)
+            if (maxSum > taoSumDiff):
+                # print("this is executing")
+                maxSum = taoSumDiff
+                maxThreshold = taoThreshold
+        # print("Cost Count: ",costCount," penalty count: ",penaltyCount)
+    lists = sorted(difference.items())  # sorted by key, return a list of tuples
+    x, y = zip(*lists)  # unpack a list of pairs into two tuples
+    fig = plt.figure()
+    plt.plot(x, y)
+    # fig.suptitle('Cost - Penalty Plotting', fontsize=20)
+    plt.xlabel('Standard Limit')
+    plt.ylabel('Cost - Penalty')
+    # fig.savefig('test.jpg')
+    plt.show()
+    return maxThreshold
+
+
+def calculateTmin_QR(rucFrame, keys):
+    minSum = sys.float_info.max
+    minRuc2014 = rucFrame['ruc2014'].min()
+    minRuc2015 = rucFrame['ruc2015'].min()
+    minThreshold = min(minRuc2015, minRuc2014)
+    # print("minThreshold: ",minThreshold)
+    difference = dict()
+    for taoThreshold in numpy.arange(0.0025, .500, 0.0025):
+        costSum = 0
+        pSum = 0
+        costCount = 0
+        penaltyCount = 0
+        for row in rucFrame.itertuples():
+            # print(row)
+            for key in keys:
+                if (getattr(row, "ruc" + key) < 0):
+                    if (getattr(row, "ruc" + key) > ((-1) * taoThreshold)):
+                        # temp = abs(taoThreshold*(-1) - getattr(row, "ruc" + key))/2
+                        # costSum += pow(temp, 2)
+                        costSum += abs(taoThreshold*(-1) - getattr(row, "ruc" + key)) / 2
+                        costCount = costCount + 1
+                    else:
+                        # temp = abs(taoThreshold*(-1) - getattr(row, "ruc" + key))*2
+                        # pSum += pow(temp, 2)
+                        pSum += abs(taoThreshold*(-1) - getattr(row, "ruc" + key)) * 2
+                        penaltyCount = penaltyCount + 1
+        if (costSum != 0 and pSum != 0):
+            # print("Both are not zero at least once")
+            # taoSumDiff = abs(costSum - pSum + (costCount-penaltyCount)*taoThreshold)
+            taoSumDiff = abs(costSum - pSum)
+            # taoSumDiff = pow(abs(costSum - pSum),2)
+            difference[taoThreshold] = taoSumDiff
+            if (minSum > taoSumDiff):
+                # print("Original cost: ", costSum, " penalty: ", pSum," taothreshold: ",taoThreshold*(-1))
+                minSum = taoSumDiff
+                minThreshold = taoThreshold * (-1)
+        # print("Cost Count: ",costCount," penalty count: ",penaltyCount)
+    lists = (difference.items())  # sorted by key, return a list of tuples
+    w = csv.writer(open("free_of_attack_loss_old.csv", "w"))
+    for key, val in difference.items():
+        w.writerow([key, val])
+    x, y = zip(*lists)  # unpack a list of pairs into two tuples
+    #
+    fig = plt.figure()
+    plt.plot(x, y)
+    # fig.suptitle('Cost - Penalty Plotting', fontsize=20)
+    plt.xlabel('Standard Limit')
+    plt.ylabel('Loss')
+    # fig.savefig('test.jpg')
+    plt.show()
+    return minThreshold
+
