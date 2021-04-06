@@ -14,10 +14,12 @@ plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 ruc_frame = pd.read_csv('../data/training_residual.csv')
-y1,target1 = get_loss_for_fixed_target_min_LR(ruc_frame, TRAINING_DATA.keys())
-x = numpy.arange(len(y1))
-plt.plot(x, y1, color='r', label='l1-FGAV', marker ='X',markevery = 5) # r - red colour
-plt.xlabel("Number of RUC ")
-plt.ylabel("Loss")
-plt.legend()
-plt.show()
+# y1,target1 = get_loss_for_fixed_target_min_LR(ruc_frame, TRAINING_DATA.keys())
+get_loss_for_contraint_romax_min_LR(ruc_frame, TRAINING_DATA.keys())
+get_loss_for_contraint_romax_max_LR(ruc_frame, TRAINING_DATA.keys())
+# x = numpy.arange(len(y1))
+# plt.plot(x, y1, color='r', label='l1-FGAV', marker ='X',markevery = 5) # r - red colour
+# plt.xlabel("Number of RUC ")
+# plt.ylabel("Loss")
+# plt.legend()
+# plt.show()

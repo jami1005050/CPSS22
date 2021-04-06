@@ -218,3 +218,43 @@ def calculate_ruc(nabla_frame, keys):
     ruc_frame = pd.DataFrame(ruc_arry)
     return ruc_frame
 
+def testing_attacked_threshold(residual_frame,max_threshold_org,min_threshold_org,
+                               max_threshold_att,min_threshold_att):
+    first_detected_org = 0
+    first_detected_att = 0
+    false_alarm_tier2_org = 0
+    false_alarm_tier2_att = 0
+    tier1_anomaly = 0
+    tier2_for_att = 0
+    tier2_for_org = 0
+    for row in residual_frame.itertuples():
+        if not(getattr(row,"ratio2016") <= getattr(row,'margin_high') and
+               getattr(row,'ratio2016') >= getattr(row,'margin_low')):
+            tier1_anomaly = tier1_anomaly + 1
+            if float(getattr(row,"ruc2016"))!= float(0):
+                if(float(getattr(row,"ruc2016"))> float(max_threshold_org) or float(getattr(row,"ruc2016")) < float(min_threshold_org)):
+                    print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ', max_threshold_org,' ', min_threshold_org)
+                    if(getattr(row,"day") > int(91) and getattr(row,"day")<int(181) ): # 91 = attack start day 181 = attack end day
+                        if int(tier2_for_org) == int(0):
+                            first_detected_org = getattr(row, "day")
+                        tier2_for_org = tier2_for_org +1
+                    else:
+                        false_alarm_tier2_org = false_alarm_tier2_org + 1
+                if (float(getattr(row,"ruc2016")) > float(max_threshold_att) or float(getattr(row,"ruc2016")) < float(min_threshold_att)):
+                    print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ',max_threshold_att,' ',min_threshold_att)
+                    if (getattr(row,"day") > int(91) and getattr(row,"day")<int(181)):
+                        if int(tier2_for_att) == int(0) :
+                            first_detected_att = getattr(row, "day")
+                        tier2_for_att = tier2_for_att +1
+                    else:
+                        false_alarm_tier2_att = false_alarm_tier2_att + 1
+    print("Tier 1 Detection: ",tier1_anomaly,"\n",
+          "Tier 2 Detection for altered threshold: ",tier2_for_att,"\n",
+          "Tier 2 Detection for Org Threshold: ",tier2_for_org,
+          "First Detected org: ",first_detected_org,
+          "First Detected atta: ",first_detected_att,
+        "false_alarm_tier2_org: ", false_alarm_tier2_org,
+        "false_alarm_tier2_att: ", false_alarm_tier2_att
+        )
+    return tier2_for_org,tier2_for_att, first_detected_org,first_detected_att,false_alarm_tier2_org,false_alarm_tier2_att
+

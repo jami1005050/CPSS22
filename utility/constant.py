@@ -44,3 +44,22 @@ END_DATE_TEST = '2016-06-30'
 SLIDING_FRAME = 7
 RESIDUAL_BOTTOM = -1
 RESIDUAL_TOP = 1
+ROMAX = 40
+# After Romax Tao Min LR:  -0.0525 After Romax Tao Max:  0.0475 with epsilon .05
+# After Romax Tao Min LR:  -0.06 After Romax Tao Max:  0.0475 with epsilon .08
+# tmin after ROMAX QR:  -0.085 #tmax after ROMAX QR:  0.0725 with epsilon .05
+# tmin after ROMAX QR:  -0.1 #tmax after ROMAX QR:  0.0825 with epsilon .08
+#del 50 and romal 30% deductive attack
+# QR-->Tier 2 Detection for Org Threshold: 0 First Detected org: 0 First Detected atta: 0 false_alarm_tier2_org: 19 false_alarm_tier2_att: 11
+# LR-->Tier 2 Detection for Org Threshold: 0 First Detected org: 0 First Detected atta: 0 false_alarm_tier2_org: 39 false_alarm_tier2_att: 28
+
+#del 100 and romal 30% deductive attack
+#QR-->Tier 2 Detection for Org Threshold: 52 First Detected org: 99 First Detected atta: 100 false_alarm_tier2_org: 19 false_alarm_tier2_att: 12
+#LR-->Tier 2 Detection for Org Threshold: 56 First Detected org: 97 First Detected atta: 99 false_alarm_tier2_org: 38 false_alarm_tier2_att: 26
+# optimal epsilon value
+# 0.04146170788004631(mean) + 0.03840153102525633(std)*2 = 0.11826476993
+# 0.04146170788004631(mean) + 0.03840153102525633(std) = 0.0798632389
+
+#Geometric mean
+ # gmean = 0.021374503333936225  mad = 0.033139772397974276
+ # median = 0.0272641306322526
