@@ -3,8 +3,8 @@ from functools import reduce
 import os as o
 from utility.common import *
 # -0.0275 0.0275 l1 #-0.0425 0.0425 l2
-lower_limit_LR = -0.0275
-upper_limit_LR = 0.0275
+lower_limit_LR = -0.0425
+upper_limit_LR = 0.0425
 
 def calculateTmax_ruc_LR(rucFrame):
     global maxThreshold
@@ -16,6 +16,7 @@ def calculateTmax_ruc_LR(rucFrame):
         for row in rucFrame:
             if (row > 0):
                 costSum += abs(taoThreshold - row)
+                # costSum += pow(abs(taoThreshold - row),2)
                 costCount = costCount + 1
         taoSumDiff = abs(costSum)
         difference[taoThreshold] = taoSumDiff
@@ -206,7 +207,8 @@ def get_loss_for_contraint_romax_min_LR(rucFrame, keys):
             sign = (-1)*1
         else:sign = 1
         costSum = 0
-        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.05451427573
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.07
+        # non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.05451427573
         ruc_count = ruc_count + 1
         for l in range(len(non_zero_ruc_array_copied)):
             costSum += abs(lower_limit_LR - non_zero_ruc_array_copied[l])
@@ -255,7 +257,8 @@ def get_loss_for_contraint_romax_max_LR(rucFrame, keys):
             sign = (-1)*1
         else:sign = 1
         costSum = 0
-        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.05451427573
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.07
+        # non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.05451427573
         ruc_count = ruc_count + 1
         for l in range(len(non_zero_ruc_array_copied)):
             costSum += abs(upper_limit_LR - non_zero_ruc_array_copied[l])

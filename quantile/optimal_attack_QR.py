@@ -17,6 +17,7 @@ plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 ruc_frame = pd.read_csv('../data/training_residual.csv')
 # y1,target1 = get_loss_for_fix_target_min_QR(ruc_frame, TRAINING_DATA.keys())
 get_loss_for_contraint_romax_min_QR(ruc_frame, TRAINING_DATA.keys())
+# pd.DataFrame(ruc_frame_array).to_csv("../data/residual_l1_fgsv.csv")
 get_loss_for_contraint_romax_max_QR(ruc_frame, TRAINING_DATA.keys())
 # df = pd.DataFrame(y1,columns=['loss'])
 # df.to_csv('l1_QR_Loss_t_33.csv')

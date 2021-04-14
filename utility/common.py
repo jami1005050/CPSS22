@@ -33,8 +33,12 @@ def calculate_gradients(costFunction, non_zero_ruc_array):#param1- output param2
     for i in range(len(gradients)):
         if(numpy.isnan(gradients[i])):
             gradients[i] = gradients[0]
-    index_of_sorted_list = sorted(range(len(gradients)), key=lambda k: gradients[k], reverse=True)
-    print(index_of_sorted_list)
+    # index_of_sorted_list = sorted(range(len(gradients)), key=lambda k: (gradients[k]), reverse=True)
+    index_of_sorted_list = sorted(range(len(gradients)), key=lambda k: abs(gradients[k]), reverse=True)
+    # print(gradients)
+    # print(index_of_sorted_list)
+    # for i in index_of_sorted_list:
+    #     print(gradients[i])
     return index_of_sorted_list,gradients
 
 def calculateAMAndHM(data):
@@ -103,34 +107,10 @@ def perform_additive_attack(file_data, romal, delavg, START_DATE, END_DATE):
            (attack_window_data['localminute'] <= END_DATE) & \
            (attack_window_data['dataid'].isin(compromisedMeters))
     df = attack_window_data.loc[mask]
-    # print(file_data_copied[str(ATTACK_YEAR)].loc[mask])
-    # print(file_data_copied[str(ATTACK_YEAR)])
-
-    # df2 = attack_window_data.loc[mask] # this is for checking if the del avg is working
-    # iterate each row of the dataframe and add a random number with use value
-    # for row in attack_window_data.loc[mask].itertuples():
-    #     print(row)
-    # setattr(row,'use',getattr(row,'use')+ randint(200, 600))
-    # df['use'] = df['use'].apply(lambda x: x + randint(200, 600))
-    # attack_window_data.loc[mask, 'use'] = df['use'].apply(lambda x: x + randint(1400, 1600)) #commented out on purpose to check the effect of various results
-    # print("Before attack with del avg: ",delavg)
-    # print(attack_window_data.loc[mask, 'use'] )
     s = delavg - 50
     e = delavg + 50
     attack_window_data.loc[mask, 'use'] = df['use'].apply(lambda x: x + randint(s, e))
-    # print(file_data_copied[str(ATTACK_YEAR)].loc[mask])
-    # print("attack winodw data for del avg:",delavg)
-    # print(attack_window_data.loc[mask, 'use'] )
-    # df3 =  attack_window_data.loc[mask] # this is for checking if the del avg is working
-    # df_combined = df2 # this is for checking if the del avg is working
-    # df_combined['use'] = df3['use']-df2['use'] # this is for checking if the del avg is working
-    # print(df_combined.groupby(['dataid']).mean()) # this is for checking if the del avg is working
-    # print("df_combined: ",df_combined)
-    # print(file_data_copied[str(ATTACK_YEAR)])
     return file_data_copied, numberofitems
-    # commented#12.47 08/17/2020
-    # attack_window_data.loc[mask, 'use'] = randint(0, 50)
-    # return file_data_copied#12.47 08/17/2020
 
 def perform_deductive_attack(file_data, romal, delavg, START_DATE, END_DATE):
     file_data_copied = {}
@@ -233,7 +213,7 @@ def testing_attacked_threshold(residual_frame,max_threshold_org,min_threshold_or
             tier1_anomaly = tier1_anomaly + 1
             if float(getattr(row,"ruc2016"))!= float(0):
                 if(float(getattr(row,"ruc2016"))> float(max_threshold_org) or float(getattr(row,"ruc2016")) < float(min_threshold_org)):
-                    print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ', max_threshold_org,' ', min_threshold_org)
+                    # print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ', max_threshold_org,' ', min_threshold_org)
                     if(getattr(row,"day") > int(91) and getattr(row,"day")<int(181) ): # 91 = attack start day 181 = attack end day
                         if int(tier2_for_org) == int(0):
                             first_detected_org = getattr(row, "day")
@@ -241,7 +221,7 @@ def testing_attacked_threshold(residual_frame,max_threshold_org,min_threshold_or
                     else:
                         false_alarm_tier2_org = false_alarm_tier2_org + 1
                 if (float(getattr(row,"ruc2016")) > float(max_threshold_att) or float(getattr(row,"ruc2016")) < float(min_threshold_att)):
-                    print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ',max_threshold_att,' ',min_threshold_att)
+                    # print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ',max_threshold_att,' ',min_threshold_att)
                     if (getattr(row,"day") > int(91) and getattr(row,"day")<int(181)):
                         if int(tier2_for_att) == int(0) :
                             first_detected_att = getattr(row, "day")

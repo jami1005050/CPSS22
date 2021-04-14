@@ -2,8 +2,8 @@ import matplotlib.pyplot as plt
 
 from utility.constant import E
 
-SMALL_SIZE = 8
-MEDIUM_SIZE = 14
+SMALL_SIZE = 12
+MEDIUM_SIZE = 20
 BIGGER_SIZE = 24
 
 plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
@@ -12,48 +12,95 @@ plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
-#QR-->Tier 2 Detection for Org Threshold: 52 First Detected org: 99 First Detected atta: 100 false_alarm_tier2_org: 19 false_alarm_tier2_att: 12
 number_of_meters = 192
 attack_start_day = 91
+attack_end_day = 181
 del_avg = 100
 ro_mal = .3
-attack_end_day = 181
-range_att_QR =100-91
-range_org_QR =99-91
-t_max_QR = 0.065
-t_min_QR = -0.065
-t_max_att_QR =  0.075
-t_min_att_QR = -0.0875
-total_change_std_limit_QR = abs(t_max_QR-t_max_att_QR) + abs(t_min_QR-t_min_att_QR)
-#LR-->Tier 2 Detection for Org Threshold: 56 First Detected org: 97 First Detected atta: 99 false_alarm_tier2_org: 38 false_alarm_tier2_att: 26
+plt.ylim(0,120)
+First_Detected_org_QR_l1=  99
+First_Detected_att_QR_l1=  102
+First_Detected_org_QR_l2=  100
+First_Detected_att_QR_l2=  110
+First_Detected_org_LR_l1=  97
+First_Detected_att_LR_l1=  100
+First_Detected_org_LR_l2=  94
+First_Detected_att_LR_l2=  100
+# First Detected org:  97 First Detected atta:  100
+# First Detected org:  94 First Detected atta:  100
+#region L1
+range_org_QR_l1 =First_Detected_org_QR_l1-attack_start_day
+range_att_QR_l1 =First_Detected_att_QR_l1-attack_start_day
+t_max_org_QR_l1 = 0.065
+t_min_org_QR_l1 = -0.065
+t_max_att_QR_l1 =  0.12 # when romax -- 50 and epsilon .07
+t_min_att_QR_l1 = -0.1175
+total_change_std_limit_QR_l1 = abs(t_max_org_QR_l1 - t_max_att_QR_l1) + abs(t_min_org_QR_l1 - t_min_att_QR_l1)
+impact_org_QR_l1 = del_avg * ro_mal * number_of_meters * E * range_org_QR_l1*24/1000
+impact_att_QR_l1 = del_avg * ro_mal * number_of_meters * E * range_att_QR_l1*24/1000
+impact_per_std_limit_change_QR_l1 = (impact_att_QR_l1-impact_org_QR_l1)/total_change_std_limit_QR_l1
+#endregion
 
-range_att_LR =99-91
-range_org_LR =97-91
-t_max_LR = 0.0275
-t_min_LR = -0.0275
-t_max_att_LR =  0.0475
-t_min_att_LR = -0.055
-total_change_std_limit_LR = abs(t_max_LR-t_max_att_LR) + abs(t_min_LR-t_min_att_LR)
+#region l2
+t_max_org_QR_l2 = 0.08
+t_min_org_QR_l2 = -0.08
+t_max_att_QR_l2 =  0.1375 # when romax --50 and epsilon .07
+t_min_att_QR_l2 = -0.14
+range_org_QR_l2 =First_Detected_org_QR_l2-attack_start_day
+range_att_QR_l2 =First_Detected_att_QR_l2-attack_start_day
 
-impact_org_QR = del_avg * ro_mal * number_of_meters * E * range_org_QR/1000
-impact_att_QR = del_avg * ro_mal * number_of_meters * E * range_att_QR/1000
-impact_per_std_limit_change_QR = (impact_att_QR-impact_org_QR)/total_change_std_limit_QR
-plt.bar(["Not Attacked QR","Attacked QR"], [impact_org_QR/24,impact_att_QR/24],
+total_change_std_limit_QR_l2 = abs(t_max_org_QR_l2 - t_max_att_QR_l2) + abs(t_min_org_QR_l2 - t_min_att_QR_l2)
+impact_org_QR_l2 = del_avg * ro_mal * number_of_meters * E * range_org_QR_l2*24/1000
+impact_att_QR_l2 = del_avg * ro_mal * number_of_meters * E * range_att_QR_l2*24/1000
+impact_per_std_limit_change_QR_l2 = (impact_att_QR_l2-impact_org_QR_l2)/total_change_std_limit_QR_l2
+#endregion
+#endregion
+#region LR
+#region l1
+range_org_LR_l1 =First_Detected_org_LR_l1-attack_start_day
+range_att_LR_l1 = First_Detected_att_LR_l1 - attack_start_day
+t_max_org_LR_l1 = 0.0275
+t_min_org_LR_l1 = -0.0275
+t_max_att_LR_l1 =  0.075
+t_min_att_LR_l1 = -0.075
+
+
+total_change_std_limit_LR_l1 = abs(t_max_org_LR_l1 - t_max_att_LR_l1) + abs(t_min_org_LR_l1 - t_min_att_LR_l1)
+impact_org_LR_l1 = del_avg * ro_mal * number_of_meters * E * range_org_LR_l1*24/1000
+impact_att_LR_l1 = del_avg * ro_mal * number_of_meters * E * range_att_LR_l1*24/1000
+impact_per_std_limit_change_LR_l1 = (impact_att_QR_l1-impact_org_LR_l1)/total_change_std_limit_LR_l1
+
+#endregion
+#region l2
+range_org_LR_l2 =First_Detected_org_LR_l2-attack_start_day
+range_att_LR_l2 =First_Detected_att_LR_l2-attack_start_day
+t_max_org_LR_l2 = 0.0425
+t_min_org_LR_l2 = -0.0425
+t_max_att_LR_l2 =  0.0875
+t_min_att_LR_l2 = -0.0875
+total_change_std_limit_LR_l2 = abs(t_max_org_LR_l2 - t_max_att_LR_l2) + abs(t_min_org_LR_l2 - t_min_att_LR_l2)
+impact_org_LR_l2 = del_avg * ro_mal * number_of_meters * E * range_org_LR_l2*24/1000
+impact_att_LR_l2 = del_avg * ro_mal * number_of_meters * E * range_att_LR_l2*24/1000
+impact_per_std_limit_change_LR_l2 = (impact_att_QR_l2-impact_org_LR_l2)/total_change_std_limit_LR_l2
+#endregion
+#endregion
+
+plt.bar(["Not Attacked","Attacked"], [impact_org_QR_l1/(24*range_org_QR_l1),impact_att_QR_l1/(24*range_org_QR_l1)],
+        color=[ 'green','red'])
+plt.bar(["Not Attacked","Attacked"], [impact_org_QR_l2/(24*range_org_QR_l2),impact_att_QR_l2/(24*range_org_QR_l2)],
+        color=[ 'green','red'])
+plt.bar(["Not Attacked","Attacked"], [impact_org_LR_l1/(range_org_LR_l1*24),impact_att_LR_l1/(range_org_LR_l1*24)],
         color=[ 'green','red'])
 
-
-impact_org_LR = del_avg * ro_mal * number_of_meters * E * range_org_LR/1000
-impact_att_LR = del_avg * ro_mal * number_of_meters * E * range_att_LR/1000
-impact_per_std_limit_change_LR = (impact_att_LR-impact_org_LR)/total_change_std_limit_LR
-
-# plt.bar(["Not Attacked LR","Attacked LR"], [impact_org_LR/24,impact_att_LR/24],
-#         color=[ 'green','red'])
+plt.bar(["Not Attacked","Attacked"], [impact_org_LR_l2/(24*range_org_LR_l2),impact_att_LR_l2/(range_org_LR_l2*24)],
+        color=[ 'green','red'])
 plt.ylabel("Increasing Impact($/Hour)")
 
-# plt.title("Compared impact of Undetected attack")
+plt.bar(["LR","QR"], [impact_per_std_limit_change_LR_l1/range_org_LR_l1,impact_per_std_limit_change_QR_l1/range_org_QR_l1],
+        color=[ 'black','blue'])
 
-# plt.bar(["LR","QR"], [impact_per_std_limit_change_LR,impact_per_std_limit_change_QR],
-#         color=[ 'black','blue'])
-# plt.ylabel("Impact Rate")
+plt.bar(["L1","L2"], [impact_per_std_limit_change_QR_l1/range_org_QR_l1,impact_per_std_limit_change_QR_l2/range_org_QR_l2],
+        color=[ 'black','blue'])
 
+plt.ylabel("Impact Rate(per day)")
 plt.show()
