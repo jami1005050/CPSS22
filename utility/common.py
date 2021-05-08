@@ -25,6 +25,22 @@ def box_cox_transformation(data):
         data[key].use = stats.boxcox(data[key].use, lmbda=LAMBDA, alpha=None)
     return data
 
+def calculate_gradients_signed(costFunction, non_zero_ruc_array):#param1- output param2-input of a loss function
+    f = numpy.array(costFunction, dtype = float)
+    x = numpy.array(non_zero_ruc_array,dtype=float)
+    dx = numpy.gradient(x)
+    gradients = numpy.gradient(f,x)
+    for i in range(len(gradients)):
+        if(numpy.isnan(gradients[i])):
+            gradients[i] = gradients[0]
+    index_of_sorted_list = sorted(range(len(gradients)), key=lambda k: (gradients[k]), reverse=True)
+    # index_of_sorted_list = sorted(range(len(gradients)), key=lambda k: abs(gradients[k]), reverse=True)
+    # print(gradients)
+    # print(index_of_sorted_list)
+    # for i in index_of_sorted_list:
+    #     print(gradients[i])
+    return index_of_sorted_list,gradients
+
 def calculate_gradients(costFunction, non_zero_ruc_array):#param1- output param2-input of a loss function
     f = numpy.array(costFunction, dtype = float)
     x = numpy.array(non_zero_ruc_array,dtype=float)

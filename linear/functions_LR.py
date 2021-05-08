@@ -3,8 +3,8 @@ from functools import reduce
 import os as o
 from utility.common import *
 # -0.0275 0.0275 l1 #-0.0425 0.0425 l2
-lower_limit_LR = -0.0425
-upper_limit_LR = 0.0425
+lower_limit_LR = -0.0275
+upper_limit_LR = 0.0275
 
 def calculateTmax_ruc_LR(rucFrame):
     global maxThreshold
