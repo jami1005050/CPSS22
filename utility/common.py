@@ -224,21 +224,21 @@ def testing_attacked_threshold(residual_frame,max_threshold_org,min_threshold_or
     tier2_for_att = 0
     tier2_for_org = 0
     for row in residual_frame.itertuples():
-        if not(getattr(row,"ratio2016") <= getattr(row,'margin_high') and
-               getattr(row,'ratio2016') >= getattr(row,'margin_low')):
+        if not(((getattr(row,"ratio2016") <= getattr(row,'margin_high')) and
+                (getattr(row,'ratio2016') >= getattr(row,'margin_low')))):
             tier1_anomaly = tier1_anomaly + 1
             if float(getattr(row,"ruc2016"))!= float(0):
-                if(float(getattr(row,"ruc2016"))> float(max_threshold_org) or float(getattr(row,"ruc2016")) < float(min_threshold_org)):
+                if((float(getattr(row,"ruc2016"))> float(max_threshold_org)) or (float(getattr(row,"ruc2016")) < float(min_threshold_org))):
                     # print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ', max_threshold_org,' ', min_threshold_org)
-                    if(getattr(row,"day") > int(91) and getattr(row,"day")<int(181) ): # 91 = attack start day 181 = attack end day
+                    if((getattr(row,"day") > int(91)) and (getattr(row,"day")<int(181) )): # 91 = attack start day 181 = attack end day
                         if int(tier2_for_org) == int(0):
                             first_detected_org = getattr(row, "day")
                         tier2_for_org = tier2_for_org +1
                     else:
                         false_alarm_tier2_org = false_alarm_tier2_org + 1
-                if (float(getattr(row,"ruc2016")) > float(max_threshold_att) or float(getattr(row,"ruc2016")) < float(min_threshold_att)):
+                if ((float(getattr(row,"ruc2016")) > float(max_threshold_att)) or (float(getattr(row,"ruc2016")) < float(min_threshold_att))):
                     # print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ',max_threshold_att,' ',min_threshold_att)
-                    if (getattr(row,"day") > int(91) and getattr(row,"day")<int(181)):
+                    if ((getattr(row,"day") > int(91)) and (getattr(row,"day")<int(181))):
                         if int(tier2_for_att) == int(0) :
                             first_detected_att = getattr(row, "day")
                         tier2_for_att = tier2_for_att +1
@@ -253,4 +253,29 @@ def testing_attacked_threshold(residual_frame,max_threshold_org,min_threshold_or
         "false_alarm_tier2_att: ", false_alarm_tier2_att
         )
     return tier2_for_org,tier2_for_att, first_detected_org,first_detected_att,false_alarm_tier2_org,false_alarm_tier2_att
+
+def testing_tau(residual_frame,tao_max,tao_min):
+    first_detected_org = 0
+    false_alarm_tier2_org = 0
+    tier1_anomaly = 0
+    tier2_for_org = 0
+    for row in residual_frame.itertuples():
+        if not(((getattr(row,"ratio2016") <= getattr(row,'margin_high')) and
+                (getattr(row,'ratio2016') >= getattr(row,'margin_low')))):
+            tier1_anomaly = tier1_anomaly + 1
+            if float(getattr(row,"ruc2016"))!= float(0):
+                if((float(getattr(row,"ruc2016"))> float(tao_max)) or (float(getattr(row,"ruc2016")) < float(tao_min))):
+                    # print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ', max_threshold_org,' ', min_threshold_org)
+                    if((getattr(row,"day") >= int(274)) and (getattr(row,"day")<=int(365) )): # 91 = attack start day 181 = attack end day
+                        if int(tier2_for_org) == int(0):
+                            first_detected_org = getattr(row, "day")
+                        tier2_for_org = tier2_for_org +1
+                    else:
+                        false_alarm_tier2_org = false_alarm_tier2_org + 1
+    print("Tier 1 Detection: ",tier1_anomaly,"\n",
+          "Tier 2 Detection for Org Threshold: ",tier2_for_org,
+          "First Detected org: ",first_detected_org,
+        "false_alarm_tier2_org: ", false_alarm_tier2_org,
+        )
+    return tier2_for_org, first_detected_org,false_alarm_tier2_org
 

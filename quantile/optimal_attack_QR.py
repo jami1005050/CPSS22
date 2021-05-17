@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-import pandas as pd
+# import pandas as pd
 import numpy
 from quantile.functions_QR import *
 SMALL_SIZE = 8
@@ -14,7 +14,7 @@ plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 # plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 # mpl.rcParams['agg.path.chunksize'] = 10000
-ruc_frame = pd.read_csv('../data/training_residual.csv')
+ruc_frame = pd.read_csv('../data/training_residual/training_residual.csv')
 # sorted_frame_min = dict()
 # day_frame_array_min = []
 # rucFrame_array_min = []
@@ -56,18 +56,18 @@ ruc_frame = pd.read_csv('../data/training_residual.csv')
 # index1, grad1 = calculate_gradients_signed(loss_max,tao_max)
 # print(len(grad1))
 # print("Min threshold: ",minThreshold," Max threshold: ",maxThreshold1)
-ruc_frame3 = get_loss_for_contraint_romax_min_QR_signed(ruc_frame, TRAINING_DATA.keys())
+# ruc_frame3 = get_loss_for_contraint_romax_min_QR_signed(ruc_frame, TRAINING_DATA.keys())
 ruc_frame1 = get_loss_for_contraint_romax_min_QR(ruc_frame, TRAINING_DATA.keys())
-ruc_frame5 = get_loss_for_contraint_romax_min_QR_RUC_order(ruc_frame, TRAINING_DATA.keys())
+# ruc_frame5 = get_loss_for_contraint_romax_min_QR_RUC_order(ruc_frame, TRAINING_DATA.keys())
 # pd.DataFrame(ruc_frame_array).to_csv("../data/residual_l1_fgsv.csv")
-ruc_frame4 = get_loss_for_contraint_romax_max_QR_signed(ruc_frame, TRAINING_DATA.keys())
+# ruc_frame4 = get_loss_for_contraint_romax_max_QR_signed(ruc_frame, TRAINING_DATA.keys())
 ruc_frame2 = get_loss_for_contraint_romax_max_QR(ruc_frame, TRAINING_DATA.keys())
-ruc_frame6 = get_loss_for_contraint_romax_max_QR_RUC_order(ruc_frame, TRAINING_DATA.keys())
-merged_array = ruc_frame5
-for x in ruc_frame6:
+# ruc_frame6 = get_loss_for_contraint_romax_max_QR_RUC_order(ruc_frame, TRAINING_DATA.keys())
+merged_array = ruc_frame1
+for x in ruc_frame2:
     merged_array.append(x)
 df = pd.DataFrame(merged_array,columns=['ruc'])
-# df.to_csv('l1_QR_ruc_romax_50_epsilon_0.07_RUC_Order.csv')
+df.to_csv('LQR_ROMAX50_EPS07_FGAV.csv')
 # ruc_frame_array = calculate_min_by_gradient(ruc_frame,TRAINING_DATA.keys())
 # pd.DataFrame(ruc_frame_array).to_csv("../loss_minimization/ruc_for_l1_fgav.csv")
 
