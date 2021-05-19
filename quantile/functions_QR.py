@@ -8,12 +8,8 @@ import pandas as pd
 #-0.13 or -0.1075  0.0975 #hyper parameter 8
 #-0.12 or -0.09  0.09 #hyper parameter 4
 #l1(-0.09 or -065 0.065) l2(-0.08 0.08) #hyper parameter 2
-# upper_limit = 0.05
-# lower_limit = -0.05
-# upper_limit = 0.01
-# lower_limit = -0.01
-upper_limit = 0.065
-lower_limit = -0.065
+upper_limit = 0.0675
+lower_limit = -0.0651580041643599
 def calculateTmax_ruc_QR(rucFrame):
     global maxThreshold1
     # maxThreshold1 = None
@@ -73,8 +69,8 @@ def calculateTmin_ruc_QR(rucFrame):
         costCount = 0
         penaltyCount = 0
         for row in rucFrame:
-            # print(row)
             if (row < 0):
+                # print(row)
                 if (row > ((-1) * taoThreshold)):
                     # temp = abs(taoThreshold*(-1) - row)/2
                     # costSum += pow(temp, 2)
@@ -434,7 +430,7 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
     penalty_count = 0
     costFunction =[0 for i in range(len(merged_array))]
     for l in range(len(merged_array)):
-        if (merged_array[l] > lower_limit):
+        if (merged_array[l] >= lower_limit):
             # temp = abs(lower_limit - merged_array[l])/2
             # costSum += pow(temp, 2)
             costSum += abs(lower_limit - merged_array[l]) / 2
@@ -457,8 +453,8 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
         # costFunction[l] =  abs(costSum-pSum)
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
-    print("length min: ",len(non_zero_ruc_array_copied))
-    min = numpy.min(non_zero_ruc_array_copied)
+    # print("length min: ",len(non_zero_ruc_array_copied))
+    # min = numpy.min(non_zero_ruc_array_copied)
     for i in range(len(index_of_sorted_list)):
         if(gradients[index_of_sorted_list[i]]<0):
             sign = -1
@@ -467,11 +463,11 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
         pSum = 0
         # if (min > (non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.07)):
         #     continue
-        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.07
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.08
         # non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.07451427573
         # print(i,"th gradient: ",gradients[index_of_sorted_list[i]]," residual: ",non_zero_ruc_array_copied[index_of_sorted_list[i]])
         ruc_count = ruc_count + 1
-        if(ruc_count >= ROMAX):
+        if(ruc_count > ROMAX):
             tmin, minSum  = calculateTmin_ruc_QR(non_zero_ruc_array_copied)
             print("tmin after ROMAX QR: ",tmin)
             break
@@ -695,10 +691,8 @@ def get_loss_for_contraint_romax_max_QR(rucFrame, keys):
         pSum = 0
         # if (max < (non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.07)):
         #     continue
-        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.07
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.08
         # non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.07451427573
-        # print("After: ",non_zero_ruc_array_copied[index_of_sorted_list[i]])
-
         ruc_count = ruc_count + 1
         if(ruc_count >= ROMAX):
             tmax, maxSum  = calculateTmax_ruc_QR(non_zero_ruc_array_copied)

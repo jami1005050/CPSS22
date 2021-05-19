@@ -44,7 +44,7 @@ END_DATE_TEST = '2016-06-30'
 SLIDING_FRAME = 7
 RESIDUAL_BOTTOM = -1
 RESIDUAL_TOP = 1
-ROMAX = 50
+ROMAX = 30
 # After Romax Tao Min LR:  -0.0525 After Romax Tao Max:  0.0475 with epsilon .05
 # After Romax Tao Min LR:  -0.06 After Romax Tao Max:  0.0475 with epsilon .08
 # tmin after ROMAX QR:  -0.085 #tmax after ROMAX QR:  0.0725 with epsilon .05
