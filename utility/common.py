@@ -266,7 +266,7 @@ def testing_tau(residual_frame,tao_max,tao_min):
             if float(getattr(row,"ruc2016"))!= float(0):
                 if((float(getattr(row,"ruc2016"))> float(tao_max)) or (float(getattr(row,"ruc2016")) < float(tao_min))):
                     # print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ', max_threshold_org,' ', min_threshold_org)
-                    if((getattr(row,"day") >= int(182)) and (getattr(row,"day")<=int(273) )): # 91 = attack start day 181 = attack end day
+                    if((getattr(row,"day") >= int(181)) and (getattr(row,"day")<=int(273) )): # 91 = attack start day 181 = attack end day
                         if int(tier2_for_org) == int(0):
                             first_detected_org = getattr(row, "day")
                         tier2_for_org = tier2_for_org +1

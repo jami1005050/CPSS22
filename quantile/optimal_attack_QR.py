@@ -57,17 +57,28 @@ ruc_frame = pd.read_csv('../data/training_residual/training_RUC.csv')
 # print(len(grad1))
 # print("Min threshold: ",minThreshold," Max threshold: ",maxThreshold1)
 # ruc_frame3 = get_loss_for_contraint_romax_min_QR_signed(ruc_frame, TRAINING_DATA.keys())
-ruc_frame1 = get_loss_for_contraint_romax_min_QR(ruc_frame, TRAINING_DATA.keys())
+# ruc_frame1 = get_loss_for_contraint_romax_min_QR(ruc_frame, TRAINING_DATA.keys())
 # ruc_frame5 = get_loss_for_contraint_romax_min_QR_RUC_order(ruc_frame, TRAINING_DATA.keys())
+ruc_frame7 = get_loss_for_contraint_romax_min_Random(ruc_frame, TRAINING_DATA.keys())
 # pd.DataFrame(ruc_frame_array).to_csv("../data/residual_l1_fgsv.csv")
 # ruc_frame4 = get_loss_for_contraint_romax_max_QR_signed(ruc_frame, TRAINING_DATA.keys())
-ruc_frame2 = get_loss_for_contraint_romax_max_QR(ruc_frame, TRAINING_DATA.keys())
+# ruc_frame2 = get_loss_for_contraint_romax_max_QR(ruc_frame, TRAINING_DATA.keys())
 # ruc_frame6 = get_loss_for_contraint_romax_max_QR_RUC_order(ruc_frame, TRAINING_DATA.keys())
-merged_array = ruc_frame1
-for x in ruc_frame2:
+ruc_frame8 = get_loss_for_contraint_romax_max_Random(ruc_frame, TRAINING_DATA.keys())
+
+
+
+merged_array = ruc_frame7
+for x in ruc_frame8:
     merged_array.append(x)
 df = pd.DataFrame(merged_array,columns=['ruc'])
-df.to_csv('LQR_ROMAX30_EPS08_FGAV.csv')
+df.to_csv('F_LQR_RAND10_EPS12.csv')
+#
+# merged_array1 = ruc_frame1
+# for x in ruc_frame2:
+#     merged_array1.append(x)
+# df1 = pd.DataFrame(merged_array1,columns=['ruc'])
+# df1.to_csv('F_LQR_ROMAX10_EPS12_FGAV.csv')
 # ruc_frame_array = calculate_min_by_gradient(ruc_frame,TRAINING_DATA.keys())
 # pd.DataFrame(ruc_frame_array).to_csv("../loss_minimization/ruc_for_l1_fgav.csv")
 
