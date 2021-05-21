@@ -438,13 +438,13 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
             # temp = abs(lower_limit - merged_array[l])/2
             # costSum += pow(temp, 2)
             costSum += abs(lower_limit - merged_array[l]) / 2
-            costFunction[l] = abs(lower_limit - merged_array[l]) /2
+            # costFunction[l] = abs(lower_limit - merged_array[l]) /2
             cost_count = cost_count+ 1
         else:
             # temp = abs(lower_limit - merged_array[l])*2
             # pSum += pow(temp, 2)
             pSum += abs(lower_limit - merged_array[l]) * 2
-            costFunction[l] = abs(lower_limit - merged_array[l]) * 2
+            # costFunction[l] = abs(lower_limit - merged_array[l]) * 2
             penalty_count = penalty_count + 1
         # cost_norm = costSum
         # penalty_norm = pSum
@@ -453,7 +453,7 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
         # if (penalty_count > 0):
         #     penalty_norm = pSum / penalty_count
         # costFunction[l] = abs(cost_norm - penalty_norm)
-        # costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
+        costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
         # costFunction[l] =  abs(costSum-pSum)
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
@@ -690,13 +690,13 @@ def get_loss_for_contraint_romax_max_QR(rucFrame, keys):
             # temp = abs(upper_limit - merged_array[l])/2
             # costSum += pow(temp, 2)
             costSum += abs(upper_limit - merged_array[l]) / 2
-            costFunction[l] = abs(upper_limit - merged_array[l]) / 2
+            # costFunction[l] = abs(upper_limit - merged_array[l]) / 2
             cost_count = cost_count+ 1
         else:
             # temp = abs(upper_limit - merged_array[l])*2
             # pSum += pow(temp, 2)
             costFunction[l] = abs(upper_limit - merged_array[l]) * 2
-            pSum += abs(upper_limit - merged_array[l]) * 2
+            # pSum += abs(upper_limit - merged_array[l]) * 2
             penalty_count = penalty_count + 1
         # cost_norm = costSum
         # penalty_norm = pSum
@@ -705,7 +705,7 @@ def get_loss_for_contraint_romax_max_QR(rucFrame, keys):
         # if (penalty_count > 0):
         #     penalty_norm = pSum / penalty_count
         # costFunction[l] = abs(cost_norm - penalty_norm)
-        # costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
+        costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
         # costFunction[l] =  abs(costSum-pSum)
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
