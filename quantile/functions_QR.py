@@ -11,8 +11,8 @@ import random
 #-0.13 or -0.1075  0.0975 #hyper parameter 8
 #-0.12 or -0.09  0.09 #hyper parameter 4
 #l1(-0.09 or -065 0.065) l2(-0.08 0.08) #hyper parameter 2
-upper_limit = 0.0675
-lower_limit = -0.0651580041643599
+upper_limit =  0.045
+lower_limit =   -0.0451459079933606
 random.seed(42)
 def calculateTmax_ruc_QR(rucFrame):
     global maxThreshold1

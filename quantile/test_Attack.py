@@ -89,12 +89,14 @@ tao_min_H = -0.0927
 tao_max_C = 0.0775
 tao_min_C = -0.0427
 #Quantile loss
-tao_max_Q = 0.0825
-tao_min_Q = -0.082658004
+# mad = [{'kappa': 1.0, 'upper_limit': 0.0125, 'lower_limit': -0.012766112936864759}]
+# std = [{'kappa': 1.0, 'upper_limit': 0.0.01, 'lower_limit': -0.009313027714994265}]
+tao_max_Q = 0.0125
+tao_min_Q = -0.012766112936864759
 
-testing_residualM4M6 = pd.read_csv("../data/test_residual_new/TestR_DA_del200_romal30_M07M09.csv") #91-181
+testing_residualM4M6 = pd.read_csv("../data/test_residuals/Test_RUC_K_mad_2.0_D150_M4M6.csv") #91-181
 # testing_residualM7M9 = pd.read_csv("../data/test_residual_CA_AA/TestR_CA_del100_romal40_M07M09.csv")  #182-273
 tier2_Q, first_detected_Q,false_alarm_tier2_Q = testing_tau(testing_residualM4M6,tao_max_Q,tao_min_Q)
-tier2_for_C, first_detected_C,false_alarm_tier2_C = testing_tau(testing_residualM4M6,tao_max_C,tao_min_C)
-tier2_for_H, first_detected_H,false_alarm_tier2_H = testing_tau(testing_residualM4M6,tao_max_H,tao_min_H)
+# tier2_for_C, first_detected_C,false_alarm_tier2_C = testing_tau(testing_residualM4M6,tao_max_C,tao_min_C)
+# tier2_for_H, first_detected_H,false_alarm_tier2_H = testing_tau(testing_residualM4M6,tao_max_H,tao_min_H)
 

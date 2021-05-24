@@ -14,7 +14,7 @@ plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 # plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 # mpl.rcParams['agg.path.chunksize'] = 10000
-ruc_frame = pd.read_csv('../data/training_residual/training_RUC.csv')
+ruc_frame = pd.read_csv('../data/training_residual/training_RUC_2.5csv')
 # sorted_frame_min = dict()
 # day_frame_array_min = []
 # rucFrame_array_min = []
@@ -78,7 +78,7 @@ merged_array1 = ruc_frame1
 for x in ruc_frame2:
     merged_array1.append(x)
 df1 = pd.DataFrame(merged_array1,columns=['ruc'])
-df1.to_csv('LQR_ROMAX30_EPS12_FGAV.csv')
+df1.to_csv('LQR_ROMAX10_EPS12_FGAV_K_2.5.csv')
 # ruc_frame_array = calculate_min_by_gradient(ruc_frame,TRAINING_DATA.keys())
 # pd.DataFrame(ruc_frame_array).to_csv("../loss_minimization/ruc_for_l1_fgav.csv")
 
