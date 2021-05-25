@@ -6,7 +6,7 @@ import json
 from utility.constant import BETA_ARR
 
 loss_function = 'huber'  # l2 huber pseudo_huber
-f = open('../poisoning_test/poison.json' )
+f = open('../test_QP/poison.json')
 
 # returns JSON object as
 # a dictionary
@@ -20,7 +20,7 @@ for key in poisoning_std_limits.keys():
         for key3 in poisoning_std_limits[key][key2].keys():
             rob_poisoin_limit[key][key2][key3] = {}
             data = pd.DataFrame()
-            ruc_frame_attacked = pd.read_csv('../poisoning_test/FGAV_QL1_RO_'+str(key2)+'_EPS'+str(key3)+'_K'+str(key)+'_.csv')
+            ruc_frame_attacked = pd.read_csv('../test_QP/FGAV_QL1_RO_'+str(key2)+'_EPS'+str(key3)+'_K'+str(key)+'_.csv')
             data['ruc2014'] = ruc_frame_attacked['ruc']
             keys = ['2014']
             min_candidate1 = data['ruc2014'].min()
@@ -53,7 +53,7 @@ rob_res_benign = {}
 #order of the key is kappa --> beta
 for key in tau_dict.keys():
     rob_res_benign[key] = {}
-    ruc_frame = pd.read_csv('../poisoning_test/cleaned_res/training_RUC_mad_'+str(key)+'csv')
+    ruc_frame = pd.read_csv('../test_QP/cleaned_res/training_RUC_mad_'+str(key)+'csv')
     # ruc_frame_training = pd.read_csv('../data/training_residual/training_RUC_2.5csv')
     keys_TR = ['2014','2015']
     minRuc2014 = ruc_frame['ruc2014'].min()

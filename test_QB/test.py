@@ -20,5 +20,5 @@ for key in tau_dict.keys():
         result [key][del_avg] ['false_alarm'] = false_alarm
 
 
-with open("detection.json", "w") as outfile:
+with open("detection_benign_Q.json", "w") as outfile:
     json.dump(result, outfile)

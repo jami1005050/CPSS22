@@ -1,6 +1,6 @@
 import json
 
-from poisoning_test.functions_QR_CLN import *
+from test_QP.functions_QR_CLN import *
 import random
 # random.seed(42)
 tau_dict = {1.0:{'tau_max': 0.005, 'tau_min': -0.0038691378044811986},
