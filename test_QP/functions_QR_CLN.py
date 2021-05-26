@@ -101,6 +101,7 @@ def get_loss_for_contraint_romax_min_QR_CLN(rucFrame, keys, lower_limit,romax,ep
         # costFunction[l] =  abs(costSum-pSum)
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
+    print("Length of RUC ",len(non_zero_ruc_array_copied))
     for i in range(len(index_of_sorted_list)):
         non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - epsilon
         ruc_count = ruc_count + 1

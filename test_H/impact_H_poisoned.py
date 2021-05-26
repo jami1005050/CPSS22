@@ -25,7 +25,10 @@ for key1 in poisoning_std_limits.keys(): #kappa
                     # print(poisoning_std_limits[key1][key2][key3][key4][key5])
                     first_detected = poisoning_std_limits[key1][key2][key3][key4][key5]['first_detected']
                     false_alarm = poisoning_std_limits[key1][key2][key3][key4][key5]['false_alarm']
-                    days_undetected = first_detected - attack_start_day
+                    if (first_detected > attack_start_day):
+                        days_undetected = first_detected - attack_start_day
+                    else:
+                        days_undetected = attack_end_day - attack_start_day
                     result[key1][key2][key3][key4][key5]['days_undetected'] = days_undetected
                     if(len(false_alarm)>1):
                         T_btw_FA = 0

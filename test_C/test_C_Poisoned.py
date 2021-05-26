@@ -1,6 +1,6 @@
 import json
 from utility.common import *
-f = open('robust_poison.json' )
+f = open('robust_poison_C.json' )
 poisoning_std_limits = json.load(f)
 result = {}
 for key1 in poisoning_std_limits.keys(): #kappa
