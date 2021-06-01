@@ -99,7 +99,7 @@ def calculateAMAndHM(data):
         plot = dateRatioFrame.plot(kind="line", x="day", y="ratio"+str(key.year), color="blue",
                                    xlim=(START, END),
                                    ylim =(.85, 1.00),
-                                   title =str(key.year)+ ' ratio plot vs day')#08/17
+                                   title =str(key.year)+ ' ratio impact_analysis vs day')#08/17
     plt.show()
     return frame_array
 
@@ -267,7 +267,7 @@ def testing_tau(residual_frame,tao_max,tao_min):
             if float(getattr(row,"ruc2016"))!= float(0):
                 if((float(getattr(row,"ruc2016"))> float(tao_max)) or (float(getattr(row,"ruc2016")) < float(tao_min))):
                     # print("day",getattr(row, "day"),' ',getattr(row,"ruc2016"),' ', max_threshold_org,' ', min_threshold_org)
-                    if((getattr(row,"day") >= int(91)) and (getattr(row,"day")<=int(181) )): # 91 = attack start day 181 = attack end day
+                    if((getattr(row,"day") >= int(182)) and (getattr(row,"day")<=int(273) )): # 91 = attack start day 181 = attack end day
                         if int(tier2_for_org) == int(0):
                             first_detected_org = getattr(row, "day")
                         tier2_for_org = tier2_for_org +1

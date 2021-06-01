@@ -83,9 +83,9 @@ df1.to_csv('LQR_ROMAX10_EPS12_FGAV_K_2.5.csv')
 # pd.DataFrame(ruc_frame_array).to_csv("../loss_minimization/ruc_for_l1_fgav.csv")
 
 # x = numpy.arange(len(y1))
-# plt.plot(tao_max, grad1, color='r', label='TAO-Max', marker ='X',markevery = 5) # r - red colour
-# plt.plot(t, grad, color='b', label='TAO-Min', marker ='X',markevery = 5) # r - red colour
-# plt.plot(x, grad1, color='r', label='l1-FGAV', marker ='X',markevery = 5) # r - red colour
+# plt.impact_analysis(tao_max, grad1, color='r', label='TAO-Max', marker ='X',markevery = 5) # r - red colour
+# plt.impact_analysis(t, grad, color='b', label='TAO-Min', marker ='X',markevery = 5) # r - red colour
+# plt.impact_analysis(x, grad1, color='r', label='l1-FGAV', marker ='X',markevery = 5) # r - red colour
 # plt.axvline(x=target1, color='k',label='Target FGSV', linestyle='--')
 
 # plt.xlabel("Tao Max ")

@@ -48,7 +48,7 @@ def calculateTmin_ruc_LR(rucFrame):
     # x, y = zip(*lists)  # unpack a list of pairs into two tuples
     #
     # fig = plt.figure()
-    # plt.plot(x, y)
+    # plt.impact_analysis(x, y)
     # # fig.suptitle('Cost - Penalty Plotting', fontsize=20)
     # plt.xlabel('Standard Limit')
     # plt.ylabel('Loss')
@@ -74,7 +74,7 @@ def calculateTmax_LR(rucFrame, keys):
             maxThreshold = taoThreshold
     # lists = (difference.items())  # sorted by key, return a list of tuples
     # x, y = zip(*lists)  # unpack a list of pairs into two tuples
-    # plt.plot(x, y)
+    # plt.impact_analysis(x, y)
     # plt.xlabel('Standard Limit')
     # plt.ylabel('Loss')
     # # plt.show()
@@ -98,7 +98,7 @@ def calculateTmin_LR(rucFrame, keys):
             minThreshold = taoThreshold * (-1)
     # lists = (difference.items())  # sorted by key, return a list of tuples
     # x, y = zip(*lists)  # unpack a list of pairs into two tuples
-    # plt.plot(x, y)
+    # plt.impact_analysis(x, y)
     # plt.xlabel('Standard Limit')
     # plt.ylabel('Loss')
     # # plt.show()

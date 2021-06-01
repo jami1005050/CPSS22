@@ -1,7 +1,6 @@
 import numpy as np
 from math import sqrt
 
-
 def calculate_t_max_cauchy(ruc_frame, keys, tau_range, w1, w2, b=0.006):
     tau_list = list()
     cost_list = list()
@@ -28,7 +27,6 @@ def calculate_t_max_cauchy(ruc_frame, keys, tau_range, w1, w2, b=0.006):
         tau_list.append(tau)
 
     return tau_list[np.argmin(cost_list)], cost_list, tau_list
-
 
 def calculate_t_min_cauchy(ruc_frame, keys, tau_range, w1, w2, b=0.006):
     tau_list = list()
@@ -57,7 +55,6 @@ def calculate_t_min_cauchy(ruc_frame, keys, tau_range, w1, w2, b=0.006):
 
     return tau_list[np.argmin(cost_list)], cost_list, tau_list
 
-
 def calculate_t_max_l2(ruc_frame, keys, tau_range, w1, w2, b=1):
     tau_list = list()
     cost_list = list()
@@ -82,7 +79,6 @@ def calculate_t_max_l2(ruc_frame, keys, tau_range, w1, w2, b=1):
 
     return tau_list[np.argmin(loss_list)], loss_list, tau_list
 
-
 def calculate_t_min_l2(ruc_frame, keys, tau_range, w1, w2, b=1):
     tau_list = list()
     cost_list = list()
@@ -106,7 +102,6 @@ def calculate_t_min_l2(ruc_frame, keys, tau_range, w1, w2, b=1):
         tau_list.append(tau)
 
     return tau_list[np.argmin(loss_list)], loss_list, tau_list
-
 
 def calculate_t_max_huber(ruc_frame, keys, tau_range, w1, w2, b=0.2):
     tau_list = list()
@@ -142,7 +137,6 @@ def calculate_t_max_huber(ruc_frame, keys, tau_range, w1, w2, b=0.2):
 
     return tau_list[np.argmin(cost_list)], cost_list, tau_list
 
-
 def calculate_t_min_huber(ruc_frame, keys, tau_range, w1, w2, b=0.2):
     tau_list = list()
     cost_list = list()
@@ -177,7 +171,6 @@ def calculate_t_min_huber(ruc_frame, keys, tau_range, w1, w2, b=0.2):
 
     return tau_list[np.argmin(cost_list)], cost_list, tau_list
 
-
 def calculate_t_max_pseudo_huber(ruc_frame, keys, tau_range, w1, w2, b=1):
     tau_list = list()
     cost_list = list()
@@ -203,4 +196,67 @@ def calculate_t_max_pseudo_huber(ruc_frame, keys, tau_range, w1, w2, b=1):
         cost_list.append(b * b * (sqrt(1 + (cost / b) ** 2) - 1))
         tau_list.append(tau)
 
+    return tau_list[np.argmin(cost_list)], cost_list, tau_list
+
+def calculate_t_max_cauchy_non_Q(ruc_frame, keys, tau_range, b=0.006):
+    tau_list = list()
+    cost_list = list()
+    for tau in np.arange(tau_range[0], tau_range[1], tau_range[2]):
+        cost = 1
+        for row in ruc_frame.itertuples():
+            for key in keys:
+                if getattr(row, "ruc" + key) > 0:
+                    x = getattr(row, "ruc" + key) - tau
+                    cost *= 1 + ((x / b) ** 2)
+        cost_list.append(b * b * np.log(cost))
+        tau_list.append(tau)
+    return tau_list[np.argmin(cost_list)], cost_list, tau_list
+
+def calculate_t_min_cauchy_non_Q(ruc_frame, keys, tau_range, b=0.006):
+    tau_list = list()
+    cost_list = list()
+    for tau in np.arange(tau_range[0], tau_range[1], tau_range[2]):
+        cost = 1
+        for row in ruc_frame.itertuples():
+            for key in keys:
+                if getattr(row, "ruc" + key) < 0:
+                    x = getattr(row, "ruc" + key) - tau
+                    cost *= 1 + ((x / b) ** 2)
+        cost_list.append(b * b * np.log(cost))
+        tau_list.append(tau)
+    return tau_list[np.argmin(cost_list)], cost_list, tau_list
+
+def calculate_t_max_huber_non_Q(ruc_frame, keys, tau_range, b=0.1):
+    tau_list = list()
+    cost_list = list()
+    for tau in np.arange(tau_range[0], tau_range[1], tau_range[2]):
+        cost = 0
+        for row in ruc_frame.itertuples():
+            for key in keys:
+                if getattr(row, "ruc" + key) > 0:
+                    x = getattr(row, "ruc" + key) - tau
+                    if (abs(x)) <= b:
+                        cost += .5 * (abs(x) ** 2)
+                    else:
+                        cost += b * abs(x) - (.5 * (b ** 2))
+        cost_list.append(cost)
+        tau_list.append(tau)
+
+    return tau_list[np.argmin(cost_list)], cost_list, tau_list
+
+def calculate_t_min_huber_non_Q(ruc_frame, keys, tau_range, b=0.1):
+    tau_list = list()
+    cost_list = list()
+    for tau in np.arange(tau_range[0], tau_range[1], tau_range[2]):
+        cost = 0
+        for row in ruc_frame.itertuples():
+            for key in keys:
+                if getattr(row, "ruc" + key) < 0:
+                    x = getattr(row, "ruc" + key) - tau
+                    if abs(x) <= b:
+                        cost += .5 * (abs(x)) ** 2
+                    else:
+                        cost += b * abs(x) - (.5 * (b ** 2))
+        cost_list.append(cost)
+        tau_list.append(tau)
     return tau_list[np.argmin(cost_list)], cost_list, tau_list

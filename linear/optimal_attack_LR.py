@@ -18,7 +18,7 @@ ruc_frame = pd.read_csv('../data/training_residual/training_residual.csv')
 get_loss_for_contraint_romax_min_LR(ruc_frame, TRAINING_DATA.keys())
 get_loss_for_contraint_romax_max_LR(ruc_frame, TRAINING_DATA.keys())
 # x = numpy.arange(len(y1))
-# plt.plot(x, y1, color='r', label='l1-FGAV', marker ='X',markevery = 5) # r - red colour
+# plt.impact_analysis(x, y1, color='r', label='l1-FGAV', marker ='X',markevery = 5) # r - red colour
 # plt.xlabel("Number of RUC ")
 # plt.ylabel("Loss")
 # plt.legend()

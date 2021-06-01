@@ -91,19 +91,19 @@ plt.show()
 # Creating color map
 # my_cmap = plt.get_cmap('hot')
 
-# Creating plot
+# Creating impact_analysis
 # trisurf = ax.plot_trisurf(romax, epsilon, impact['Q'],
 #                           # cmap=my_cmap,
 #                           linewidth=0.2,
 #                           antialiased=True,
 #                           edgecolor='grey')
 # fig.colorbar(trisurf, ax=ax, shrink=0.5, aspect=5)
-# ax.set_title('Tri-Surface plot')
+# ax.set_title('Tri-Surface impact_analysis')
 #
 # # Adding labels
 # ax.set_xlabel('X-axis', fontweight='bold')
 # ax.set_ylabel('Y-axis', fontweight='bold')
 # ax.set_zlabel('Z-axis', fontweight='bold')
 
-# show plot
+# show impact_analysis
 plt.show()

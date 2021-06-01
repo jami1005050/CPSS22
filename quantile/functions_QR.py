@@ -53,7 +53,7 @@ def calculateTmax_ruc_QR(rucFrame):
     x, y = zip(*lists)  # unpack a list of pairs into two tuples
     #
     # fig = plt.figure()
-    # plt.plot(x, y)
+    # plt.impact_analysis(x, y)
     # fig.suptitle('Cost - Penalty Plotting', fontsize=20)
     # plt.xlabel('Standard Limit')
     # plt.ylabel('Loss')
@@ -101,7 +101,7 @@ def calculateTmin_ruc_QR(rucFrame):
     x, y = zip(*lists)  # unpack a list of pairs into two tuples
     #
     # fig = plt.figure()
-    # plt.plot(x, y)
+    # plt.impact_analysis(x, y)
     # fig.suptitle('Cost - Penalty Plotting', fontsize=20)
     # plt.xlabel('Standard Limit')
     # plt.ylabel('Loss')
@@ -311,8 +311,8 @@ def get_loss_for_fix_target_min_QR(rucFrame, keys):
     # y = numpy.array(std_limit_array)
     # x = numpy.arange(len(std_limit_array))
     #
-    # # plot the data
-    # plt.plot(x, y)
+    # # impact_analysis the data
+    # plt.impact_analysis(x, y)
     # plt.xlabel("Number of ruc")
     # plt.ylabel("Standard Limit")
     # plt.show()
