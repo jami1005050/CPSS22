@@ -3,12 +3,12 @@ import sys
 from utility.common import *
 
 number_of_meters = 192
-attack_start_day = 91
-attack_end_day = 181
+attack_start_day = 182
+attack_end_day = 273
 number_of_reports = 24
 ro_mal = .3
 
-f = open('detection_poisoned_QRA.json' )
+f = open('detection_poisoned_QRA_Small_Step_Del.json' )
 poisoning_std_limits = json.load(f)
 result = {}
 
@@ -38,5 +38,5 @@ for key2 in poisoning_std_limits.keys(): # romax
             result[key2][key3]['Efa'] = sys.maxsize
         result[key2][key3]['impact'] = int(key3) * ro_mal * number_of_meters * E * days_undetected*number_of_reports/1000
 
-with open("impact_poisoned_QRA.json", "w") as outfile:
+with open("impact_poisoned_QRA_small_step_del.json", "w") as outfile:
     json.dump(result, outfile)

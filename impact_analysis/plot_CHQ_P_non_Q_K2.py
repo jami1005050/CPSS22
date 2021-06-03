@@ -2,6 +2,7 @@
 import matplotlib.pyplot as plt
 import json
 import pandas as pd
+from sklearn.preprocessing import MinMaxScaler
 
 SMALL_SIZE = 12
 MEDIUM_SIZE = 12
@@ -39,23 +40,69 @@ for key in impact_dict_C.keys():
 
 
 result_frame = pd.DataFrame(result)
+
+temp_scaled = result_frame.copy(deep=True)
+min_max_scaler = MinMaxScaler()
+temp_scaled[['impact_Q','impact_H','impact_C','Efa_Q', 'Efa_H', 'Efa_C']] = min_max_scaler.fit_transform(temp_scaled[['impact_Q','impact_H','impact_C','Efa_Q', 'Efa_H', 'Efa_C']])
+# print(temp_scaled)
+temp_scaled.to_csv('scaled_nonQ.csv')
 groups = result_frame.groupby('del_avg')
 # 2         0.04301103139  small large perturbation
 
 color_list = ['tab:blue','tab:orange','tab:green','tab:red','tab:purple','tab:brown','tab:pink','tab:gray','tab:olive','tab:cyan']
 i = 0
 for key,group in groups:
-    print(group[['impact_Q','impact_H','impact_C','Efa_Q','Efa_C','Efa_H']])
-
-    foucsed_frame = group[(group['epsilon']==str(0.04301103139)) & (group['romax']==str(2))]
-    # print(foucsed_frame)
-    plt.scatter(foucsed_frame['Efa_Q'],foucsed_frame['impact_Q'],marker ='<',color = 'b')
-    plt.scatter(foucsed_frame['Efa_H'],foucsed_frame['impact_H'],marker ='>',color = 'r')
-    plt.scatter(foucsed_frame['Efa_C'],foucsed_frame['impact_C'],marker ='^',color = 'g')
+    temp_df = group[group['romax'] == str(2)][['Efa_Q', 'Efa_H', 'Efa_C', 'impact_Q', 'impact_H', 'impact_C']]
+    # print(temp_df.to_latex())
+    # break
+    # print(group[['romax','epsilon','del_avg','impact_Q','impact_H','impact_C']])
+    # foucsed_frame = group[(group['epsilon']==str(0.04301103139)) & (group['romax']==str(2))]
+    # # print(foucsed_frame)
+    # plt.scatter(foucsed_frame['Efa_Q'],foucsed_frame['impact_Q'],marker ='<',color = 'b')
+    # plt.scatter(foucsed_frame['Efa_H'],foucsed_frame['impact_H'],marker ='>',color = 'r')
+    # plt.scatter(foucsed_frame['Efa_C'],foucsed_frame['impact_C'],marker ='^',color = 'g')
     # plt.impact_analysis([foucsed_frame['Efa_Q'],foucsed_frame['Efa_H'],foucsed_frame['Efa_C']],
     #          [foucsed_frame['impact_Q'],foucsed_frame['impact_H'],foucsed_frame['impact_C']],color = color_list[i],label=key)
     i = i+1
-plt.xlabel("Efa")
-plt.ylabel("Impact")
-plt.legend()
-plt.show()
+    break
+
+#region barplot
+impact= result_frame[ ( result_frame['romax'] == str(6) ) & ( result_frame['epsilon'] == str(0.012840280834311983) ) & ( result_frame['del_avg'] == str(100) ) ]
+# print(impact)
+# plt.bar(["QL1","H","C"], [impact.at[180,'impact_Q'],impact.at[180,'impact_H'],impact.at[180,'impact_C']],color=[ 'violet','blue','cyan'])
+# plt.ylabel("Impact")
+# plt.ylim(30,85)
+# plt.show()
+#endregion
+
+#region line plot with varying epsilon
+# impact= result_frame[ ( result_frame['romax'] == str(2) )  & ( result_frame['del_avg'] == str(100) ) ]
+# impact['epsilon'] = impact['epsilon'].astype(float)
+#
+# impact.round(decimals=4)
+# print(impact)
+# plt.ylim(5,150)
+# plt.plot(impact['epsilon'],impact['impact_Q'],marker ='<',color = 'b',label ="Q")
+# plt.plot(impact['epsilon'],impact['impact_H'],marker ='>',color = 'r',label = 'H')
+# plt.plot(impact['epsilon'],impact['impact_C'],marker ='^',color = 'g',label = 'C')
+# plt.xlabel("Epsilon")
+# plt.xticks( rotation=90 )
+# plt.ylabel("Impact")
+# plt.legend()
+# plt.show()
+#endregion
+
+
+#region line plot with varying romax
+# impact= result_frame[ ( result_frame['epsilon'] == str(0.05507933161) )  & ( result_frame['del_avg'] == str(100) ) ]
+# print(impact)
+# plt.ylim(5,150)
+# plt.plot(impact['romax'],impact['impact_Q'],marker ='<',color = 'b',label ="Q")
+# plt.plot(impact['romax'],impact['impact_H'],marker ='>',color = 'r',label = 'H')
+# plt.plot(impact['romax'],impact['impact_C'],marker ='^',color = 'g',label = 'C')
+# plt.xlabel("romax")
+# # plt.xticks( rotation=90 )
+# plt.ylabel("Impact")
+# plt.legend()
+# plt.show()
+#endregion

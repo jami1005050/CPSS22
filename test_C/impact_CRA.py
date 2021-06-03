@@ -4,18 +4,19 @@ import sys
 from utility.common import *
 
 number_of_meters = 192
-attack_start_day = 91
-attack_end_day = 181
+attack_start_day = 182
+attack_end_day = 273
 number_of_reports = 24
 ro_mal = .3
 
-f = open('detection_poisoned_CRA.json' )
+f = open('detection_poisoned_CRA_small_step_del.json' )
 poisoning_std_limits = json.load(f)
 result = {}
 
 for key2 in poisoning_std_limits.keys(): # del
     result[key2] = {}
-    for key3 in poisoning_std_limits.keys(): #del
+    # for key3 in poisoning_std_limits.keys(): #del
+    for key3 in poisoning_std_limits[key2].keys(): #del use for small step del
         result[key2][key3] = {}
         for key4 in poisoning_std_limits[key2][key3].keys(): #beta
             result[key2][key3][key4] = {}
@@ -40,5 +41,5 @@ for key2 in poisoning_std_limits.keys(): # del
                 result[key2][key3][key4]['Efa'] = sys.maxsize
             result[key2][key3][key4]['impact'] = int(key3) * ro_mal * number_of_meters * E * days_undetected*number_of_reports/1000
 
-with open("impact_poisoned_CRA.json", "w") as outfile:
+with open("impact_poisoned_CRA_small_step_del.json", "w") as outfile:
     json.dump(result, outfile)
