@@ -14,16 +14,15 @@ plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    #
-f_C = open('../test_C/impact_poisoned_C_non_Q_K2.json' )
-f_H = open('../test_H/impact_poisoned_H_non_Q_K2.json' )
-f_Q = open('../test_QP/impact_poisoned_Q_k2.json' )
+f_C = open('../test_C/impact_poisoned_C_non_Q_K2_small_step_del.json' )
+f_H = open('../test_H/impact_poisoned_H_non_Q_K2_small_step_del.json' )
+f_Q = open('../test_QP/impact_poisoned_Q_k2_Small_step_del.json' )
 impact_dict_C = json.load(f_C)
 impact_dict_H = json.load(f_H)
 impact_dict_Q = json.load(f_Q)
 result = []
 for key in impact_dict_C.keys():
     for key1 in impact_dict_C[key].keys():
-        # print(impact_dict_C[key][key1].keys())
         for key2 in impact_dict_C[key][key1]['0.006'].keys():
             Efa_C = impact_dict_C[key][key1]['0.006'][key2]['Efa']
             Efa_H = impact_dict_H[key][key1]['0.006'][key2]['Efa']
@@ -31,40 +30,39 @@ for key in impact_dict_C.keys():
             impact_C = impact_dict_C[key][key1]['0.006'][key2]['impact']
             impact_H = impact_dict_H[key][key1]['0.006'][key2]['impact']
             impact_Q = impact_dict_Q[key][key1][key2]['impact']
-            if(Efa_Q>365):Efa_Q = 365
-            if(Efa_H>365):Efa_H = 365
-            if(Efa_C>365):Efa_C = 365
-            temp = {'romax':key,'epsilon':key1,'del_avg':key2,'impact_C':impact_C,
-                    'impact_Q':impact_Q,'impact_H':impact_H,'Efa_Q':Efa_Q,'Efa_C':Efa_C,'Efa_H':Efa_H}
+            days_Q = impact_dict_Q[key][key1][key2]['days_undetected']
+            days_H = impact_dict_H[key][key1]['0.006'][key2]['days_undetected']
+            days_C = impact_dict_C[key][key1]['0.006'][key2]['days_undetected']
+            if (Efa_Q > 365): Efa_Q = 365
+            if (Efa_H > 365): Efa_H = 365
+            if (Efa_C > 365): Efa_C = 365
+            temp = {'romax': key, 'epsilon': key1, 'del_avg': key2, 'impact_C': impact_C, 'days_Q': days_Q,
+                    'days_H': days_H, 'days_C': days_C,
+                    'impact_Q': impact_Q, 'impact_H': impact_H, 'Efa_Q': Efa_Q, 'Efa_C': Efa_C, 'Efa_H': Efa_H}
             result.append(temp)
 
 
 result_frame = pd.DataFrame(result)
 
-temp_scaled = result_frame.copy(deep=True)
-min_max_scaler = MinMaxScaler()
-temp_scaled[['impact_Q','impact_H','impact_C','Efa_Q', 'Efa_H', 'Efa_C']] = min_max_scaler.fit_transform(temp_scaled[['impact_Q','impact_H','impact_C','Efa_Q', 'Efa_H', 'Efa_C']])
-# print(temp_scaled)
-temp_scaled.to_csv('scaled_nonQ.csv')
-groups = result_frame.groupby('del_avg')
+# temp_scaled = result_frame.copy(deep=True)
+# min_max_scaler = MinMaxScaler()
+# temp_scaled[['impact_Q','impact_H','impact_C','Efa_Q', 'Efa_H', 'Efa_C']] = min_max_scaler.fit_transform(temp_scaled[['impact_Q','impact_H','impact_C','Efa_Q', 'Efa_H', 'Efa_C']])
+# # print(temp_scaled)
+# temp_scaled.to_csv('scaled_nonQ.csv')
+groups = result_frame.groupby(['romax','epsilon'])
 # 2         0.04301103139  small large perturbation
 
 color_list = ['tab:blue','tab:orange','tab:green','tab:red','tab:purple','tab:brown','tab:pink','tab:gray','tab:olive','tab:cyan']
 i = 0
 for key,group in groups:
-    temp_df = group[group['romax'] == str(2)][['Efa_Q', 'Efa_H', 'Efa_C', 'impact_Q', 'impact_H', 'impact_C']]
-    # print(temp_df.to_latex())
-    # break
+    # temp_df = group[group['romax'] == str(2)][['Efa_Q', 'Efa_H', 'Efa_C', 'impact_Q', 'impact_H', 'impact_C']]
     # print(group[['romax','epsilon','del_avg','impact_Q','impact_H','impact_C']])
-    # foucsed_frame = group[(group['epsilon']==str(0.04301103139)) & (group['romax']==str(2))]
-    # # print(foucsed_frame)
-    # plt.scatter(foucsed_frame['Efa_Q'],foucsed_frame['impact_Q'],marker ='<',color = 'b')
-    # plt.scatter(foucsed_frame['Efa_H'],foucsed_frame['impact_H'],marker ='>',color = 'r')
-    # plt.scatter(foucsed_frame['Efa_C'],foucsed_frame['impact_C'],marker ='^',color = 'g')
-    # plt.impact_analysis([foucsed_frame['Efa_Q'],foucsed_frame['Efa_H'],foucsed_frame['Efa_C']],
-    #          [foucsed_frame['impact_Q'],foucsed_frame['impact_H'],foucsed_frame['impact_C']],color = color_list[i],label=key)
+    print(group[['romax', 'epsilon', 'del_avg', 'days_Q', 'impact_Q']])
+    print(group[['romax', 'epsilon', 'del_avg', 'days_H', 'impact_H']])
+    print(group[['romax', 'epsilon', 'del_avg', 'days_C', 'impact_C']])
+    # print(temp_df.to_latex())
     i = i+1
-    break
+    # break
 
 #region barplot
 impact= result_frame[ ( result_frame['romax'] == str(6) ) & ( result_frame['epsilon'] == str(0.012840280834311983) ) & ( result_frame['del_avg'] == str(100) ) ]

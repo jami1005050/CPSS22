@@ -6,19 +6,18 @@ number_of_meters = 192
 attack_start_day = 182
 attack_end_day = 273
 number_of_reports = 24
-ro_mal = .3
+# ro_mal = .3
 
-f = open('detection_poisoned_QK2_L2_small_step_del.json' )
+f = open('detection_poisoned_ro_del_L2_QRA.json' )
 poisoning_std_limits = json.load(f)
 result = {}
 
-for key2 in poisoning_std_limits.keys(): # romax
+for key2 in poisoning_std_limits.keys(): # del
     result[key2] = {}
-    for key3 in poisoning_std_limits[key2].keys(): #epsilon
+    for key3 in poisoning_std_limits[key2].keys(): #del use for small step del
         result[key2][key3] = {}
-        for key4 in poisoning_std_limits[key2][key3].keys(): # del_avg
+        for key4 in poisoning_std_limits[key2][key3].keys(): #row
             result[key2][key3][key4] = {}
-            # print(poisoning_std_limits[key1][key2][key3][key4][key5])
             first_detected = poisoning_std_limits[key2][key3][key4]['first_detected']
             false_alarm = poisoning_std_limits[key2][key3][key4]['false_alarm']
             if (first_detected > attack_start_day):
@@ -38,7 +37,7 @@ for key2 in poisoning_std_limits.keys(): # romax
                 result[key2][key3][key4]['Efa'] = T_btw_FA / (len(false_alarm) - 1)
             else:
                 result[key2][key3][key4]['Efa'] = sys.maxsize
-            result[key2][key3][key4]['impact'] = int(key4) * ro_mal * number_of_meters * E * days_undetected*number_of_reports/1000
+            result[key2][key3][key4]['impact'] = int(key3) * float(key4) * number_of_meters * E * days_undetected*number_of_reports/1000
 
-with open("impact_poisoned_Q_k2_L2_small_step_del.json", "w") as outfile:
+with open("impact_poisoned_ro_del_L2_QRA.json", "w") as outfile:
     json.dump(result, outfile)
