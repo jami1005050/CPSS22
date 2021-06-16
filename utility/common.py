@@ -276,3 +276,14 @@ def testing_tau(residual_frame,tao_max,tao_min):
                         false_alarm.append(row.day)
     return tier1_anomaly,tier2_for_org,first_detected_org,false_alarm
 
+
+def testing_EFA(residual_frame,tao_max,tao_min):
+    false_alarm = []
+    for row in residual_frame.itertuples():
+        if not(((getattr(row,"ratio2016") <= getattr(row,'margin_high')) and
+                (getattr(row,'ratio2016') >= getattr(row,'margin_low')))):
+            if float(getattr(row,"ruc2016"))!= float(0):
+                if((float(getattr(row,"ruc2016"))> float(tao_max)) or (float(getattr(row,"ruc2016")) < float(tao_min))):
+                        false_alarm.append(row.day)
+    return false_alarm
+

@@ -4,41 +4,40 @@ SMALL_SIZE = 12
 MEDIUM_SIZE = 20
 BIGGER_SIZE = 24
 number_of_meters = 192
-attack_start_day = 91
-attack_end_day = 181
+attack_start_day = 182
+attack_end_day = 273
 number_of_reports = 24
 del_avg1 = 100
 del_avg2 = 150
 del_avg3 = 200
-ro_mal = .4
+ro_mal = .3
 plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
 plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
-
-#Huber loss  b=0.006
-tao_max_H = 0.085
-tao_min_H = -0.0927
-#Cauchy loss b=0.006
-tao_max_C = 0.0775
-tao_min_C = -0.0427
 #Quantile loss
 tao_max_Q = 0.0825
-tao_min_Q = -0.082658004
+tao_min_Q =-0.082658004
+#Cauchy loss  b=0.006 --.01
+tao_max_C = 0.0375
+tao_min_C =-0.0302
+#Huber loss b=0.006 --.01
+tao_max_H = 0.05
+tao_min_H = -0.0427
 
 # plt.ylim(0,160)
-First_Detected_Q_D100 = 118
-First_Detected_Q_D150 = 98
-First_Detected_Q_D200 = 92
+First_Detected_Q_D100 = 225
+First_Detected_Q_D150 = 224
+First_Detected_Q_D200 = 185
 
-First_Detected_C_D100 = 107
-First_Detected_C_D150 = 96
-First_Detected_C_D200 = 92
+First_Detected_C_D100 = 223
+First_Detected_C_D150 = 222
+First_Detected_C_D200 = 183
 
-First_Detected_H_D100 = 119
-First_Detected_H_D150 = 99
-First_Detected_H_D200 = 93
+First_Detected_H_D100 = 224
+First_Detected_H_D150 = 222
+First_Detected_H_D200 = 184
 
 range_Q_D100 =First_Detected_Q_D100-attack_start_day
 range_Q_D150 =First_Detected_Q_D150-attack_start_day
@@ -68,6 +67,7 @@ impact_C_D200 = del_avg3 * ro_mal * number_of_meters * E * range_C_D200*number_o
 # plt.bar(["Q","H","C"], [impact_Q_D150,impact_H_D150,impact_C_D150],color=[ 'violet','blue','cyan'])
 plt.bar(["Q","H","C"], [impact_Q_D200,impact_H_D200,impact_C_D200],color=[ 'violet','blue','cyan'])
 plt.ylabel("Impact")
+# plt.ylim(950,1050)
 plt.show()
 
 dict = {'Q':[impact_Q_D100,impact_Q_D150,impact_Q_D200],

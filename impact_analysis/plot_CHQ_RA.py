@@ -66,9 +66,9 @@ for key,group in groups:
     #          [foucsed_frame['impact_Q'],foucsed_frame['impact_H'],foucsed_frame['impact_C']],color = color_list[i],label=key)
     i = i+1
 #region impact when testing delavg varies
-impact= result_frame[ ( result_frame['tr_del_avg'] == str(150) ) & ( result_frame['del_avg'] == str(150) )]
+impact= result_frame[ ( result_frame['tr_del_avg'] == str(100) ) & ( result_frame['del_avg'] == str(100) )]
 temp_df = impact[['del_avg','Efa_Q','Efa_H','Efa_C','impact_Q','impact_H','impact_C']]
-# print(temp_df.to_latex())
+print(temp_df.to_latex())
 # print(impact)
 # # plt.ylim(5,150)
 # plt.plot(impact['tr_del_avg'],impact['impact_Q'],marker ='<',color = 'b',label ="QL1")
@@ -141,9 +141,9 @@ for key,group in groups:
 # plt.ylim(2200,3400)
 # plt.show()
 #endregion
-impact_nQ= result_frame[( result_frame['tr_del_avg'] == str(150) ) & ( result_frame['del_avg'] == str(150) ) ]
+impact_nQ= result_frame[( result_frame['tr_del_avg'] == str(100) ) & ( result_frame['del_avg'] == str(100) ) ]
 temp_df = impact_nQ[['del_avg','Efa_Q','Efa_H','Efa_C','impact_Q','impact_H','impact_C']]
-# print(temp_df.to_latex())
+print(temp_df.to_latex())
 # print(impact_nQ)
 #region tesitng del avg varies
 # plt.ylim(5,150)

@@ -68,9 +68,9 @@ impact_C_D200 = del_avg3 * ro_mal * number_of_meters * E * range_C_D200*number_o
 
 # plt.bar(["Q","H","C"], [impact_Q_D100,impact_H_D100,impact_C_D100],color=[ 'violet','blue','cyan'])
 # plt.bar(["Q","H","C"], [impact_Q_D150,impact_H_D150,impact_C_D150],color=[ 'violet','blue','cyan'])
-# plt.bar(["Q","H","C"], [impact_Q_D200,impact_H_D200,impact_C_D200],color=[ 'violet','blue','cyan'])
-# plt.ylabel("Impact")
-# plt.show()
+plt.bar(["Q","H","C"], [impact_Q_D200,impact_H_D200,impact_C_D200],color=[ 'violet','blue','cyan'])
+plt.ylabel("Impact")
+plt.show()
 
 dict = {'Q':[impact_Q_D100,impact_Q_D150,impact_Q_D200],
          'H':[impact_H_D100,impact_H_D150,impact_H_D200],

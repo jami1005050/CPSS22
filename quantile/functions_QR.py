@@ -11,8 +11,8 @@ import random
 #-0.13 or -0.1075  0.0975 #hyper parameter 8
 #-0.12 or -0.09  0.09 #hyper parameter 4
 #l1(-0.09 or -065 0.065) l2(-0.08 0.08) #hyper parameter 2
-upper_limit =  0.045
-lower_limit =   -0.0451459079933606
+upper_limit =  0.08
+lower_limit =   -0.08
 random.seed(42)
 def calculateTmax_ruc_QR(rucFrame):
     global maxThreshold1
@@ -28,14 +28,14 @@ def calculateTmax_ruc_QR(rucFrame):
             # print(row)
             if (row > 0):
                 if (row <  taoThreshold):
-                    # temp = abs(taoThreshold- row)/2
-                    # costSum += pow(temp, 2)
-                    costSum += abs(taoThreshold - row) / 2
+                    temp = abs(taoThreshold- row)/2
+                    costSum += pow(temp, 2)
+                    # costSum += abs(taoThreshold - row) / 2
                     costCount = costCount + 1
                 else:
-                    # temp = abs(taoThreshold - row)*2
-                    # pSum += pow(temp, 2)
-                    pSum += abs(taoThreshold - row) * 2
+                    temp = abs(taoThreshold - row)*2
+                    pSum += pow(temp, 2)
+                    # pSum += abs(taoThreshold - row) * 2
                     penaltyCount = penaltyCount + 1
         if (costSum != 0 and pSum != 0):
             taoSumDiff = abs(costSum - pSum)
@@ -76,14 +76,14 @@ def calculateTmin_ruc_QR(rucFrame):
             if (row < 0):
                 # print(row)
                 if (row > ( taoThreshold)):
-                    # temp = abs(taoThreshold*(-1) - row)/2
-                    # costSum += pow(temp, 2)
-                    costSum += abs(taoThreshold - row) / 2
+                    temp = abs(taoThreshold*(-1) - row)/2
+                    costSum += pow(temp, 2)
+                    # costSum += abs(taoThreshold - row) / 2
                     costCount = costCount + 1
                 else:
-                    # temp = abs(taoThreshold*(-1) - row)*2
-                    # pSum += pow(temp, 2)
-                    pSum += abs(taoThreshold - row) * 2
+                    temp = abs(taoThreshold*(-1) - row)*2
+                    pSum += pow(temp, 2)
+                    # pSum += abs(taoThreshold - row) * 2
                     penaltyCount = penaltyCount + 1
         if (costSum != 0 and pSum != 0):
             taoSumDiff = abs(costSum - pSum)
@@ -435,15 +435,15 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
     costFunction =[0 for i in range(len(merged_array))]
     for l in range(len(merged_array)):
         if (merged_array[l] >= lower_limit):
-            # temp = abs(lower_limit - merged_array[l])/2
-            # costSum += pow(temp, 2)
-            costSum += abs(lower_limit - merged_array[l]) / 2
+            temp = abs(lower_limit - merged_array[l])/2
+            costSum += pow(temp, 2)
+            # costSum += abs(lower_limit - merged_array[l]) / 2
             # costFunction[l] = abs(lower_limit - merged_array[l]) /2
             cost_count = cost_count+ 1
         else:
-            # temp = abs(lower_limit - merged_array[l])*2
-            # pSum += pow(temp, 2)
-            pSum += abs(lower_limit - merged_array[l]) * 2
+            temp = abs(lower_limit - merged_array[l])*2
+            pSum += pow(temp, 2)
+            # pSum += abs(lower_limit - merged_array[l]) * 2
             # costFunction[l] = abs(lower_limit - merged_array[l]) * 2
             penalty_count = penalty_count + 1
         # cost_norm = costSum
@@ -467,7 +467,7 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
         pSum = 0
         # if (min > (non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.07)):
         #     continue
-        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.12
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.02
         # non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - 0.07451427573
         # print(i,"th gradient: ",gradients[index_of_sorted_list[i]]," residual: ",non_zero_ruc_array_copied[index_of_sorted_list[i]])
         ruc_count = ruc_count + 1
@@ -477,14 +477,14 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
             break
         for l in range(len(non_zero_ruc_array_copied)):
             if (non_zero_ruc_array_copied[l] > lower_limit):
-                # temp = abs(lower_limit - non_zero_ruc_array_copied[l])/2
-                # costSum += pow(temp, 2)
-                costSum += abs(lower_limit - non_zero_ruc_array_copied[l]) / 2
+                temp = abs(lower_limit - non_zero_ruc_array_copied[l])/2
+                costSum += pow(temp, 2)
+                # costSum += abs(lower_limit - non_zero_ruc_array_copied[l]) / 2
                 # cost_count = cost_count + 1
             else:
-                # temp = abs(lower_limit - non_zero_ruc_array_copied[l])*2
-                # pSum += pow(temp, 2)
-                pSum += abs(lower_limit - non_zero_ruc_array_copied[l]) * 2
+                temp = abs(lower_limit - non_zero_ruc_array_copied[l])*2
+                pSum += pow(temp, 2)
+                # pSum += abs(lower_limit - non_zero_ruc_array_copied[l]) * 2
                 # penalty_count = penalty_count + 1
         taoSumDiff = abs(pSum - costSum)
         difference[i] = taoSumDiff
@@ -687,15 +687,15 @@ def get_loss_for_contraint_romax_max_QR(rucFrame, keys):
     costFunction =[0 for i in range(len(merged_array))]
     for l in range(len(merged_array)):
         if (merged_array[l] < upper_limit):
-            # temp = abs(upper_limit - merged_array[l])/2
-            # costSum += pow(temp, 2)
-            costSum += abs(upper_limit - merged_array[l]) / 2
+            temp = abs(upper_limit - merged_array[l])/2
+            costSum += pow(temp, 2)
+            # costSum += abs(upper_limit - merged_array[l]) / 2
             # costFunction[l] = abs(upper_limit - merged_array[l]) / 2
             cost_count = cost_count+ 1
         else:
-            # temp = abs(upper_limit - merged_array[l])*2
-            # pSum += pow(temp, 2)
-            costFunction[l] = abs(upper_limit - merged_array[l]) * 2
+            temp = abs(upper_limit - merged_array[l])*2
+            pSum += pow(temp, 2)
+            # costFunction[l] = abs(upper_limit - merged_array[l]) * 2
             # pSum += abs(upper_limit - merged_array[l]) * 2
             penalty_count = penalty_count + 1
         # cost_norm = costSum
@@ -719,7 +719,7 @@ def get_loss_for_contraint_romax_max_QR(rucFrame, keys):
         pSum = 0
         # if (max < (non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.07)):
         #     continue
-        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.12
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.02
         # non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + 0.07451427573
         ruc_count = ruc_count + 1
         if(ruc_count > ROMAX):
@@ -728,14 +728,14 @@ def get_loss_for_contraint_romax_max_QR(rucFrame, keys):
             break
         for l in range(len(non_zero_ruc_array_copied)):
             if (non_zero_ruc_array_copied[l] < upper_limit):
-                # temp = abs(upper_limit - non_zero_ruc_array_copied[l])/2
-                # costSum += pow(temp, 2)
-                costSum += abs(upper_limit - non_zero_ruc_array_copied[l]) / 2
+                temp = abs(upper_limit - non_zero_ruc_array_copied[l])/2
+                costSum += pow(temp, 2)
+                # costSum += abs(upper_limit - non_zero_ruc_array_copied[l]) / 2
                 # cost_count = cost_count + 1
             else:
-                # temp = abs(upper_limit - non_zero_ruc_array_copied[l])*2
-                # pSum += pow(temp, 2)
-                pSum += abs(upper_limit - non_zero_ruc_array_copied[l]) * 2
+                temp = abs(upper_limit - non_zero_ruc_array_copied[l])*2
+                pSum += pow(temp, 2)
+                # pSum += abs(upper_limit - non_zero_ruc_array_copied[l]) * 2
                 # penalty_count = penalty_count + 1
         taoSumDiff = abs(pSum - costSum)
         difference[i] = taoSumDiff

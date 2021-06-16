@@ -2,9 +2,10 @@
 import matplotlib.pyplot as plt
 import json
 import pandas as pd
+import matplotlib.ticker
 from sklearn.preprocessing import MinMaxScaler
 SMALL_SIZE = 12
-MEDIUM_SIZE = 16
+MEDIUM_SIZE = 14
 BIGGER_SIZE = 24
 plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
 # plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
@@ -74,42 +75,12 @@ for key,group in groups:#[group['romax']==str(2)]
     i = i+1
     break
 
-impact= result_frame[ ( result_frame['romax'] == str(2) )& ( result_frame['epsilon'] == str(0.06714763183) ) & ( result_frame['del_avg'] == str(130) )]
+impact= result_frame[ ( result_frame['romax'] == str(6) ) &( result_frame['epsilon'] == str( 0.012840280834311983) )& ( result_frame['del_avg'] == str(130))]# ( result_frame['epsilon'] == str(0.06714763183) )
+
 impact['epsilon'] = impact['epsilon'].astype(float)
-impact.round(decimals=4)
+impact['epsilon'].round(decimals=3)
 temp_df = impact[['del_avg','Efa_Q','Efa_H','Efa_C','impact_Q','impact_H','impact_C']]
-# print(temp_df.to_latex())
-
-#region line plot with varying epsilon
-# impact= result_frame[ ( result_frame['romax'] == str(2) )  & ( result_frame['del_avg'] == str(100) ) ]
-# impact['epsilon'] = impact['epsilon'].astype(float)
-#
-# impact.round(decimals=4)
-# print(impact)
-# plt.ylim(5,150)
-# plt.plot(impact['epsilon'],impact['impact_Q'],marker ='<',color = 'b',label ="Q")
-# plt.plot(impact['epsilon'],impact['impact_H'],marker ='>',color = 'r',label = 'H')
-# plt.plot(impact['epsilon'],impact['impact_C'],marker ='^',color = 'g',label = 'C')
-# plt.xlabel("Epsilon")
-# plt.xticks( rotation=90 )
-# plt.ylabel("Impact")
-# plt.legend()
-# plt.show()
-#endregion
-
-#region line plot with varying romax
-# impact= result_frame[ ( result_frame['epsilon'] == str(0.05507933161) )  & ( result_frame['del_avg'] == str(100) ) ]
-# print(impact)
-# plt.ylim(5,150)
-# plt.plot(impact['romax'],impact['impact_Q'],marker ='<',color = 'b',label ="Q")
-# plt.plot(impact['romax'],impact['impact_H'],marker ='>',color = 'r',label = 'H')
-# plt.plot(impact['romax'],impact['impact_C'],marker ='^',color = 'g',label = 'C')
-# plt.xlabel("romax")
-# # plt.xticks( rotation=90 )
-# plt.ylabel("Impact")
-# plt.legend()
-# plt.show()
-#endregion
+print(temp_df.to_latex())
 
 print("******Non Quantile*******")
 f_C = open('../test_C/impact_poisoned_C_non_Q_K2_small_step_del.json' )
@@ -159,44 +130,46 @@ for key,group in groups:#[group['romax'] == str(2)]
     i = i+1
     # break
 
-impact_nQ= result_frame[ ( result_frame['romax'] == str(2) ) & ( result_frame['epsilon'] == str( 0.06714763183) ) & ( result_frame['del_avg'] == str(130) )]
-print(impact_nQ)
+impact_nQ= result_frame[ ( result_frame['romax'] == str(6) ) & ( result_frame['epsilon'] == str( 0.012840280834311983) ) & ( result_frame['del_avg'] ==str(130))  ] # ( result_frame['epsilon'] == str( 0.06714763183) )&
+# print(impact_nQ)
 impact_nQ['epsilon'] = impact_nQ['epsilon'].astype(float)
-impact_nQ.round(decimals=4)
+impact_nQ['epsilon'].round(decimals=3)
 temp_df = impact_nQ[['del_avg','Efa_Q','Efa_H','Efa_C','impact_Q','impact_H','impact_C']]
-# print(temp_df.to_latex())
+print(temp_df.to_latex())
 #region tesitng del avg varies Or Epsilon varies
 # plt.ylim(5,150)
 # fig = plt.subplots(figsize=(16, 8))
 # plt.plot(impact_nQ['epsilon'],impact_nQ['impact_H'],marker ='>',color = 'c',label = 'NQH')
-# plt.plot(impact_nQ['epsilon'],impact_nQ['impact_C'],marker ='^',color = 'tab:orange',label = 'NQC')
-# plt.plot(impact['epsilon'],impact['impact_Q'],marker ='<',color = 'b',label ="QL1")
-# plt.plot(impact['epsilon'],impact['impact_QL2'],marker ='D',color = 'tab:olive',label ="QL2")
-# plt.plot(impact['epsilon'],impact['impact_H'],marker ='>',color = 'r',label = 'QH')
-# plt.plot(impact['epsilon'],impact['impact_C'],marker ='^',color = 'g',label = 'QC')
-#
-# plt.xlabel(r'$\delta$')
-# plt.xticks( rotation=90 )
-# plt.ylabel("Impact")
-# plt.legend()
-# plt.show()
+plt.plot(impact_nQ['del_avg'],impact_nQ['impact_C'],marker ='^',color = 'tab:orange',label = 'NQC',linestyle = '-.')
+plt.plot(impact['del_avg'],impact['impact_Q'],marker ='<',color = 'b',label ="QL1",linestyle = '--')
+# plt.plot(impact['del_avg'],impact['impact_QL2'],marker ='D',color = 'tab:olive',label ="QL2",linestyle = '-.')
+# plt.plot(impact['del_avg'],impact['impact_H'],marker ='>',color = 'r',label = 'QH',linestyle = ':')
+# plt.plot(impact['del_avg'],impact['impact_C'],marker ='^',color = 'g',label = 'QC',linestyle ='--',dashes=(5, 1))
+
+plt.xlabel(r'Test $\delta_{avg}$')
+# plt.xticks( rotation=45 )
+plt.ylabel("Impact")
+loc = matplotlib.ticker.LinearLocator(numticks=8)
+plt.gca().xaxis.set_major_locator(loc)
+plt.legend()
+plt.show()
 #endregion
 
-#region Bar plot
+# region Bar plot
 index_ar = impact.index
 print(impact)
 plt.bar(["QL1","QL2","QH","QC","NQH","NQC"],
         [impact.at[index_ar[0],'impact_Q'],impact.at[index_ar[0],'impact_QL2'],impact.at[index_ar[0],'impact_H'],impact.at[index_ar[0],'impact_C'],
          impact_nQ.at[index_ar[0],'impact_H'],impact_nQ.at[index_ar[0],'impact_C']],color=[ 'violet','blue','cyan','tab:orange','tab:green','tab:olive'])
 
-# plt.bar(["QL1","QL2","QH","QC"],
-#         [impact.at[index_ar[0],'impact_Q'],impact.at[index_ar[0],'impact_QL2'],impact.at[index_ar[0],'impact_H'],impact.at[index_ar[0],'impact_C']],
-#         color=[ 'violet','blue','cyan','tab:orange'])
-
-# plt.bar(["QC","NQH","NQC"],
-#         [impact.at[index_ar[0],'impact_C'],impact_nQ.at[index_ar[0],'impact_H'],impact_nQ.at[index_ar[0],'impact_C']],
-#         color=['violet','tab:green','tab:olive'])
-
+# # plt.bar(["QL1","QL2","QH","QC"],
+# #         [impact.at[index_ar[0],'impact_Q'],impact.at[index_ar[0],'impact_QL2'],impact.at[index_ar[0],'impact_H'],impact.at[index_ar[0],'impact_C']],
+# #         color=[ 'violet','blue','cyan','tab:orange'])
+#
+# # plt.bar(["QC","NQH","NQC"],
+# #         [impact.at[index_ar[0],'impact_C'],impact_nQ.at[index_ar[0],'impact_H'],impact_nQ.at[index_ar[0],'impact_C']],
+# #         color=['violet','tab:green','tab:olive'])
+#
 plt.ylabel("Impact")
 # plt.ylim(120,160)
 plt.show()
