@@ -14,7 +14,8 @@ plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 # plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 # mpl.rcParams['agg.path.chunksize'] = 10000
-ruc_frame = pd.read_csv('../data/training_residual/training_residual.csv')
+# ruc_frame = pd.read_csv('../data/training_residual/training_residual.csv')
+ruc_frame = pd.read_csv('training_RUC_std_2.0csv')
 # sorted_frame_min = dict()
 # day_frame_array_min = []
 # rucFrame_array_min = []
@@ -62,7 +63,7 @@ ruc_frame1 = get_loss_for_contraint_romax_min_QR(ruc_frame, TRAINING_DATA.keys()
 # ruc_frame7 = get_loss_for_contraint_romax_min_Random(ruc_frame, TRAINING_DATA.keys())
 # pd.DataFrame(ruc_frame_array).to_csv("../data/residual_l1_fgsv.csv")
 # ruc_frame4 = get_loss_for_contraint_romax_max_QR_signed(ruc_frame, TRAINING_DATA.keys())
-ruc_frame2 = get_loss_for_contraint_romax_max_QR(ruc_frame, TRAINING_DATA.keys())
+# ruc_frame2 = get_loss_for_contraint_romax_max_QR(ruc_frame, TRAINING_DATA.keys())
 # ruc_frame6 = get_loss_for_contraint_romax_max_QR_RUC_order(ruc_frame, TRAINING_DATA.keys())
 # ruc_frame8 = get_loss_for_contraint_romax_max_Random(ruc_frame, TRAINING_DATA.keys())
 

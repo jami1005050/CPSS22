@@ -34,6 +34,14 @@ tao_min_QH = -0.0927
 tao_max_QC = 0.0775
 tao_min_QC = -0.0427
 
+# cauchy quantile beta 0.006 training residual for kappa 2
+#-0.015266112936864702 0.0175
+tao_max_QC_B = 0.0175
+tao_min_QC_B = -0.015266112936864702
+#cauchy non quantile beta 0.006 training residual for kappa 2
+#-0.0027661129368647085 0.0025
+tao_max_NQC_B = 0.0025
+tao_min_NQC_B = -0.0027661129368647085
 # testing_residualM4M6 = pd.read_csv("../data/test_residuals/TestR_DA_del100_romal30_M4M6.csv") #91-181
 testing_residualM7M9 = pd.read_csv("../data/Test_RUC_Benign.csv")  #182-273
 false_alarm_tier2_Q = testing_EFA(testing_residualM7M9,tao_max_Q,tao_min_Q)
@@ -43,9 +51,16 @@ false_alarm_tier2_NQH = testing_EFA(testing_residualM7M9,tao_max_NQH,tao_min_NQH
 false_alarm_tier2_QC = testing_EFA(testing_residualM7M9,tao_max_QC,tao_min_QC)
 false_alarm_tier2_QH = testing_EFA(testing_residualM7M9,tao_max_QH,tao_min_QH)
 
+false_alarm_tier2_QC_B = testing_EFA(testing_residualM7M9,tao_max_QC_B,tao_min_QC_B)
+false_alarm_tier2_NQC_B = testing_EFA(testing_residualM7M9,tao_max_NQC_B,tao_min_NQC_B)
+
 print(false_alarm_tier2_Q)
 print(false_alarm_tier2_QL2)
 print(false_alarm_tier2_NQC)
 print(false_alarm_tier2_NQH)
 print(false_alarm_tier2_QC)
 print(false_alarm_tier2_QH)
+
+print("New value ")
+print(false_alarm_tier2_QC_B)
+print(false_alarm_tier2_NQC_B)

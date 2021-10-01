@@ -15,11 +15,11 @@ plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    #
 
 #random attack type
-fa_NQCRA = open('../test_C/fa_NQCRA.json' )
-fa_QCRA = open('../test_C/fa_QCRA.json' )
-fa_QHRA = open('../test_H/fa_QHRA.json' )
-fa_NQHRA = open('../test_H/fa_NQHRA.json' )
-fa_QRA = open('../test_QP/fa_QRA.json' )
+fa_NQCRA = open('../test_C/result_data/false_alarm/fa_NQCRA.json')
+fa_QCRA = open('../test_C/result_data/false_alarm/fa_QCRA.json')
+fa_QHRA = open('../test_H/result/false_alarm/fa_QHRA.json')
+fa_NQHRA = open('../test_H/result/false_alarm/fa_NQHRA.json')
+fa_QRA = open('../test_QP/result/false_alarm/fa_QRA.json')
 
 eQC = json.load(fa_QCRA)
 eNQC = json.load(fa_NQCRA)

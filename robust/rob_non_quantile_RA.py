@@ -29,5 +29,5 @@ for del_avg in DEL_AVG_ARRAY_DED:
             rob_res_benign[del_avg][ro][beta] = {'tau_max':train_t_max,'tau_min':train_t_min}
 
 
-with open("../test_C/robust_C_non_Q_ro_del_RA.json", "w") as outfile:
+with open("../test_C/result_data/standard_limit/robust_C_non_Q_ro_del_RA.json", "w") as outfile:
     json.dump(rob_res_benign, outfile)

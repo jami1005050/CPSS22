@@ -13,10 +13,10 @@ plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    #
-f_C = open('../test_C/impact_poisoned_CRA_small_step_del.json' )
-f_H = open('../test_H/impact_poisoned_HRA_small_step_del.json' )
-f_Q = open('../test_QP/impact_poisoned_QRA_small_step_del.json' )
-f_QL2 = open('../test_QP/impact_poisoned_QRA_L2_small_step_del.json' )
+f_C = open('../test_C/result_data/impact/impact_poisoned_CRA_small_step_del.json')
+f_H = open('../test_H/result/impact/impact_poisoned_HRA_small_step_del.json')
+f_Q = open('../test_QP/result/impact/impact_poisoned_QRA_small_step_del.json')
+f_QL2 = open('../test_QP/result/impact/impact_poisoned_QRA_L2_small_step_del.json')
 impact_dict_QL2 = json.load(f_QL2)
 impact_dict_C = json.load(f_C)
 impact_dict_H = json.load(f_H)
@@ -80,10 +80,10 @@ print(temp_df.to_latex())
 # plt.legend()
 # plt.show()
 
-f_C = open('../test_C/impact_poisoned_CRA_non_Q_small_step_del.json' )
-f_H = open('../test_H/impact_poisoned_HRA_non_Q_small_step_del.json' )
-f_Q = open('../test_QP/impact_poisoned_QRA_small_step_del.json' )
-f_QL2 = open('../test_QP/impact_poisoned_QRA_L2_small_step_del.json' )
+f_C = open('../test_C/result_data/impact/impact_poisoned_CRA_non_Q_small_step_del.json')
+f_H = open('../test_H/result/impact/impact_poisoned_HRA_non_Q_small_step_del.json')
+f_Q = open('../test_QP/result/impact/impact_poisoned_QRA_small_step_del.json')
+f_QL2 = open('../test_QP/result/impact/impact_poisoned_QRA_L2_small_step_del.json')
 impact_dict_C = json.load(f_C)
 impact_dict_H = json.load(f_H)
 impact_dict_Q = json.load(f_Q)
@@ -141,6 +141,8 @@ for key,group in groups:
 # plt.ylim(2200,3400)
 # plt.show()
 #endregion
+
+
 impact_nQ= result_frame[( result_frame['tr_del_avg'] == str(100) ) & ( result_frame['del_avg'] == str(100) ) ]
 temp_df = impact_nQ[['del_avg','Efa_Q','Efa_H','Efa_C','impact_Q','impact_H','impact_C']]
 print(temp_df.to_latex())
@@ -163,18 +165,21 @@ print(temp_df.to_latex())
 # print(impact)
 index_ar = impact.index
 #region bar plot
-plt.bar(["QL1","QL2","QH","QC","NQH","NQC"],
-        [impact.at[index_ar[0],'impact_Q'],impact.at[index_ar[0],'impact_QL2'],impact.at[index_ar[0],'impact_H'],impact.at[index_ar[0],'impact_C'],
-         impact_nQ.at[index_ar[0],'impact_H'],impact_nQ.at[index_ar[0],'impact_C']],color=[ 'violet','blue','cyan','tab:orange','tab:green','tab:olive'])
-
-# plt.bar(["QL1","QL2","QH","QC"],
-#         [impact.at[index_ar[0],'impact_Q'],impact.at[index_ar[0],'impact_QL2'],impact.at[index_ar[0],'impact_H'],impact.at[index_ar[0],'impact_C']],
-#         color=[ 'violet','blue','cyan','tab:orange'])
-
-# plt.bar(["QC","NQH","NQC"],
-#         [impact.at[index_ar[0],'impact_C'],impact_nQ.at[index_ar[0],'impact_H'],impact_nQ.at[index_ar[0],'impact_C']],
-#         color=['violet','tab:green','tab:olive'])
-plt.ylabel("Impact")
-# plt.ylim(1100,1150)
-plt.show()
+# plt.bar(["QL1","QL2","QH","QC","NQH","NQC"],
+#         [impact.at[index_ar[0],'impact_Q'],impact.at[index_ar[0],'impact_QL2'],impact.at[index_ar[0],'impact_H'],impact.at[index_ar[0],'impact_C'],
+#          impact_nQ.at[index_ar[0],'impact_H'],impact_nQ.at[index_ar[0],'impact_C']],color=[ 'violet','blue','cyan','tab:orange','tab:green','tab:olive'])
+#
+# # plt.bar(["QL1","QL2","QH","QC"],
+# #         [impact.at[index_ar[0],'impact_Q'],impact.at[index_ar[0],'impact_QL2'],impact.at[index_ar[0],'impact_H'],impact.at[index_ar[0],'impact_C']],
+# #         color=[ 'violet','blue','cyan','tab:orange'])
+#
+# # plt.bar(["QC","NQH","NQC"],
+# #         [impact.at[index_ar[0],'impact_C'],impact_nQ.at[index_ar[0],'impact_H'],impact_nQ.at[index_ar[0],'impact_C']],
+# #         color=['violet','tab:green','tab:olive'])
+# plt.ylabel("Impact")
+# # plt.ylim(1100,1150)
+# plt.show()
 #endregion
+
+
+

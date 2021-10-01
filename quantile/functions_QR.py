@@ -433,6 +433,7 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
     cost_count = 0
     penalty_count = 0
     costFunction =[0 for i in range(len(merged_array))]
+    dict_t = dict()
     for l in range(len(merged_array)):
         if (merged_array[l] >= lower_limit):
             temp = abs(lower_limit - merged_array[l])/2
@@ -453,8 +454,12 @@ def get_loss_for_contraint_romax_min_QR(rucFrame, keys):
         # if (penalty_count > 0):
         #     penalty_norm = pSum / penalty_count
         # costFunction[l] = abs(cost_norm - penalty_norm)
-        costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
-        # costFunction[l] =  abs(costSum-pSum)
+        # costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
+
+        costFunction[l] =  abs(costSum-pSum)
+        dict_t[merged_array[l]] = costFunction[l]
+    plt.plot(dict_t.keys(),dict_t.values())
+    plt.show()
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
     # print("length min: ",len(non_zero_ruc_array_copied))
