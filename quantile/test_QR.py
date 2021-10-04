@@ -23,7 +23,7 @@ tao_min_C = -0.075
 # testing_residualM1M3 = pd.read_csv("../data/test_residuals/TestR_DA_del100_romal30_M1M3.csv") #1-90
 # testing_residualM4M6 = pd.read_csv("../data/test_residuals/TestR_DA_del100_romal30_M4M6.csv") #91-181
 # testing_residualM7M9 = pd.read_csv("../data/test_residuals/TestR_DA_del100_romal30_M7M9.csv")  #182-273
-testing_residualM10M12 = pd.read_csv("../data/test_residuals/TestR_DA_del100_romal30_M10M12.csv") #244-365
+testing_residualM10M12 = pd.read_csv("../data/test_ruc/test_residuals/TestR_DA_del100_romal30_M10M12.csv") #244-365
 # testing_attacked_threshold(testing_residual,tao_max_Q_l1,tao_min_Q_l1,t_max_att_QR_l1,t_min_att_QR_l1)
 # testing_attacked_threshold(testing_residual,t_max_org_QR_l2,t_min_org_QR_l2,t_max_att_QR_l2,t_min_att_QR_l2)
 tier2_Q, first_detected_Q,false_alarm_tier2_Q = testing_tau(testing_residualM10M12,tao_max_Q_l1,tao_min_Q_l1)

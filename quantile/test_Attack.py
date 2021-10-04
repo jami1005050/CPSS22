@@ -94,7 +94,7 @@ tao_min_C = -0.0427
 tao_max_Q = 0.0125
 tao_min_Q = -0.012766112936864759
 
-testing_residualM4M6 = pd.read_csv("../data/test_residuals/Test_RUC_K_mad_2.0_D150_M4M6.csv") #91-181
+testing_residualM4M6 = pd.read_csv("../data/test_ruc/test_residuals/Test_RUC_K_mad_2.0_D150_M4M6.csv") #91-181
 # testing_residualM7M9 = pd.read_csv("../data/test_residual_CA_AA/TestR_CA_del100_romal40_M07M09.csv")  #182-273
 tier2_Q, first_detected_Q,false_alarm_tier2_Q = testing_tau(testing_residualM4M6,tao_max_Q,tao_min_Q)
 # tier2_for_C, first_detected_C,false_alarm_tier2_C = testing_tau(testing_residualM4M6,tao_max_C,tao_min_C)

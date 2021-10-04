@@ -17,7 +17,7 @@ plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 # plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 plt.ylim(0,11)
 plt.xlim(0,0.13)
-not_attack = pd.read_csv('../data/loss_vs_tmin_l1.csv', names=['std_limit', 'loss'], header=None)
+not_attack = pd.read_csv('../data/loss_vs_std/loss_vs_tmin_l1.csv', names=['std_limit', 'loss'], header=None)
 under_attack_constrained = pd.read_csv('../data/loss_vs_std/loss_vs_tmin_l1_fgav_CON.csv', names=['std_limit', 'loss'], header=None)
 under_attack_unconstrained = pd.read_csv('../data/loss_vs_std/loss_vs_tmin_l1_fgav_UNCON_2.csv', names=['std_limit', 'loss'], header=None)
 plt.plot(not_attack['std_limit'], not_attack['loss'],marker = "D", markevery=5)

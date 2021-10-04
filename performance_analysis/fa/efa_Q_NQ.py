@@ -2,11 +2,11 @@ import json
 import pandas as pd
 
 #FGAV attack type
-FA_QC = open('../test_C/result_data/false_alarm/FA_QC.json')
-FA_NQC = open('../test_C/result_data/false_alarm/FA_NQC.json')
-FA_QH = open('../test_H/result/false_alarm/FA_QH.json')
-FA_NQH = open('../test_H/result/false_alarm/FA_NQH.json')
-FA_Q = open('../test_QP/result/false_alarm/FA_Q.json')
+FA_QC = open('../../test_C/result_data/false_alarm/FA_QC.json')
+FA_NQC = open('../../test_C/result_data/false_alarm/FA_NQC.json')
+FA_QH = open('../../test_H/result/false_alarm/FA_QH.json')
+FA_NQH = open('../../test_H/result/false_alarm/FA_NQH.json')
+FA_Q = open('../../test_QP/result/false_alarm/FA_Q.json')
 eQC = json.load(FA_QC)
 eNQC = json.load(FA_NQC)
 eQH = json.load(FA_QH)

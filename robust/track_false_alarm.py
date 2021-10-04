@@ -7,8 +7,8 @@ result = []
 for index, row in tau_frame.iterrows():
     #Now check with the benign Test set residual
     #As a cross validation set we can consider 6 months of data
-    test_residual_benign = pd.read_csv('../data/Test_RUC_Benign.csv')
-    test_residual_attack = pd.read_csv('../data/test_residuals_cleaned/Test_RUC_K_mad_2.0_D100_M4M6.csv') #ROMAL 30%
+    test_residual_benign = pd.read_csv('../data/test_ruc/test_residuals/Test_RUC_Benign.csv')
+    test_residual_attack = pd.read_csv('../data/test_ruc/test_residuals_cleaned/Test_RUC_K_mad_2.0_D100_M4M6.csv') #ROMAL 30%
     cv_residual_benign = test_residual_benign[test_residual_benign['day'] <= 350]
     cv_residual_attack = test_residual_attack[test_residual_attack['day'] <= 350]
     #CAUCHY

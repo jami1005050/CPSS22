@@ -54,7 +54,7 @@ rob_res_benign = {}
 for key in tau_dict.keys():
     rob_res_benign[key] = {}
     ruc_frame = pd.read_csv('../test_QP/cleaned_res/training_RUC_mad_'+str(key)+'csv')
-    # ruc_frame_training = pd.read_csv('../data/training_residual/training_RUC_2.5csv')
+    # ruc_frame_training = pd.read_csv('../data/t_RUC_benign/training_RUC_2.5csv')
     keys_TR = ['2014','2015']
     minRuc2014 = ruc_frame['ruc2014'].min()
     minRuc2015 = ruc_frame['ruc2015'].min()

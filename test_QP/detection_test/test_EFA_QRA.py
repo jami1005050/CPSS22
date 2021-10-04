@@ -3,7 +3,7 @@ from utility.common import *
 f = open('../result/standard_limit/poison_RA.json')
 poisoning_std_limits = json.load(f)
 result = {}
-testing_residualM4M6 = pd.read_csv("../../data/Test_RUC_Benign.csv")  # 91-181
+testing_residualM4M6 = pd.read_csv("../../data/test_ruc/test_residuals/Test_RUC_Benign.csv")  # 91-181
 
 for key2 in poisoning_std_limits.keys(): # del_avg
     result[key2] = {}

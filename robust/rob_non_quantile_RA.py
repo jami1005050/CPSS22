@@ -10,7 +10,7 @@ for del_avg in DEL_AVG_ARRAY_DED:
     rob_res_benign[del_avg] = {}
     for ro in RO_MAL_ARRAY:
         rob_res_benign[del_avg][ro] = {}
-        ruc_frame = pd.read_csv('training_RUC_all_ro_Del_RA/training_RUC_del_' +
+        ruc_frame = pd.read_csv('t_RUC_RA/training_RUC_del_' +
                                 str(del_avg) + '_romal_' + str(ro) + 'csv')
         keys_TR = ['2014','2015']
         minRuc2014 = ruc_frame['ruc2014'].min()

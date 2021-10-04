@@ -17,10 +17,10 @@ plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    #
-f_C = open('../test_C/result_data/impact/impact_poisoned_ro_del_CRA.json')
-f_H = open('../test_H/result/impact/impact_poisoned_ro_del_HRA.json')
-f_Q = open('../test_QP/result/impact/impact_poisoned_ro_del_QRA.json')
-f_QL2 = open('../test_QP/result/impact/impact_poisoned_ro_del_L2_QRA.json')
+f_C = open('../../test_C/result_data/impact/impact_poisoned_ro_del_CRA.json')
+f_H = open('../../test_H/result/impact/impact_poisoned_ro_del_HRA.json')
+f_Q = open('../../test_QP/result/impact/impact_poisoned_ro_del_QRA.json')
+f_QL2 = open('../../test_QP/result/impact/impact_poisoned_ro_del_L2_QRA.json')
 impact_dict_QL2 = json.load(f_QL2)
 impact_dict_C = json.load(f_C)
 impact_dict_H = json.load(f_H)
@@ -76,8 +76,8 @@ impact_FIX_TR_DEL = result_frame[( result_frame['del_avg'] == 180 )  ]
 
 # temp_df = impact[['del_avg','Efa_Q','Efa_H','Efa_C','impact_Q','impact_H','impact_C']]
 
-f_C = open('../test_C/result_data/impact/impact_poisoned_ro_del_nonQ_CRA.json')
-f_H = open('../test_H/result/impact/impact_poisoned_ro_del_nonQ_HRA.json')
+f_C = open('../../test_C/result_data/impact/impact_poisoned_ro_del_nonQ_CRA.json')
+f_H = open('../../test_H/result/impact/impact_poisoned_ro_del_nonQ_HRA.json')
 impact_dict_C = json.load(f_C)
 impact_dict_H = json.load(f_H)
 result = []

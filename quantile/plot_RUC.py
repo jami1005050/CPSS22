@@ -16,7 +16,7 @@ plt.rc('legend', fontsize=MEDIUM_SIZE)    # legend fontsize
 # plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
 # plt.ylim(0,11)
 # plt.xlim(0,0.2)
-residual = pd.read_csv('../data/training_residual/training_residual.csv')
+residual = pd.read_csv('../data/training_ruc/t_RUC_benign/training_residual.csv')
 print(residual)
 day_array = residual[(residual['day']>5)&(residual['day']<=60)]['day'].tolist()
 locator = matplotlib.ticker.MultipleLocator(4)

@@ -13,10 +13,10 @@ plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
 plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
 plt.rc('legend', fontsize=MEDIUM_SIZE)    #
-f_C = open('../test_C/result_data/impact/impact_poisoned_C_K2_small_step_del.json')
-f_H = open('../test_H/result/impact/impact_poisoned_H_K2_small_step_del.json')
-f_Q = open('../test_QP/result/impact/impact_poisoned_Q_k2_Small_step_del.json')
-f_QL2 = open('../test_QP/result/impact/impact_poisoned_Q_k2_L2_small_step_del.json')
+f_C = open('../../test_C/result_data/impact/impact_poisoned_C_K2_small_step_del.json')
+f_H = open('../../test_H/result/impact/impact_poisoned_H_K2_small_step_del.json')
+f_Q = open('../../test_QP/result/impact/impact_poisoned_Q_k2_Small_step_del.json')
+f_QL2 = open('../../test_QP/result/impact/impact_poisoned_Q_k2_L2_small_step_del.json')
 impact_dict_C = json.load(f_C)
 impact_dict_H = json.load(f_H)
 impact_dict_Q = json.load(f_Q)
@@ -99,8 +99,8 @@ temp_df = impact[['del_avg','Efa_Q','Efa_H','Efa_C','impact_Q','impact_H','impac
 # print(temp_df.to_latex())
 
 # print("******Non Quantile*******")
-f_C = open('../test_C/result_data/impact/impact_poisoned_C_non_Q_K2_small_step_del.json')
-f_H = open('../test_H/result/impact/impact_poisoned_H_non_Q_K2_small_step_del.json')
+f_C = open('../../test_C/result_data/impact/impact_poisoned_C_non_Q_K2_small_step_del.json')
+f_H = open('../../test_H/result/impact/impact_poisoned_H_non_Q_K2_small_step_del.json')
 impact_dict_C = json.load(f_C)
 impact_dict_H = json.load(f_H)
 result = []

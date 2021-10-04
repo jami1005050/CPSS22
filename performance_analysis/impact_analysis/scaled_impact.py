@@ -9,7 +9,7 @@ print(impact_nonQ)
 dictionary = impact_nonQ[['romax','epsilon','del_avg','impact_C','impact_Q','impact_H','Efa_Q','Efa_C','Efa_H']].to_dict()
 print(dictionary)
 
-file_name = "../data/test_residual_random_attack/Test_RUC_PWith_100Del_100_M7M9.csv"
+file_name = "../../data/test_ruc/test_residual_random_attack/Test_RUC_PWith_100Del_100_M7M9.csv"
 ruc_frame = pd.read_csv(file_name)
 array = np.arange(len(ruc_frame['ruc2016']))
 # "0.006": {"tau_max": 0.005, "tau_min": -0.004282239270649808},# "100":{"tau_max": 0.01, "tau_min": -0.009282239270649875}

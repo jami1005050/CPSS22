@@ -35,7 +35,7 @@ tao_max_QC = 0.0775
 tao_min_QC = -0.0427
 
 # testing_residualM4M6 = pd.read_csv("../data/test_residuals/TestR_DA_del100_romal30_M4M6.csv") #91-181
-testing_residualM7M9 = pd.read_csv("../data/test_residuals/TestR_DA_del100_romal30_M7M9.csv")  #182-273
+testing_residualM7M9 = pd.read_csv("../data/test_ruc/test_residuals/TestR_DA_del100_romal30_M7M9.csv")  #182-273
 tier1_anomaly_Q,tier2_Q, first_detected_Q,false_alarm_tier2_Q = testing_tau(testing_residualM7M9,tao_max_Q,tao_min_Q)
 tier1_anomaly_QL2,tier2_QL2, first_detected_QL2,false_alarm_tier2_QL2 = testing_tau(testing_residualM7M9,tao_max_QL2,tao_min_QL2)
 tier1_anomaly_NQC,tier2_for_NQC, first_detected_NQC,false_alarm_tier2_NQC = testing_tau(testing_residualM7M9,tao_max_NQC,tao_min_NQC)
