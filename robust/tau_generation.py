@@ -1,7 +1,8 @@
 import pandas as pd
 from robust.utils import*
-# ruc_frame = pd.read_csv('../test_QP/result/residual/cleaned_res/training_RUC_mad_2.0csv')
-ruc_frame = pd.read_csv('../test_QP/result/residual/poison_res_k2/FGAV_QL1_RO_6_EPS0.02490858105907152_K2_.csv')
+ruc_frame_NA = pd.read_csv('../test_QP/result/residual/cleaned_res/training_RUC_mad_2.0csv') #cleaned training residual
+ruc_frame_SA = pd.read_csv('../test_QP/result/residual/poison_res_k2/FGAV_QL1_RO_6_EPS0.05507933161_K2_.csv')#smart attacked poisoned residual
+ruc_frame_RA = pd.read_csv('../data/training_ruc/t_RUC_RA/training_RUC_del_175_romal_0.3csv') #random attacked poisoned residual
 
 #if you have your residuals divided into two columns then you want to use the following functions
 keys_TR = ['2014','2015']
@@ -11,8 +12,8 @@ def get_standard_limit_by_key(ruc_frame,keys_TR):
     min_candidate = ruc_frame[["ruc2014","ruc2015"]].min(axis = 1).min() #return the minimum between two columns
     step_size = 0.001 #step size will change the number of elements in the array
     #the step size should be choose according to the level of smoothness you want in your system.
-    max_beta_array = np.arange(.0001,max_candidate,step_size)
-    min_beta_array = np.arange(.0001,abs(min_candidate),step_size)
+    max_beta_array = np.arange(.0001,max_candidate*2,step_size)
+    min_beta_array = np.arange(.0001,abs(min_candidate*2),step_size)
     tau_result_array = []
     for max_beta in max_beta_array:
         for min_beta in min_beta_array:
@@ -49,7 +50,7 @@ def get_standard_limit_by_key(ruc_frame,keys_TR):
             tau_result_array.append(object_c)
 
     tau_result_frame = pd.DataFrame(tau_result_array)
-    tau_result_frame.to_csv('tau_frame.csv')
+    tau_result_frame.to_csv('tau_frame_DEL175_ROMAL03_Large_Beta.csv')
 
 
 def get_standard_limit_from_combined_frame(ruc_frame):
@@ -57,8 +58,8 @@ def get_standard_limit_from_combined_frame(ruc_frame):
     min_candidate = ruc_frame["ruc"].min()  # return the minimum between two columns
     step_size = 0.001  # step size will change the number of elements in the array
     # the step size should be choose according to the level of smoothness you want in your system.
-    max_beta_array = np.arange(.0001, max_candidate, step_size)
-    min_beta_array = np.arange(.0001, abs(min_candidate), step_size)
+    max_beta_array = np.arange(.0001, max_candidate*10, step_size)
+    min_beta_array = np.arange(.0001, abs(min_candidate*10), step_size)
     tau_result_array = []
     for max_beta in max_beta_array:
         for min_beta in min_beta_array:
@@ -96,6 +97,7 @@ def get_standard_limit_from_combined_frame(ruc_frame):
             tau_result_array.append(object_c)
 
     tau_result_frame = pd.DataFrame(tau_result_array)
-    tau_result_frame.to_csv('tau_frame_poison_ro_6_eps025.csv')
+    tau_result_frame.to_csv('tau_frame_poison_ro_6_eps055_Large_BETA.csv')
 
-get_standard_limit_from_combined_frame(ruc_frame)
+# get_standard_limit_from_combined_frame(ruc_frame_SA)
+get_standard_limit_by_key(ruc_frame_RA,keys_TR)
