@@ -1,12 +1,12 @@
 import pandas as pd
-fa_frame_sa = pd.read_csv('false_alarm_missed_detection_P_ro6_eps025.csv')
-fa_frame_ra = pd.read_csv('false_alarm_missed_detection_DEL100_ROMAL03.csv')
+fa_frame_sa = pd.read_csv('false_alarm_missed_detection_ro6_eps055_large_beta.csv')
+fa_frame_ra = pd.read_csv('false_alarm_missed_detection_DEL100_ROMAL03_large_beta.csv')
 def get_cost(fa_frame):
     fa_frame['cost_c'] = None
     fa_frame['cost_h'] = None
     for index,row in fa_frame.iterrows():
-        fa_frame.at[index,'cost_c'] = row.md_c*0.2 + row.fa_c*0.8
-        fa_frame.at[index,'cost_h'] = row.md_h*0.2 + row.fa_h*0.8
+        fa_frame.at[index,'cost_c'] = row.md_c*0.3+ row.fa_c*0.7
+        fa_frame.at[index,'cost_h'] = row.md_h*0.3 + row.fa_h*0.7
     return fa_frame
 
 def get_opt_beta_c(cost_frame):
