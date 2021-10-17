@@ -1,8 +1,8 @@
 import pandas as pd
 from robust.tau_generation.utils import*
 ruc_frame_NA = pd.read_csv('training_RUC_mad_2.0csv') #cleaned training residual
-ruc_frame_SA = pd.read_csv('../../test_QP/result/residual/poison_res_k2/FGAV_QL1_RO_2_EPS0.0490451815_K2_.csv')#smart attacked poisoned residual
-ruc_frame_RA = pd.read_csv('../../data/training_ruc/t_RUC_RA/training_RUC_del_100_romal_0.3csv') #random attacked poisoned residual
+ruc_frame_SA = pd.read_csv('SPA_QL1_EPS0.0069.csv')#smart attacked poisoned residual #RO==8
+ruc_frame_RA = pd.read_csv('RPA_RUC_del_150_romal_0.3.csv') #random attacked poisoned residual
 
 #if you have your residuals divided into two columns then you want to use the following functions
 keys_TR = ['2014','2015']
@@ -50,7 +50,7 @@ def get_standard_limit_by_key(ruc_frame,keys_TR):
             tau_result_array.append(object_c)
 
     tau_result_frame = pd.DataFrame(tau_result_array)
-    tau_result_frame.to_csv('tau_frame_DEL100_ROMAL03_smallstep.csv')
+    tau_result_frame.to_csv('RA_tau_DEL150_ROMAL03.csv')
 
 
 def get_standard_limit_from_combined_frame(ruc_frame):
@@ -97,7 +97,7 @@ def get_standard_limit_from_combined_frame(ruc_frame):
             tau_result_array.append(object_c)
 
     tau_result_frame = pd.DataFrame(tau_result_array)
-    tau_result_frame.to_csv('tau_frame_poison_ro_2_eps0128.csv')
+    tau_result_frame.to_csv('SA_tau_ro_8_eps0069.csv')
 
 # get_standard_limit_from_combined_frame(ruc_frame_SA)
 get_standard_limit_by_key(ruc_frame_RA,keys_TR)
