@@ -11,7 +11,7 @@ for ro in r_max:
     result[ro] = {}
     for epsilon in Epsilon_A:
         result[ro][epsilon] = {}
-        ruc_frame = pd.read_csv('result/residual/cleaned_res/training_RUC_mad_2.0csv')
+        ruc_frame = pd.read_csv('../result/residual/cleaned_res/training_RUC_mad_2.0csv')
         ruc_frame1,tmin = get_loss_for_contraint_romax_min_QR_CLN(ruc_frame, TRAINING_DATA.keys(),tau_min_K2,ro,epsilon)
         ruc_frame2,tmax = get_loss_for_contraint_romax_max_QR_CLN(ruc_frame, TRAINING_DATA.keys(),tau_max_K2,ro,epsilon)
         print('tmax: ',tmax," tmin: ",tmin)

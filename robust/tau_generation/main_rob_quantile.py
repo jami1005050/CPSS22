@@ -6,7 +6,7 @@ import json
 from utility.constant import BETA_ARR
 
 loss_function = 'huber'  # l2 huber pseudo_huber
-f = open('../test_QP/result/standard_limit/poison.json')
+f = open('../../test_QP/result/standard_limit/poison.json')
 
 # returns JSON object as
 # a dictionary
@@ -38,7 +38,7 @@ for key in poisoning_std_limits.keys():
                     w1=.5, w2=2., b=beta)
                 rob_poisoin_limit[key][key2][key3][beta] = {'tau_max':attack_t_max,'tau_min':attack_t_min}
 
-with open("../test_H/result/standard_limit/robust_poison_H.json", "w") as outfile:
+with open("../../test_H/result/standard_limit/robust_poison_H.json", "w") as outfile:
     json.dump(rob_poisoin_limit, outfile)
 
 tau_dict = {1.0:{'tau_max': 0.005, 'tau_min': -0.0038691378044811986},
@@ -74,7 +74,7 @@ for key in tau_dict.keys():
         rob_res_benign[key][beta] = {'tau_max':train_t_max,'tau_min':train_t_min}
 
 
-with open("../test_H/result/standard_limit/robust_benign_H.json", "w") as outfile:
+with open("../../test_H/result/standard_limit/robust_benign_H.json", "w") as outfile:
     json.dump(rob_res_benign, outfile)
 
 

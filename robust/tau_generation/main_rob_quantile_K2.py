@@ -6,7 +6,7 @@ import json
 from utility.constant import BETA_ARR
 
 loss_function = 'cauchy'  # l2 huber pseudo_huber
-f = open('../test_QP/result/standard_limit/poison_tau_K2.json')
+f = open('../../test_QP/result/standard_limit/poison_tau_K2.json')
 
 # returns JSON object as
 # a dictionary

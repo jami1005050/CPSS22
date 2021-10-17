@@ -1,6 +1,6 @@
 import pandas as pd
-fa_frame_sa = pd.read_csv('false_alarm_missed_detection_ro6_eps055_large_beta.csv')
-fa_frame_ra = pd.read_csv('false_alarm_missed_detection_DEL100_ROMAL03_large_beta.csv')
+fa_frame_sa = pd.read_csv('../false_alarm_and_missed_detection_out/false_alarm_missed_detection_ro2_eps018.csv')
+fa_frame_ra = pd.read_csv('../false_alarm_and_missed_detection_out/false_alarm_missed_detection_DEL100_ROMAL03_SS.csv')
 def get_cost(fa_frame):
     fa_frame['cost_c'] = None
     fa_frame['cost_h'] = None
@@ -54,3 +54,19 @@ print("Cauchy OPT BETA RA: ",max_beta_c_ra,min_beta_c_ra)
 print("Cauchy OPT BETA SA: ",max_beta_c_sa,min_beta_c_sa)
 print("Huber OPT BETA RA: ",max_beta_h_ra,min_beta_h_ra)
 print("Huber OPT BETA SA: ",max_beta_h_sa,min_beta_h_sa)
+print("Values for Smart Attack: Cauchy  ")
+print(cost_frame_sa [(cost_frame_sa['beta_p'] == max_beta_c_sa) &
+                     (cost_frame_sa['beta_n'] == min_beta_c_sa)][['tau_max_c','tau_min_c']])
+print("Values for Adversarial Attack:  Cauchy ")
+print(cost_frame_ra [(cost_frame_ra['beta_p'] == max_beta_c_ra) &
+                     (cost_frame_ra['beta_n'] == min_beta_c_ra)][['tau_max_c','tau_min_c']])
+
+print("Values for Smart Attack: Huber  ")
+
+print(cost_frame_sa [(cost_frame_sa['beta_p'] == max_beta_h_sa) &
+                     (cost_frame_sa['beta_n'] == min_beta_h_sa)][['tau_max_h','tau_min_h']])
+
+print("Values for Adversarial Attack:  Huber ")
+
+print(cost_frame_ra [(cost_frame_ra['beta_p'] == max_beta_h_ra) &
+                     (cost_frame_ra['beta_n'] == min_beta_h_ra)][['tau_max_h','tau_min_h']])

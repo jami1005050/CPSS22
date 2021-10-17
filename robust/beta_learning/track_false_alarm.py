@@ -1,6 +1,6 @@
 from utility.common import*
 
-tau_frame = pd.read_csv('tau_frame_poison_ro_6_eps055_Large_BETA.csv')
+tau_frame = pd.read_csv('../learned_tau_out/tau_frame_DEL100_ROMAL03_smallstep.csv')
 # print(tau_frame.tau_min_c.unique())
 attack_start_date = 91
 attack_end_date = 181
@@ -8,10 +8,10 @@ result = []
 for index, row in tau_frame.iterrows():
     #Now check with the benign Test set residual
     #As a cross validation set we can consider 6 months of data
-    test_residual_benign = pd.read_csv('../data/test_ruc/test_residuals/Test_RUC_Benign.csv')
-    test_residual_attack = pd.read_csv('../data/test_ruc/test_residuals_cleaned/Test_RUC_K_mad_2.0_D100_M4M6.csv') #ROMAL 30%
-    cv_residual_benign = test_residual_benign[test_residual_benign['day'] <= 350]
-    cv_residual_attack = test_residual_attack[test_residual_attack['day'] <= 350]
+    test_residual_benign = pd.read_csv('../../data/test_ruc/test_residuals/Test_RUC_Benign.csv')
+    test_residual_attack = pd.read_csv('../../data/test_ruc/test_residuals_cleaned/Test_RUC_K_mad_2.0_D100_M4M6.csv') #ROMAL 30%
+    cv_residual_benign = test_residual_benign[test_residual_benign['day'] <= 181]
+    cv_residual_attack = test_residual_attack[test_residual_attack['day'] <= 181]
     #CAUCHY
     false_alarm_c = testing_EFA(cv_residual_benign, row.tau_max_c, row.tau_min_c)
     tier1_anomaly_c, tier2_for_org_c, first_detected_org_c, false_alarm_ca = testing_tau(cv_residual_attack,row.tau_max_c, row.tau_min_c)
@@ -39,4 +39,4 @@ for index, row in tau_frame.iterrows():
                  'fa_h':len(false_alarm_h),'md_h':missed_detection_h}
     result.append(object_fm)
 fm_result_frame = pd.DataFrame(result)
-fm_result_frame.to_csv('false_alarm_missed_detection_ro6_eps055_large_beta.csv')
+fm_result_frame.to_csv('false_alarm_missed_detection_DEL100_ROMAL03_SS.csv')
