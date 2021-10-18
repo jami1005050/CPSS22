@@ -99,5 +99,5 @@ def get_standard_limit_from_combined_frame(ruc_frame):
     tau_result_frame = pd.DataFrame(tau_result_array)
     tau_result_frame.to_csv('SA_tau_ro_8_eps0069.csv')
 
-# get_standard_limit_from_combined_frame(ruc_frame_SA)
-get_standard_limit_by_key(ruc_frame_RA,keys_TR)
+get_standard_limit_from_combined_frame(ruc_frame_SA)
+# get_standard_limit_by_key(ruc_frame_RA,keys_TR)
