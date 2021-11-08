@@ -10,7 +10,7 @@ keys_TR = ['2014','2015']
 def get_standard_limit_by_key(ruc_frame,keys_TR):
     max_candidate = ruc_frame[["ruc2014","ruc2015"]].max(axis = 1).max() #returns the maximum between two columns
     min_candidate = ruc_frame[["ruc2014","ruc2015"]].min(axis = 1).min() #return the minimum between two columns
-    step_size = 0.0001 #step size will change the number of elements in the array
+    step_size = 0.00000001 #step size will change the number of elements in the array
     #the step size should be choose according to the level of smoothness you want in your system.
     max_beta_array = np.arange(.000,max_candidate,step_size)
     min_beta_array = np.arange(.000,abs(min_candidate),step_size)
@@ -56,7 +56,7 @@ def get_standard_limit_by_key(ruc_frame,keys_TR):
 def get_standard_limit_from_combined_frame(ruc_frame):
     max_candidate = ruc_frame['ruc'].max()  # returns the maximum between two columns
     min_candidate = ruc_frame["ruc"].min()  # return the minimum between two columns
-    step_size = 0.0001  # step size will change the number of elements in the array
+    step_size = 0.00000001  # step size will change the number of elements in the array
     # the step size should be choose according to the level of smoothness you want in your system.
     max_beta_array = np.arange(.000, max_candidate, step_size)
     min_beta_array = np.arange(.000, abs(min_candidate), step_size)
