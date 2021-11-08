@@ -1,6 +1,6 @@
 import pandas as pd
-fa_frame_sa = pd.read_csv('../false_alarm_and_missed_detection_out/false_alarm_missed_detection_ro2_eps018.csv')
-fa_frame_ra = pd.read_csv('../false_alarm_and_missed_detection_out/false_alarm_missed_detection_DEL100_ROMAL03_SS.csv')
+fa_frame_sa = pd.read_csv('SA_FA_MD_RO_8_EPS_0069_CR_DEL_90.csv')
+fa_frame_ra = pd.read_csv('RA_FA_MD_DEL150_ROMAL03_CR_DEL_100.csv')
 def get_cost(fa_frame):
     fa_frame['cost_c'] = None
     fa_frame['cost_h'] = None

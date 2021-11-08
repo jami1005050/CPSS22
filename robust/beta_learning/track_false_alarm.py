@@ -39,4 +39,4 @@ for index, row in tau_frame.iterrows():
                  'fa_h':len(false_alarm_h),'md_h':missed_detection_h}
     result.append(object_fm)
 fm_result_frame = pd.DataFrame(result)
-fm_result_frame.to_csv('RA_FA_MD_DEL150_ROMAL03.csv')
+fm_result_frame.to_csv('RA_FA_MD_DEL150_ROMAL03_CR_DEL_175.csv')
