@@ -1,7 +1,8 @@
+#Cauchy Huber Non quantile Tau Generation--11-14-21 JAMI
+
 import utils
 import pandas as pd
 import json
-
 from utility.constant import BETA_ARR
 
 loss_function = 'cauchy_non_Q'  # l2 huber pseudo_huber

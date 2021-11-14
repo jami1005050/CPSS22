@@ -1,3 +1,5 @@
+#Cauchy Huber Tau generation for Quantile version 11-14-21-- JAMI
+
 import utils
 import pandas as pd
 import matplotlib.pyplot as plt
