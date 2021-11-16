@@ -57,6 +57,7 @@ SLIDING_FRAME = 7
 RESIDUAL_BOTTOM = -1
 RESIDUAL_TOP = 1
 ROMAX = 60
+ROMAX_ARRAY = [2,4,6,8,10,12,16,20,24,28,32,36,40,44,50,54,60]
 # After Romax Tao Min LR:  -0.0525 After Romax Tao Max:  0.0475 with epsilon .05
 # After Romax Tao Min LR:  -0.06 After Romax Tao Max:  0.0475 with epsilon .08
 # tmin after ROMAX QR:  -0.085 #tmax after ROMAX QR:  0.0725 with epsilon .05

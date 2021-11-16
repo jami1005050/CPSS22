@@ -50,5 +50,5 @@ for key in tau_dict.keys():
     #     break
     # break
 
-with open("../result/standard_limit/poison.json", "w") as outfile:
+with open("../../result/standard_limit/poison.json", "w") as outfile:
     json.dump(result, outfile)

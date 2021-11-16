@@ -137,7 +137,7 @@ def get_neg_residual_SA(merged_array,lower_limit,epsilon):
         costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
-    print("Length of RUC ",len(non_zero_ruc_array_copied))
+    # print("Length of RUC ",len(non_zero_ruc_array_copied))
     for i in range(len(index_of_sorted_list)):
         non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - epsilon
     tmin, minSum = calculateTmin_ruc_QR(non_zero_ruc_array_copied)

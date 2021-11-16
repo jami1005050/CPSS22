@@ -35,5 +35,5 @@ for ro in r_max:
         # df1.to_csv('FGAV_QL1_RO_'+str(ro)+'_EPS'+str(epsilon)+'_K2_.csv')
 
 
-with open("../result/standard_limit/poison_tau_K2_L2.json", "w") as outfile:
+with open("../../result/standard_limit/poison_tau_K2_L2.json", "w") as outfile:
     json.dump(result, outfile)
