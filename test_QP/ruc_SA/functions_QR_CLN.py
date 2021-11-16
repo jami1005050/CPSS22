@@ -1,6 +1,6 @@
 import sys
 from utility.common import *
-def calculateTmax_ruc_QR(rucFrame):
+def calculateTmax_ruc_QR_l1(rucFrame):
     global maxThreshold1
     max_candidate = max(rucFrame)
     maxSum = sys.float_info.max
@@ -29,7 +29,7 @@ def calculateTmax_ruc_QR(rucFrame):
     x, y = zip(*lists)  # unpack a list of pairs into two tuples
     return maxThreshold1, maxSum
 
-def calculateTmin_ruc_QR(rucFrame):
+def calculateTmin_ruc_QR_l1(rucFrame):
     global minThreshold
     minSum = sys.float_info.max
     min_candidate = min(rucFrame)
@@ -121,7 +121,7 @@ def calculateTmin_ruc_QR_L2(rucFrame):
     return minThreshold,minSum
 
 
-def get_neg_residual_SA(merged_array,lower_limit,epsilon):
+def get_neg_residual_SA_l1(merged_array,lower_limit,epsilon,ro_max):
     costSum = 0
     pSum = 0
     cost_count = 0
@@ -138,12 +138,15 @@ def get_neg_residual_SA(merged_array,lower_limit,epsilon):
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
     # print("Length of RUC ",len(non_zero_ruc_array_copied))
+    count = 0
     for i in range(len(index_of_sorted_list)):
+        if(count==ro_max):break
         non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - epsilon
-    tmin, minSum = calculateTmin_ruc_QR(non_zero_ruc_array_copied)
+        count = count + 1
+    tmin, minSum = calculateTmin_ruc_QR_l1(non_zero_ruc_array_copied)
     return non_zero_ruc_array_copied,tmin
 
-def get_pos_residual_SA(merged_array,upper_limit,epsilon):
+def get_pos_residual_SA_l1(merged_array,upper_limit,epsilon,ro_max):
     costSum = 0
     pSum = 0
     cost_count = 0
@@ -159,10 +162,69 @@ def get_pos_residual_SA(merged_array,upper_limit,epsilon):
         costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
     index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
     non_zero_ruc_array_copied = merged_array.copy()
+    count = 0
     for i in range(len(index_of_sorted_list)):
+        if(count == ro_max):break
         non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + epsilon
-    tmax, maxSum = calculateTmax_ruc_QR(non_zero_ruc_array_copied)
+        count = count + 1
+    tmax, maxSum = calculateTmax_ruc_QR_l1(non_zero_ruc_array_copied)
     return non_zero_ruc_array_copied,tmax
+
+def get_neg_residual_SA_l2(merged_array,lower_limit,epsilon,ro_max):
+    costSum = 0
+    pSum = 0
+    cost_count = 0
+    penalty_count = 0
+    costFunction =[0 for i in range(len(merged_array))]
+    for l in range(len(merged_array)):
+        if (merged_array[l] >= lower_limit):
+            temp = abs(lower_limit - merged_array[l]) / 2
+            costSum += pow(temp, 2)
+            # costFunction[l] = abs(lower_limit - merged_array[l]) /2
+            cost_count = cost_count + 1
+        else:
+            temp = abs(lower_limit - merged_array[l]) * 2
+            pSum += pow(temp, 2)
+            penalty_count = penalty_count + 1
+        costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
+    index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
+    non_zero_ruc_array_copied = merged_array.copy()
+    # print("Length of RUC ",len(non_zero_ruc_array_copied))
+    count = 0
+    for i in range(len(index_of_sorted_list)):
+        if(count==ro_max):break
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] - epsilon
+        count = count + 1
+    tmin, minSum = calculateTmin_ruc_QR_L2(non_zero_ruc_array_copied)
+    return non_zero_ruc_array_copied,tmin
+
+def get_pos_residual_SA_l2(merged_array,upper_limit,epsilon,ro_max):
+    costSum = 0
+    pSum = 0
+    cost_count = 0
+    penalty_count = 0
+    costFunction =[0 for i in range(len(merged_array))]
+    for l in range(len(merged_array)):
+        if (merged_array[l] < upper_limit):
+            temp = abs(upper_limit - merged_array[l]) / 2
+            costSum += pow(temp, 2)
+            # costFunction[l] = abs(lower_limit - merged_array[l]) /2
+            cost_count = cost_count + 1
+        else:
+            temp = abs(upper_limit - merged_array[l]) * 2
+            pSum += pow(temp, 2)
+            penalty_count = penalty_count + 1
+        costFunction[l] =  abs(costSum-pSum)/(cost_count+penalty_count)
+    index_of_sorted_list,gradients = calculate_gradients(costFunction,merged_array) #gradient by cost array
+    non_zero_ruc_array_copied = merged_array.copy()
+    count = 0
+    for i in range(len(index_of_sorted_list)):
+        if(count == ro_max):break
+        non_zero_ruc_array_copied[index_of_sorted_list[i]] = non_zero_ruc_array_copied[index_of_sorted_list[i]] + epsilon
+        count = count + 1
+    tmax, maxSum = calculateTmax_ruc_QR_L2(non_zero_ruc_array_copied)
+    return non_zero_ruc_array_copied,tmax
+
 
 def get_loss_for_contraint_romax_min_QR_CLN(rucFrame, keys, lower_limit,romax,epsilon):
     sorted_frame = dict()
@@ -204,7 +266,7 @@ def get_loss_for_contraint_romax_min_QR_CLN(rucFrame, keys, lower_limit,romax,ep
         ruc_count = ruc_count + 1
         if(ruc_count > romax):
             break
-    tmin, minSum = calculateTmin_ruc_QR(non_zero_ruc_array_copied)
+    tmin, minSum = calculateTmin_ruc_QR_l1(non_zero_ruc_array_copied)
     print("RUC Count: ", ruc_count)
     return non_zero_ruc_array_copied,tmin
 
@@ -248,7 +310,7 @@ def get_loss_for_contraint_romax_max_QR_CLN(rucFrame, keys,upper_limit,romax,eps
         ruc_count = ruc_count + 1
         if(ruc_count > romax):
             break
-    tmax, maxSum = calculateTmax_ruc_QR(non_zero_ruc_array_copied)
+    tmax, maxSum = calculateTmax_ruc_QR_l1(non_zero_ruc_array_copied)
     # print("tmax after ROMAX QR: ", tmax)
     return non_zero_ruc_array_copied,tmax
 

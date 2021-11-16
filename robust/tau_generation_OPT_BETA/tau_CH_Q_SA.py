@@ -14,7 +14,7 @@ tau_result_array = []
 for romax in ROMAX_ARRAY:
     for eps in eps_list: # need to remove the ro from the code if want to use other training residual
 
-        ruc_frame = pd.read_csv('../../data/training_ruc/training_ruc_SA/ruc_romax'+str(romax)+'_sa_eps'+str(eps)+'.csv')
+        ruc_frame = pd.read_csv('../../data/training_ruc/training_SA/ruc_romax'+str(romax)+'_sa_eps'+str(eps)+'.csv')
         max_candidate = ruc_frame['ruc'].max()  # returns the maximum between two columns
         min_candidate = ruc_frame["ruc"].min()  # return the minimum between two columns
         tau_max_c, attack_t_max_loss_list_c, attack_t_max_list_c = calculate_t_max_cauchy_combined_frame(ruc_frame=ruc_frame,
@@ -43,7 +43,7 @@ tau_result_frame.to_csv('SA_tau_C_Q.csv')
 tau_result_array = []
 for romax in ROMAX_ARRAY:
     for eps in eps_list:  # need to remove the ro from the code if want to use other training residual
-        ruc_frame = pd.read_csv('../../data/training_ruc/training_ruc_SA/ruc_romax'+str(romax)+'_sa_eps'+str(eps)+'.csv')
+        ruc_frame = pd.read_csv('../../data/training_ruc/training_SA/ruc_romax'+str(romax)+'_sa_eps'+str(eps)+'.csv')
         max_candidate = ruc_frame['ruc'].max()  # returns the maximum between two columns
         min_candidate = ruc_frame["ruc"].min()  # return the minimum between two columns
         tau_max_h, attack_t_max_loss_list_h, attack_t_max_list_h = calculate_t_max_huber_combined_frame(ruc_frame=ruc_frame,
