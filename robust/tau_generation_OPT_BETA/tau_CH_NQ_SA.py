@@ -7,8 +7,8 @@ beta_min_c = 0.0001
 beta_max_h = 0.0001
 beta_min_h = 0.0039
 SA_tau_frame = pd.read_csv('SA_tau_L1.csv', dtype=str)
-eps_list = SA_tau_frame['epsilon'].tolist()
-print(eps_list)
+eps_list = SA_tau_frame['epsilon'].unique().tolist()
+print(len(eps_list))
 #region Cauchy
 tau_result_array = []
 for romax in ROMAX_ARRAY:
@@ -32,7 +32,7 @@ for romax in ROMAX_ARRAY:
                     'tau_max_c': tau_max_c, 'tau_min_c': tau_min_c}
         tau_result_array.append(object_c)
 tau_result_frame = pd.DataFrame(tau_result_array)
-tau_result_frame.to_csv('SA_tau_C_NQ.csv')
+tau_result_frame.to_csv('SA_tau_C_NQ_U.csv')
 #endregion
 
 # region Huber
@@ -58,5 +58,5 @@ for romax in ROMAX_ARRAY:
                     'tau_max_h': tau_max_h, 'tau_min_h': tau_min_h}
         tau_result_array.append(object_c)
 tau_result_frame = pd.DataFrame(tau_result_array)
-tau_result_frame.to_csv('SA_tau_H_NQ.csv')
+tau_result_frame.to_csv('SA_tau_H_NQ_U.csv')
 # endregion
