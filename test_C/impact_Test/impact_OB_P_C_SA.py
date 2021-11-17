@@ -25,7 +25,7 @@ for index,row in det_Q_add.iterrows():
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_RA_Q_C_add.csv')
+tau_result_frame.to_csv('impact_SA_Q_C_add.csv')
 
 result_array = []
 for index, row in det_Q_ded.iterrows():
@@ -41,7 +41,7 @@ for index, row in det_Q_ded.iterrows():
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_RA_Q_C_ded.csv')
+tau_result_frame.to_csv('impact_SA_Q_C_ded.csv')
 
 result_array = []
 for index, row in det_NQ_add.iterrows():
@@ -57,7 +57,7 @@ for index, row in det_NQ_add.iterrows():
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_RA_NQ_C_add.csv')
+tau_result_frame.to_csv('impact_SA_NQ_C_add.csv')
 
 result_array = []
 for index, row in det_NQ_ded.iterrows():
@@ -73,4 +73,4 @@ for index, row in det_NQ_ded.iterrows():
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_RA_NQ_C_ded.csv')
+tau_result_frame.to_csv('impact_SA_NQ_C_ded.csv')
