@@ -27,8 +27,8 @@ for ro_max in ROMAX_ARRAY:
     for max_eps in max_eps_array:
         ruc_frame1,tmin_l1 = get_neg_residual_SA_l1(neg_merged_list_n,tau_min_l1,max_eps,ro_max)
         ruc_frame2,tmax_l1 = get_pos_residual_SA_l1(pos_merged_list_p,tau_max_l1,max_eps,ro_max)
-        ruc_frame3, tmin_l2 = get_neg_residual_SA_l1(neg_merged_list_n, tau_min_l2, max_eps, ro_max)
-        ruc_frame4, tmax_l2 = get_pos_residual_SA_l1(pos_merged_list_p, tau_max_l2, max_eps, ro_max)
+        ruc_frame3, tmin_l2 = get_neg_residual_SA_l2(neg_merged_list_n, tau_min_l2, max_eps, ro_max)
+        ruc_frame4, tmax_l2 = get_pos_residual_SA_l2(pos_merged_list_p, tau_max_l2, max_eps, ro_max)
 
         object_c_l1 = {"ro_max": ro_max, 'epsilon': max_eps,
                     'tau_max': tmin_l1, 'tau_min': tmax_l1}

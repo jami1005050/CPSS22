@@ -7,7 +7,13 @@ impact_Q_C_add = pd.read_csv('../test_C/impact_test/impact_RA_Q_C_add.csv')
 impact_NQ_C_add = pd.read_csv('../test_C/impact_test/impact_RA_NQ_C_add.csv')
 impact_Q_H_add = pd.read_csv('../test_H/impact_test/impact_RA_Q_H_add.csv')
 impact_NQ_H_add = pd.read_csv('../test_H/impact_test/impact_RA_NQ_H_add.csv')
-
+avg_l1 = impact_l1_add['impact'].mean()
+avg_l2 = impact_l2_add['impact'].mean()
+avg_QC = impact_Q_C_add['impact'].mean()
+avg_NQC = impact_NQ_C_add['impact'].mean()
+avg_QH = impact_Q_H_add['impact'].mean()
+avg_NQH = impact_NQ_H_add['impact'].mean()
+print(avg_l1,' ',avg_l2,' ',avg_QC,' ',avg_NQC,' ',avg_QH,' ',avg_NQH)
 impactl1add_VR = impact_l1_add[( impact_l1_add['del_avg_tr'] == 400 )&
                         ( impact_l1_add['del_avg_te'] == 700)]#
 impactl2add_VR = impact_l2_add[( impact_l2_add['del_avg_tr'] == 400 )&

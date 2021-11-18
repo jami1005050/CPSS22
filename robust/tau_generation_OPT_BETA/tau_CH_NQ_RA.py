@@ -17,7 +17,7 @@ for del_avg in DEL_AVG_ARRAY_ADD:
                                 '_romal_'+str(ro)+'_type_add.csv')
         max_candidate = ruc_frame[["ruc2014", "ruc2015"]].max(axis=1).max()  # returns the maximum between two columns
         min_candidate = ruc_frame[["ruc2014", "ruc2015"]].min(axis=1).min()  # return the minimum between two columns
-        tau_max_c, attack_t_max_loss_list_c, attack_t_max_list_c = calculate_t_min_cauchy_non_Q(ruc_frame=ruc_frame,
+        tau_max_c, attack_t_max_loss_list_c, attack_t_max_list_c = calculate_t_max_cauchy_non_Q(ruc_frame=ruc_frame,
                                                                                           keys=keys_TR,
                                                                                           tau_range=[.0,
                                                                                                      max_candidate,
@@ -43,7 +43,7 @@ for del_avg in DEL_AVG_ARRAY_DED:
                                 '_romal_' + str(ro) + '_type_ded.csv')
         max_candidate = ruc_frame[["ruc2014", "ruc2015"]].max(axis=1).max()  # returns the maximum between two columns
         min_candidate = ruc_frame[["ruc2014", "ruc2015"]].min(axis=1).min()  # return the minimum between two columns
-        tau_max_c, attack_t_max_loss_list_c, attack_t_max_list_c = calculate_t_min_cauchy_non_Q(ruc_frame=ruc_frame,
+        tau_max_c, attack_t_max_loss_list_c, attack_t_max_list_c = calculate_t_max_cauchy_non_Q(ruc_frame=ruc_frame,
                                                                                           keys=keys_TR,
                                                                                           tau_range=[.0,
                                                                                                      max_candidate,
@@ -72,7 +72,7 @@ for del_avg in DEL_AVG_ARRAY_ADD:
                                 '_romal_' + str(ro) + '_type_add.csv')
         max_candidate = ruc_frame[["ruc2014", "ruc2015"]].max(axis=1).max()  # returns the maximum between two columns
         min_candidate = ruc_frame[["ruc2014", "ruc2015"]].min(axis=1).min()  # return the minimum between two columns
-        tau_max_h, attack_t_max_loss_list_h, attack_t_max_list_h = calculate_t_min_huber_non_Q(ruc_frame=ruc_frame,
+        tau_max_h, attack_t_max_loss_list_h, attack_t_max_list_h = calculate_t_max_huber_non_Q(ruc_frame=ruc_frame,
                                                                                          keys=keys_TR,
                                                                                          tau_range=[.0,
                                                                                                     max_candidate,
@@ -98,7 +98,7 @@ for del_avg in DEL_AVG_ARRAY_DED:
                                 '_romal_' + str(ro) + '_type_ded.csv')
         max_candidate = ruc_frame[["ruc2014", "ruc2015"]].max(axis=1).max()  # returns the maximum between two columns
         min_candidate = ruc_frame[["ruc2014", "ruc2015"]].min(axis=1).min()  # return the minimum between two columns
-        tau_max_h, attack_t_max_loss_list_h, attack_t_max_list_h = calculate_t_min_huber_non_Q(ruc_frame=ruc_frame,
+        tau_max_h, attack_t_max_loss_list_h, attack_t_max_list_h = calculate_t_max_huber_non_Q(ruc_frame=ruc_frame,
                                                                                          keys=keys_TR,
                                                                                          tau_range=[.0,
                                                                                                     max_candidate,
