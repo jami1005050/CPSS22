@@ -1,5 +1,6 @@
 from test_QP.ruc_SA.functions_QR_CLN import *
 import numpy as np
+import statistics
 ruc_frame = pd.read_csv('../../robust/beta_learning/training_RUC_mad_2.0csv')
 ruc_n1 = ruc_frame[ruc_frame['ruc2014']<0]['ruc2014'].tolist()
 ruc_n2 = ruc_frame[ruc_frame['ruc2015']<0]['ruc2015'].tolist()
@@ -9,6 +10,8 @@ ruc_p2 = ruc_frame[ruc_frame['ruc2015']>0]['ruc2015'].tolist()
 pos_merged_list_p = ruc_p1 + ruc_p2
 min_epsilon = min(neg_merged_list_n) # returns the maximum between two columns
 max_epsilon = max(pos_merged_list_p)
+print(min_epsilon, statistics.stdev(pos_merged_list_p))
+print(max_epsilon, statistics.stdev(neg_merged_list_n))
 step_size = .00025
 max_eps_array = np.arange(.0001, max_epsilon, step_size)
 tau_min_l1 =-0.012766112936864759

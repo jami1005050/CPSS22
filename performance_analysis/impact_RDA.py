@@ -28,6 +28,7 @@ avg_NQC = impact_NQ_C_ded['impact'].mean()
 avg_QH = impact_Q_H_ded['impact'].mean()
 avg_NQH = impact_NQ_H_ded['impact'].mean()
 print(avg_l1,' ',avg_l2,' ',avg_QC,' ',avg_NQC,' ',avg_QH,' ',avg_NQH)
+
 impactl1ded_VR = impact_l1_ded[( impact_l1_ded['del_avg_tr'] == 200 )&
                         ( impact_l1_ded['del_avg_te'] == 200)]#
 impactl2ded_VR = impact_l2_ded[( impact_l2_ded['del_avg_tr'] == 200 )&
