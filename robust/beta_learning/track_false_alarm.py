@@ -4,7 +4,7 @@ from utility.common import*
 tau_frame_RA_C = pd.read_csv('RA_tau_DEL150_ROMAL03_Starting_fromZero_C.csv')
 tau_frame_RA_H = pd.read_csv('RA_tau_DEL150_ROMAL03_Starting_fromZero_H.csv')
 # print(tau_frame.tau_min_c.unique())
-tau_frame_RA = pd.concat([tau_frame_RA_C,tau_frame_RA_H])
+tau_frame_RA = pd.merge(tau_frame_RA_C,tau_frame_RA_H,on=['beta_n','beta_p'])
 attack_start_date = 60
 attack_end_date = 273
 result = []
