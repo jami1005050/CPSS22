@@ -25,21 +25,24 @@ def get_lambda_max(lower_set_ruc,upper_set_ruc,target_tau_max):
 def get_opt_epsilon_max(sorted_list,target_tau_max):
     epsilon_vector = [0 for i in range(0,len(sorted_list))] #Declaring a epsilon vector
     is_target_reached = False
+    k = 0
     while (is_target_reached == False):
+        print('iteration count : ',k)
+        k = k+1
         for i in range(0,len(sorted_list)): # upper points will not change the cardinality
             lower_set_ruc = [item for item in sorted_list if item < target_tau_max]  # splits into two sets
             upper_set_ruc = [item for item in sorted_list if item >= target_tau_max]
             cap_lamda = get_lambda_max(lower_set_ruc, upper_set_ruc, target_tau_max)  # calculate lagrangian const
             if(sorted_list[i]>=target_tau_max):
                 sorted_list[i] = sorted_list[i] + cap_lamda*lambda_p/2
-                epsilon_vector[i] = cap_lamda * lambda_p / 2
+                epsilon_vector[i] = epsilon_vector[i]+ cap_lamda * lambda_p / 2
             else:
                 sorted_list[i] = sorted_list[i] + cap_lamda*lambda_c/2
-                epsilon_vector[i] = cap_lamda * lambda_c / 2
+                epsilon_vector[i] = epsilon_vector[i]+ cap_lamda * lambda_c / 2
             t_max_u, t_sum = calculateTmax_ruc_QR_l1(sorted_list)
             print("Initial set length: ", len(lower_set_ruc), ' ', len(upper_set_ruc),"calculated lambda: ", cap_lamda)
             print('tau_max: ',t_max_u)
-            if(t_max_u>target_tau_max):
+            if(t_max_u>=target_tau_max):
                 is_target_reached = True
                 break
 

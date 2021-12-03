@@ -1,9 +1,9 @@
 import os
 from utility.common import *
 
-dataframe_add_Q_H = pd.read_csv('../../robust/tau_generation_OPT_BETA/RA_tau_OB_H_Q_add.csv')
+# dataframe_add_Q_H = pd.read_csv('../../robust/tau_generation_OPT_BETA/RA_tau_OB_H_Q_add.csv')
 dataframe_ded_Q_H = pd.read_csv('../../robust/tau_generation_OPT_BETA/RA_tau_OB_H_Q_ded.csv')
-dataframe_add_NQ_H = pd.read_csv('../../robust/tau_generation_OPT_BETA/RA_tau_OB_H_NQ_add.csv')
+# dataframe_add_NQ_H = pd.read_csv('../../robust/tau_generation_OPT_BETA/RA_tau_OB_H_NQ_add.csv')
 dataframe_ded_NQ_H = pd.read_csv('../../robust/tau_generation_OPT_BETA/RA_tau_OB_H_NQ_ded.csv')
 
 # result_array = []
