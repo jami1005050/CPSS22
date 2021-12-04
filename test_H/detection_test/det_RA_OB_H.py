@@ -38,11 +38,11 @@ result_array = []
 for index, row in tqdm(dataframe_ded_Q_H.iterrows(),desc='progress QH'):
     for del_evg_te in DEL_AVG_ARRAY_DED_TE:
         file_exists = os.path.exists(
-            '../../data/test_RUC_OPT_BETA/deductive/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
-                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM10M12.csv')
+            '../../data/test_RUC_OPT_BETA/test_RUC_RA/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
+                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM1M3.csv')
         if (file_exists == False): continue
-        res_frame = pd.read_csv('../../data/test_RUC_OPT_BETA/deductive/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
-                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM10M12.csv')
+        res_frame = pd.read_csv('../../data/test_RUC_OPT_BETA/test_RUC_RA/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
+                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM1M3.csv')
         tier1_anomaly_c, tier2_for_org_c, first_detected_org_c, false_alarm_ca = testing_tau(res_frame, row.tau_max,
                                                                                              row.tau_min)
 
@@ -61,7 +61,7 @@ for index, row in tqdm(dataframe_ded_Q_H.iterrows(),desc='progress QH'):
         result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('det_RA_QH_ded_12_03_21_M10M12.csv')
+tau_result_frame.to_csv('det_RA_QH_ded_12_03_21_M1M3.csv')
 
 # result_array = []
 # for index, row in dataframe_add_NQ_H.iterrows():
@@ -96,11 +96,11 @@ result_array = []
 for index, row in tqdm(dataframe_ded_NQ_H.iterrows(),desc='progress for NQH: '):
     for del_evg_te in DEL_AVG_ARRAY_DED_TE:
         file_exists = os.path.exists(
-            '../../data/test_RUC_OPT_BETA/deductive/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
-                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM10M12.csv')
+            '../../data/test_RUC_OPT_BETA/test_RUC_RA/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
+                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM1M3.csv')
         if (file_exists == False): continue
-        res_frame = pd.read_csv('../../data/test_RUC_OPT_BETA/deductive/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
-                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM10M12.csv')
+        res_frame = pd.read_csv('../../data/test_RUC_OPT_BETA/test_RUC_RA/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
+                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM1M3.csv')
         tier1_anomaly_c, tier2_for_org_c, first_detected_org_c, false_alarm_ca = testing_tau(res_frame, row.tau_max,
                                                                                              row.tau_min)
 
@@ -119,4 +119,4 @@ for index, row in tqdm(dataframe_ded_NQ_H.iterrows(),desc='progress for NQH: '):
         result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('det_RA_NQH_ded_12_03_21_M10M12.csv')
+tau_result_frame.to_csv('det_RA_NQH_ded_12_03_21_M1M3.csv')
