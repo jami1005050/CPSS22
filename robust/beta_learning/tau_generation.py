@@ -15,6 +15,8 @@ def get_standard_limit_by_key(ruc_frame,keys_TR):
     min_beta_array = np.arange(0,abs(min_candidate),step_size)
     print(max_candidate,min_candidate)
     tau_result_array = []
+    print("total iteration: ",(len(max_beta_array)*len(min_beta_array)))
+    i = 0
     for max_beta in max_beta_array:
         for min_beta in min_beta_array:
             tau_max_c, attack_t_max_loss_list_c, attack_t_max_list_c  = calculate_t_max_cauchy(ruc_frame = ruc_frame,
@@ -29,7 +31,8 @@ def get_standard_limit_by_key(ruc_frame,keys_TR):
                                              w1 = 0.5,
                                              w2 = 2.0,
                                              b = min_beta)
-
+            print("Iteration: ",i)
+            i = i+1
             # tau_max_h, attack_t_max_loss_list_h, attack_t_max_list_h = calculate_t_max_huber(ruc_frame=ruc_frame,
             #                                  keys=keys_TR,
             #                                  tau_range=[0, max_candidate,0.00025],
@@ -44,12 +47,11 @@ def get_standard_limit_by_key(ruc_frame,keys_TR):
             #                                  b=min_beta)
 
             object_c = {"beta_p":max_beta,'beta_n':min_beta,
-                        'tau_max_c':tau_max_c,'tau_min_c':tau_min_c,
-                        }#'tau_max_h':tau_max_h,'tau_min_h':tau_min_h
+                        'tau_max_c':tau_max_c,'tau_min_c':tau_min_c}#'tau_max_c':tau_max_c,'tau_min_c':tau_min_c,
             tau_result_array.append(object_c)
 
     tau_result_frame = pd.DataFrame(tau_result_array)
-    tau_result_frame.to_csv('RA_tau_DEL150_ROMAL03_Starting_fromZero_C.csv')
+    tau_result_frame.to_csv('RA_tau_DEL150_ROMAL03_Starting_fromZero_c.csv')
 
 def get_standard_limit_from_combined_frame(ruc_frame):
     max_candidate = ruc_frame['ruc'].max()  # returns the maximum between two columns
@@ -59,6 +61,8 @@ def get_standard_limit_from_combined_frame(ruc_frame):
     max_beta_array = np.arange(0, max_candidate, step_size)
     min_beta_array = np.arange(0, abs(min_candidate), step_size)
     tau_result_array = []
+    print("total iteration: ", (len(max_beta_array) * len(min_beta_array)))
+    i = 0
     for max_beta in max_beta_array:
         for min_beta in min_beta_array:
             tau_max_c, attack_t_max_loss_list_c, attack_t_max_list_c = calculate_t_max_cauchy_combined_frame(ruc_frame=ruc_frame,
@@ -82,14 +86,15 @@ def get_standard_limit_from_combined_frame(ruc_frame):
                                          w1=0.5,
                                          w2=2.0,
                                          b=min_beta)
-
+            print("Iteration: ", i)
+            i = i + 1
             object_c = {"beta_p": max_beta, 'beta_n': min_beta,
                         'tau_max_c': tau_max_c, 'tau_min_c': tau_min_c,
                         'tau_max_h': tau_max_h, 'tau_min_h': tau_min_h}
             tau_result_array.append(object_c)
 
     tau_result_frame = pd.DataFrame(tau_result_array)
-    tau_result_frame.to_csv('SA_tau_ro_8_eps0069_including_zero_step_for_beta.csv')
+    tau_result_frame.to_csv('SA_tau_ro_8_eps0069_including_zero_step_for_beta_CH.csv')
 
-# get_standard_limit_from_combined_frame(ruc_frame_SA)
-get_standard_limit_by_key(ruc_frame_RA,keys_TR)
+get_standard_limit_from_combined_frame(ruc_frame_SA)
+# get_standard_limit_by_key(ruc_frame_RA,keys_TR)
