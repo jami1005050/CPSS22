@@ -6,7 +6,7 @@ from utility.constant import *
 det_Q_ded = pd.read_csv('../detection_test/det_RA_QH_ded_12_03_21_M10M12.csv')
 # det_NQ_add = pd.read_csv('../detection_test/det_RA_NQ_H_add.csv')
 det_NQ_ded = pd.read_csv('../detection_test/det_RA_NQH_ded_12_03_21_M10M12.csv')
-attack_start_day = 273
+attack_start_day = 274
 attack_end_day = 365
 number_of_meters = 192
 number_of_reports = 24
@@ -42,7 +42,8 @@ for index, row in det_Q_ded.iterrows():
 
 tau_result_frame = pd.DataFrame(result_array)
 tau_result_frame.to_csv('impact_RA_QH_ded_12_03_21_M10M12.csv')
-#
+print(tau_result_frame['impact'].mean())
+
 # result_array = []
 # for index, row in det_NQ_add.iterrows():
 #     days_undetected = 0
@@ -74,3 +75,4 @@ for index, row in det_NQ_ded.iterrows():
 
 tau_result_frame = pd.DataFrame(result_array)
 tau_result_frame.to_csv('impact_RA_NQH_ded_12_03_21_M10M12.csv')
+print(tau_result_frame['impact'].mean())

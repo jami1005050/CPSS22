@@ -3,10 +3,10 @@ import pandas as pd
 from utility.constant import *
 
 # det_l1_add = pd.read_csv('../detection_test/det_RA_L1_add.csv')
-det_l1_ded = pd.read_csv('../detection_test/det_RA_L1_ded.csv')
+det_l1_ded = pd.read_csv('../detection_test/det_RA_L1_ded_12_03_21_M10M12.csv')
 # det_l2_add = pd.read_csv('../detection_test/det_RA_L2_add.csv')
-det_l2_ded = pd.read_csv('../detection_test/det_RA_L2_ded.csv')
-attack_start_day = 273
+det_l2_ded = pd.read_csv('../detection_test/det_RA_L2_ded_12_03_21_M10M12.csv')
+attack_start_day = 274
 attack_end_day = 365
 number_of_meters = 192
 number_of_reports = 24
@@ -38,14 +38,13 @@ for index, row in det_l1_ded.iterrows():
     else:
         days_undetected = attack_end_day - attack_start_day
     impact = row.del_avg_te * row.ro_mal * number_of_meters * E * days_undetected * number_of_reports / 1000
-    if(index == 630):
-        print("L2: ",impact,days_undetected,row.del_avg_te,row.ro_mal)
     object_c = {"del_avg_tr": row.del_avg_tr, 'del_avg_te': row.del_avg_te, 'ro_mal': row.ro_mal, 'efa': row.efa,
                 'type': 'ded', 'impact': impact}
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_RA_L1_ded.csv')
+print(tau_result_frame['impact'].mean())
+tau_result_frame.to_csv('impact_RA_L1_ded_12_03_21_M10M12.csv')
 #
 # result_array = []
 # for index, row in det_l2_add.iterrows():
@@ -72,11 +71,11 @@ for index, row in det_l2_ded.iterrows():
         days_undetected = attack_end_day - attack_start_day
 
     impact = row.del_avg_te * row.ro_mal * number_of_meters * E * days_undetected * number_of_reports / 1000
-    if (index == 630):
-        print("L2: ",impact,days_undetected,row.del_avg_te,row.ro_mal)
+
     object_c = {"del_avg_tr": row.del_avg_tr, 'del_avg_te': row.del_avg_te, 'ro_mal': row.ro_mal, 'efa': row.efa,
                 'type': 'ded', 'impact': impact}
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_RA_L2_ded.csv')
+tau_result_frame.to_csv('impact_RA_L2_ded_12_03_21_M10M12.csv')
+print(tau_result_frame['impact'].mean())
