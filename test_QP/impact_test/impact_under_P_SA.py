@@ -3,13 +3,13 @@ import pandas as pd
 from utility.constant import *
 
 # det_l1_add = pd.read_csv('../detection_test/det_SA_L1_add.csv')
-det_l1_ded = pd.read_csv('../detection_test/det_SA_L1_ded.csv')
+det_l1_ded = pd.read_csv('../detection_test/det_SA_L1_ded_12_03_21_M4M6.csv')
 # det_l2_add = pd.read_csv('../detection_test/det_SA_L2_add.csv')
-det_l2_ded = pd.read_csv('../detection_test/det_SA_L2_ded.csv')
+det_l2_ded = pd.read_csv('../detection_test/det_SA_L2_ded_12_03_21_M4M6.csv')
 # sal1 = pd.read_csv('../../robust/tau_generation_OPT_BETA/SA_tau_L1.csv')
 # sal2 = pd.read_csv('../../robust/tau_generation_OPT_BETA/SA_tau_L2.csv')
-attack_start_day = 273
-attack_end_day = 365
+attack_start_day = 91
+attack_end_day = 181
 number_of_meters = 192
 number_of_reports = 24
 # result_array = []
@@ -42,7 +42,7 @@ for index, row in det_l1_ded.iterrows():
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_SA_L1_ded.csv')
+tau_result_frame.to_csv('impact_SA_L1_ded_12_03_21_M4M6.csv')
 
 # result_array = []
 # for index, row in det_l2_add.iterrows():
@@ -74,4 +74,4 @@ for index, row in det_l2_ded.iterrows():
     result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('impact_SA_L2_ded.csv')
+tau_result_frame.to_csv('impact_SA_L2_ded_12_03_21_M4M6.csv')

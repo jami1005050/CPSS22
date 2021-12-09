@@ -2,6 +2,7 @@ from utility.common import *
 from tqdm import tqdm
 dataframe_tau_Q = pd.read_csv('../../robust/tau_generation_OPT_BETA/SA_tau_CQ_12_03_21.csv')
 dataframe_tau_NQ = pd.read_csv('../../robust/tau_generation_OPT_BETA/SA_tau_CNQ_12_03_21.csv')
+testing_residual_benign = pd.read_csv("../../data/test_ruc/test_residuals/Test_RUC_Benign.csv")  # 91-181
 
 # result_array = []
 # for index,row in dataframe_tau_Q.iterrows():
@@ -34,27 +35,30 @@ for index, row in tqdm(dataframe_tau_Q.iterrows(),desc='Progress QC:'):
         for ro_mal in RO_MAL_ARRAY:
             res_frame = pd.read_csv(
                 '../../data/test_RUC_OPT_BETA/test_RUC_SA/Test_RUC_TE_' + str(del_evg_te) + '_RO_' + str(
-                    ro_mal) + 'dedM1M3.csv')
+                    ro_mal) + 'dedM4M6.csv')
             tier1_anomaly_c, tier2_for_org_c, first_detected_org_c, false_alarm_ca = testing_tau(res_frame, row.tau_max,
                                                                                                  row.tau_min)
 
-            S_QC = 0
-            if (len(false_alarm_ca) > 0):
-                for i in range(len(false_alarm_ca)):
+            fa_C = testing_EFA(testing_residual_benign, row.tau_max, row.tau_min)
+            efa_QC = 365
+            if (len(fa_C) > 1):
+                T_btw_FA = 0
+                for i in range(len(fa_C)):
                     if (i == 0):
-                        S_QC += false_alarm_ca[i] - 1
+                        T_btw_FA += fa_C[i] - 1
                         continue
-                    S_QC += false_alarm_ca[i] - false_alarm_ca[i - 1]
-                    # print(S_Q)
+                    T_btw_FA += fa_C[i] - fa_C[i - 1]
                     i += 1
-                S_QC += 365 - false_alarm_ca[len(false_alarm_ca) - 1]
-            object_c = {"epsilon": row.epsilon, 'del_avg_te': del_evg_te, 'ro_mal': ro_mal, 'efa': S_QC,'ro_max':row.ro_max,
+                T_btw_FA += 365 - fa_C[len(fa_C) - 1]
+                efa_QC = T_btw_FA / (len(fa_C) - 1)
+
+            object_c = {"epsilon": row.epsilon, 'del_avg_te': del_evg_te, 'ro_mal': ro_mal, 'efa': efa_QC,'ro_max':row.ro_max,
                         'type': 'ded', 'tau_max': row.tau_max, 'tau_min': row.tau_min,
                         'day_detected': first_detected_org_c}
             result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('det_SA_QC_ded_12_03_21_M1M3.csv')
+tau_result_frame.to_csv('det_SA_QC_ded_12_03_21_M4M6.csv')
 
 # result_array = []
 # for index, row in dataframe_tau_NQ.iterrows():
@@ -90,24 +94,27 @@ for index, row in tqdm(dataframe_tau_NQ.iterrows(),desc='Progress NQC:'):
         for ro_mal in RO_MAL_ARRAY:
             res_frame = pd.read_csv(
                 '../../data/test_RUC_OPT_BETA/test_RUC_SA/Test_RUC_TE_' + str(del_evg_te) + '_RO_' + str(
-                    ro_mal) + 'dedM1M3.csv')
+                    ro_mal) + 'dedM4M6.csv')
             tier1_anomaly_c, tier2_for_org_c, first_detected_org_c, false_alarm_ca = testing_tau(res_frame, row.tau_max,
                                                                                                  row.tau_min)
 
-            S_QC = 0
-            if (len(false_alarm_ca) > 0):
-                for i in range(len(false_alarm_ca)):
+            fa_C = testing_EFA(testing_residual_benign, row.tau_max, row.tau_min)
+            efa_QC = 365
+            if (len(fa_C) > 1):
+                T_btw_FA = 0
+                for i in range(len(fa_C)):
                     if (i == 0):
-                        S_QC += false_alarm_ca[i] - 1
+                        T_btw_FA += fa_C[i] - 1
                         continue
-                    S_QC += false_alarm_ca[i] - false_alarm_ca[i - 1]
-                    # print(S_Q)
+                    T_btw_FA += fa_C[i] - fa_C[i - 1]
                     i += 1
-                S_QC += 365 - false_alarm_ca[len(false_alarm_ca) - 1]
-            object_c = {"epsilon": row.epsilon, 'del_avg_te': del_evg_te, 'ro_mal': ro_mal, 'efa': S_QC,'ro_max':row.ro_max,
+                T_btw_FA += 365 - fa_C[len(fa_C) - 1]
+                efa_QC = T_btw_FA / (len(fa_C) - 1)
+
+            object_c = {"epsilon": row.epsilon, 'del_avg_te': del_evg_te, 'ro_mal': ro_mal, 'efa': efa_QC,'ro_max':row.ro_max,
                         'type': 'ded', 'tau_max': row.tau_max, 'tau_min': row.tau_min,
                         'day_detected': first_detected_org_c}
             result_array.append(object_c)
 
 tau_result_frame = pd.DataFrame(result_array)
-tau_result_frame.to_csv('det_SA_NQC_ded_12_03_21_M1M3.csv')
+tau_result_frame.to_csv('det_SA_NQC_ded_12_03_21_M4M6.csv')

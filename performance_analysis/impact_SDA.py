@@ -1,174 +1,275 @@
-import pandas as pd
+import matplotlib.ticker
 import matplotlib.pyplot as plt
+import json
+import pandas as pd
+import matplotlib
+#impact_x m4m6 impact_y m7m9 impact m10m12
+SMALL_SIZE = 12
+MEDIUM_SIZE = 16
+BIGGER_SIZE = 24
+plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
+# plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
+plt.rc('axes', labelsize=BIGGER_SIZE)    # fontsize of the x and y labels
+plt.rc('xtick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
+plt.rc('ytick', labelsize=MEDIUM_SIZE)    # fontsize of the tick labels
+plt.rc('legend', fontsize=MEDIUM_SIZE)    #
 
-impact_l1_ded = pd.read_csv('../test_QP/impact_test/impact_SA_L1_ded.csv')
-impact_l2_ded = pd.read_csv('../test_QP/impact_test/impact_SA_L2_ded.csv')
-impact_Q_C_ded = pd.read_csv('../test_C/impact_Test/impact_SA_QC_ded_12_03_21_M10M12.csv')
-impact_NQ_C_ded = pd.read_csv('../test_C/impact_Test/impact_SA_NQC_ded_12_03_21_M10M12.csv')
-impact_Q_H_ded = pd.read_csv('../test_H/impact_test/impact_SA_QH_ded_12_03_21_M10M12.csv')
-impact_NQ_H_ded = pd.read_csv('../test_H/impact_test/impact_SA_NQH_ded_12_03_21_M10M12.csv')
-avg_l1 = impact_l1_ded['impact'].mean()
-avg_l2 = impact_l2_ded['impact'].mean()
-avg_QC = impact_Q_C_ded['impact'].mean()
-avg_NQC = impact_NQ_C_ded['impact'].mean()
-avg_QH = impact_Q_H_ded['impact'].mean()
-avg_NQH = impact_NQ_H_ded['impact'].mean()
-print(avg_l1,' ',avg_l2,' ',avg_QC,' ',avg_NQC,' ',avg_QH,' ',avg_NQH)
-#In the plot the factors involved are following ro_max,del_avg_te, epsilon, ro_mal
-#Ro_MAX 1:Large case 50 2:middle case 28 3:small case for 3D plot 10
-#0.01385
-impactl1ded_VEPS = impact_l1_ded[( impact_l1_ded['ro_max'] == 28 )&
-                                       (impact_l1_ded['del_avg_te'] == 50)&
-                                       ( impact_l1_ded['ro_mal'] == 0.30)]#
-impactl2ded_VEPS = impact_l2_ded[( impact_l2_ded['ro_max'] == 28)&
-                                       (impact_l2_ded['del_avg_te'] == 50)&
-                                       ( impact_l2_ded['ro_mal'] == 0.30)]
-impactQCded_VEPS = impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 28 )&
-                                        (impact_Q_C_ded['del_avg_te'] == 50)&
-                                        ( impact_Q_C_ded['ro_mal'] == 0.30)]
-impactNQCded_VEPS = impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 28 )&
-                                          (impact_NQ_C_ded['del_avg_te'] == 50)&
-                                          ( impact_NQ_C_ded['ro_mal'] == 0.30)]
-impactQHded_VEPS = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 28)&
-                                        (impact_Q_H_ded['del_avg_te'] == 50)&
-                                        ( impact_Q_H_ded['ro_mal'] == 0.30)]
-impactNQHded_VEPS = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 28) &
-                                          (impact_NQ_H_ded['del_avg_te'] == 50)&
-                                          (impact_NQ_H_ded['ro_mal'] == 0.30)]
+impact_l1_ded = pd.read_csv('impact_SA_l1_ded_M4M12_Frame.csv')
+impact_l2_ded = pd.read_csv('impact_SA_l2_ded_M4M12_Frame.csv')
+impact_Q_C_ded = pd.read_csv('impact_SA_QC_ded_M4M12_Frame.csv')
+impact_NQ_C_ded = pd.read_csv('impact_SA_NQC_ded_M4M12_Frame.csv')
+impact_Q_H_ded = pd.read_csv('impact_SA_QH_ded_M4M12_Frame.csv')
+impact_NQ_H_ded = pd.read_csv('impact_SA_NQH_ded_M4M12_Frame.csv')
 
+impact_l1_ded['impact_m'] = impact_l1_ded[['impact_x', 'impact_y','impact']].mean(axis=1)
+impact_l2_ded['impact_m']= impact_l2_ded[['impact_x', 'impact_y','impact']].mean(axis=1)
+impact_Q_C_ded['impact_m'] = impact_Q_C_ded[['impact_x', 'impact_y','impact']].mean(axis=1)
+impact_NQ_C_ded['impact_m'] = impact_NQ_C_ded[['impact_x', 'impact_y','impact']].mean(axis=1)
+impact_Q_H_ded['impact_m'] = impact_Q_H_ded[['impact_x', 'impact_y','impact']].mean(axis=1)
+impact_NQ_H_ded['impact_m'] = impact_NQ_H_ded[['impact_x', 'impact_y','impact']].mean(axis=1)
 
-plt.plot(impactl1ded_VEPS['epsilon'],impactl1ded_VEPS['impact'],label = 'L1',linestyle = '--',dashes =(5,1))
-plt.plot(impactl2ded_VEPS['epsilon'],impactl2ded_VEPS['impact'],label = 'L2',linestyle = ':',dashes =(5,1))
-plt.plot(impactQCded_VEPS['epsilon'],impactQCded_VEPS['impact'],label = 'QC',linestyle = '-.',dashes =(5,1))
-plt.plot(impactNQCded_VEPS['epsilon'],impactNQCded_VEPS['impact'],label = 'NQC',linestyle = '--',dashes =(10,1))
-plt.plot(impactQHded_VEPS['epsilon'],impactQHded_VEPS['impact'],label = 'QH',linestyle = '--',dashes =(10,2))
-plt.plot(impactNQHded_VEPS['epsilon'],impactNQHded_VEPS['impact'],label = 'NQH',linestyle = '--',dashes =(5,2))
-plt.xlabel(r'$\epsilon$')
-plt.ylabel('Impact')
-plt.legend()
-plt.show()
+# print(impact_NQ_C_ded[impact_NQ_C_ded['impact_m'] >impact_NQ_H_ded['impact_m']])
+impactl1ded_VDTE = impact_l1_ded[( impact_l1_ded['ro_max'] == 32 )&
+                                 (impact_l1_ded['epsilon'] == 0.00035)&
+                                 ( impact_l1_ded['ro_mal'] == 0.40)&
+                                 (impact_l1_ded['del_avg_te'] <120)]#
+impactl2ded_VDTE = impact_l2_ded[( impact_l2_ded['ro_max'] == 32)&
+                                 (impact_l2_ded['epsilon'] == 0.00035)&
+                                 ( impact_l2_ded['ro_mal'] == 0.40)&
+                                 (impact_l2_ded['del_avg_te'] <120)]
+impactQCded_VDTE = impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 32 )&
+                                  (impact_Q_C_ded['epsilon'] == 0.00060)&
+                                  ( impact_Q_C_ded['ro_mal'] == 0.40)&
+                                  (impact_Q_C_ded['del_avg_te'] <120)]
+impactNQCded_VDTE= impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 32 )&
+                                   (impact_NQ_C_ded['epsilon'] == 0.00060)&
+                                   ( impact_NQ_C_ded['ro_mal'] == 0.30)&
+                                   (impact_NQ_C_ded['del_avg_te'] <120)]
+impactQHded_VDTE = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 32)&
+                                  (impact_Q_H_ded['epsilon'] == 0.00035)&
+                                  ( impact_Q_H_ded['ro_mal'] == 0.40)&
+                                  (impact_Q_H_ded['del_avg_te'] <120)]
+impactNQHded_VDTE = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 32) &
+                                    (impact_NQ_H_ded['epsilon'] == 0.00060)&
+                                    (impact_NQ_H_ded['ro_mal'] == 0.30)&
+                                    (impact_NQ_H_ded['del_avg_te'] <120)
+                                    ]
 
-
-#0.01385
-impactl1ded_VDTE = impact_l1_ded[( impact_l1_ded['ro_max'] == 28 )&
-                                       (impact_l1_ded['epsilon'] == 0.01385)&
-                                       ( impact_l1_ded['ro_mal'] == 0.30)]#
-impactl2ded_VDTE = impact_l2_ded[( impact_l2_ded['ro_max'] == 28)&
-                                       (impact_l2_ded['epsilon'] == 0.01385)&
-                                       ( impact_l2_ded['ro_mal'] == 0.30)]
-impactQCded_VDTE = impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 28 )&
-                                        (impact_Q_C_ded['epsilon'] == 0.01385)&
-                                        ( impact_Q_C_ded['ro_mal'] == 0.30)]
-impactNQCded_VDTE= impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 28 )&
-                                          (impact_NQ_C_ded['epsilon'] == 0.01385)&
-                                          ( impact_NQ_C_ded['ro_mal'] == 0.30)]
-impactQHded_VDTE = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 28)&
-                                        (impact_Q_H_ded['epsilon'] == 0.01385)&
-                                        ( impact_Q_H_ded['ro_mal'] == 0.30)]
-impactNQHded_VDTE = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 28) &
-                                          (impact_NQ_H_ded['epsilon'] == 0.01385)&
-                                          (impact_NQ_H_ded['ro_mal'] == 0.30)]
-
-
-plt.plot(impactl1ded_VDTE['del_avg_te'],impactl1ded_VDTE['impact'],label = 'L1',linestyle = '--',dashes =(5,1))
-plt.plot(impactl2ded_VDTE['del_avg_te'],impactl2ded_VDTE['impact'],label = 'L2',linestyle = ':',dashes =(5,1))
-plt.plot(impactQCded_VDTE['del_avg_te'],impactQCded_VDTE['impact'],label = 'QC',linestyle = '-.',dashes =(5,1))
-plt.plot(impactNQCded_VDTE['del_avg_te'],impactNQCded_VDTE['impact'],label = 'NQC',linestyle = '--',dashes =(10,1))
-plt.plot(impactQHded_VDTE['del_avg_te'],impactQHded_VDTE['impact'],label = 'QH',linestyle = '--',dashes =(10,2))
-plt.plot(impactNQHded_VDTE['del_avg_te'],impactNQHded_VDTE['impact'],label = 'NQH',linestyle = '--',dashes =(5,2))
-plt.xlabel(r'$\delta_{avg}^{(te)}$')
-plt.ylabel('Impact')
-plt.legend()
-plt.show()
-
-impactl1ded_VROMAL = impact_l1_ded[( impact_l1_ded['ro_max'] == 28 )&
-                                       (impact_l1_ded['epsilon'] == 0.01385)&
-                                       ( impact_l1_ded['del_avg_te'] == 130)]#
-impactl2ded_VROMAL = impact_l2_ded[( impact_l2_ded['ro_max'] == 28)&
-                                       (impact_l2_ded['epsilon'] == 0.01385)&
-                                       ( impact_l2_ded['del_avg_te'] == 130)]
-impactQCded_VROMAL= impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 28 )&
-                                        (impact_Q_C_ded['epsilon'] == 0.01385)&
-                                        ( impact_Q_C_ded['del_avg_te'] == 130)]
-impactNQCded_VROMAL = impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 28 )&
-                                          (impact_NQ_C_ded['epsilon'] == 0.01385)&
-                                          ( impact_NQ_C_ded['del_avg_te'] == 130)]
-impactQHded_VROMAL = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 28)&
-                                        (impact_Q_H_ded['epsilon'] == 0.01385)&
-                                        ( impact_Q_H_ded['del_avg_te'] == 130)]
-impactNQHded_VROMAL = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 28) &
-                                          (impact_NQ_H_ded['epsilon'] == 0.01385)&
-                                          (impact_NQ_H_ded['del_avg_te'] == 130)]
-
-
-plt.plot(impactl1ded_VROMAL['ro_mal'],impactl1ded_VROMAL['impact'],label = 'L1',linestyle = '--',dashes =(5,1))
-plt.plot(impactl2ded_VROMAL['ro_mal'],impactl2ded_VROMAL['impact'],label = 'L2',linestyle = ':',dashes =(5,1))
-plt.plot(impactQCded_VROMAL['ro_mal'],impactQCded_VROMAL['impact'],label = 'QC',linestyle = '-.',dashes =(5,1))
-plt.plot(impactNQCded_VROMAL['ro_mal'],impactNQCded_VROMAL['impact'],label = 'NQC',linestyle = '--',dashes =(10,1))
-plt.plot(impactQHded_VROMAL['ro_mal'],impactQHded_VROMAL['impact'],label = 'QH',linestyle = '--',dashes =(10,2))
-plt.plot(impactNQHded_VROMAL['ro_mal'],impactNQHded_VROMAL['impact'],label = 'NQH',linestyle = '--',dashes =(5,2))
-plt.xlabel(r'$\rho_{mal}$')
-plt.ylabel('Impact')
-plt.legend()
-plt.show()
-
-
-impactl1ded_VROMAX = impact_l1_ded[( impact_l1_ded['del_avg_te'] == 130 )&
-                                       (impact_l1_ded['epsilon'] == 0.01385)&
-                                       ( impact_l1_ded['ro_mal'] == 0.30)]#
-impactl2ded_VROMAX = impact_l2_ded[( impact_l2_ded['del_avg_te'] == 130)&
-                                       (impact_l2_ded['epsilon'] == 0.01385)&
-                                       ( impact_l2_ded['ro_mal'] == 0.30)]
-impactQCded_VROMAX = impact_Q_C_ded[( impact_Q_C_ded['del_avg_te'] == 130 )&
-                                        (impact_Q_C_ded['epsilon'] == 0.01385)&
-                                        ( impact_Q_C_ded['ro_mal'] == 0.30)]
-impactNQCded_VROMAX = impact_NQ_C_ded[( impact_NQ_C_ded['del_avg_te'] == 130 )&
-                                          (impact_NQ_C_ded['epsilon'] == 0.01385)&
-                                          ( impact_NQ_C_ded['del_avg_te'] == 0.30)]
-impactQHded_VROMAX = impact_Q_H_ded[( impact_Q_H_ded['del_avg_te'] == 130)&
-                                        (impact_Q_H_ded['epsilon'] == 0.01385)&
-                                        ( impact_Q_H_ded['ro_mal'] == 0.30)]
-impactNQHded_VROMAX = impact_NQ_H_ded[(impact_NQ_H_ded['del_avg_te'] == 130) &
-                                          (impact_NQ_H_ded['epsilon'] == 0.01385)&
-                                          (impact_NQ_H_ded['ro_mal'] == 0.30)]
-
-
-plt.plot(impactl1ded_VROMAX['ro_max'],impactl1ded_VROMAX['impact'],label = 'L1',linestyle = '--',dashes =(5,1))
-plt.plot(impactl2ded_VROMAX['ro_max'],impactl2ded_VROMAX['impact'],label = 'L2',linestyle = ':',dashes =(5,1))
-plt.plot(impactQCded_VROMAX['ro_max'],impactQCded_VROMAX['impact'],label = 'QC',linestyle = '-.',dashes =(5,1))
-plt.plot(impactNQCded_VROMAX['ro_max'],impactNQCded_VROMAX['impact'],label = 'NQC',linestyle = '--',dashes =(10,1))
-plt.plot(impactQHded_VROMAX['ro_max'],impactQHded_VROMAX['impact'],label = 'QH',linestyle = '--',dashes =(10,2))
-plt.plot(impactNQHded_VROMAX['ro_max'],impactNQHded_VROMAX['impact'],label = 'NQH',linestyle = '--',dashes =(5,2))
-plt.xlabel('Number of Perturb Points')
-plt.ylabel('Impact')
-plt.legend()
-plt.show()
-
-
-# fig = plt.figure()
-# ax = fig.add_subplot(111, projection='3d')
-# p = ax.plot_trisurf(impactl1ded_Fix_RO_MAX['epsilon'],
-#                impactl1ded_Fix_RO_MAX['del_avg_te'],
-#                impactl1ded_Fix_RO_MAX['impact'],label ='QH',color='tab:olive') #alpha=0.5,
+print(impact_NQ_C_ded[(impact_NQ_C_ded['impact_m'] < impact_Q_C_ded['impact_m'])]['ro_max'].unique().tolist())
+print(impact_NQ_C_ded[(impact_NQ_C_ded['impact_m'] < impact_Q_C_ded['impact_m'])]['ro_mal'].unique().tolist())
+print(impact_NQ_C_ded[(impact_NQ_C_ded['ro_max']>=20)&(impact_NQ_C_ded['impact_m'] < impact_Q_C_ded['impact_m'])]['epsilon'].value_counts()) #['epsilon'].unique().tolist()
 #
-# q= ax.plot_trisurf(impactl2ded_Fix_RO_MAX['epsilon'],
-#                impactl2ded_Fix_RO_MAX['del_avg_te'],  #     cmap=matplotlib.cm.inferno,antialiased=True,
-#                impactl2ded_Fix_RO_MAX['impact'],label='QC',color='tab:blue')#alpha=0.5,
-# p._facecolors2d = p._facecolor3d
-# p._edgecolors2d = p._edgecolor3d
-#
-# q._facecolors2d = q._facecolor3d
-# q._edgecolors2d = q._edgecolor3d
-# ax.set_xlabel('$\delta_{avg}^{(p)}$',labelpad=10)
-# ax.set_ylabel(r'$\rho_{mal}^{(p)}$',labelpad=10)
-# ax.set_zlabel('Impact',labelpad=10)
-# # ax.set_xlim3d(min(impact_nQ_FIX_TR_DEL['tr_del_avg']),max(impact_nQ_FIX_TR_DEL['tr_del_avg']))
-# # ax.set_ylim3d(min(impact_nQ_FIX_TR_DEL['romal']),max(impact_nQ_FIX_TR_DEL['romal']))
-# # ax.set_zlim3d(min(impact_nQ_FIX_TR_DEL['impact_C']),300)
-# # ax.xaxis.set_major_locator(plt.MaxNLocator(2))
-# # ax.yaxis.set_major_locator(plt.MaxNLocator(3))
-# # ax.zaxis.set_major_locator(plt.MaxNLocator(3))
-# ax.view_init(elev=20, azim=-20.)
-# # fig.colorbar(p,ax=ax,orientation="horizontal", pad=0.05)
+# plt.plot(impactl1ded_VDTE['del_avg_te'],impactl1ded_VDTE['impact_m'],label = 'L1',linestyle = '--',dashes =(5,1),marker = 'o')
+# plt.plot(impactl2ded_VDTE['del_avg_te'],impactl2ded_VDTE['impact_m'],label = 'L2',linestyle = ':',dashes =(5,1),marker = '<')
+plt.plot(impactQCded_VDTE['del_avg_te'],impactQCded_VDTE['impact_m'],label = 'QC',linestyle = '-.',dashes =(5,1),marker = '>')
+plt.plot(impactNQCded_VDTE['del_avg_te'],impactNQCded_VDTE['impact_m'],label = 'NQC',linestyle = '--',dashes =(10,1),marker='o')
+# plt.plot(impactQHded_VDTE['del_avg_te'],impactQHded_VDTE['impact_m'],label = 'QH',linestyle = '--',dashes =(10,2),marker = 'v')
+# plt.plot(impactNQHded_VDTE['del_avg_te'],impactNQHded_VDTE['impact_m'],label = 'NQH',linestyle = '--',dashes =(5,2),marker='D')
+plt.xlabel(r'Evasion Strength($\delta_{avg}^{(te)}$)')
+plt.ylabel('Impact(USD)')
+plt.legend()
+plt.show()
+#region bar--plot LS
+
+impactl1ded_VDTE = impact_l1_ded[( impact_l1_ded['ro_max'] == 24 )&
+                                 (impact_l1_ded['epsilon'] == 0.0001)&
+                                 ( impact_l1_ded['ro_mal'] == 0.30)&
+                                 (impact_l1_ded['del_avg_te'] ==60)]['impact_m'].tolist()#
+impactl2ded_VDTE = impact_l2_ded[( impact_l2_ded['ro_max'] == 24)&
+                                 (impact_l2_ded['epsilon'] == 0.0001)&
+                                 ( impact_l2_ded['ro_mal'] == 0.30)&
+                                 (impact_l2_ded['del_avg_te'] ==60)]['impact_m'].tolist()
+impactQCded_VDTE = impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 32 )&
+                                  (impact_Q_C_ded['epsilon'] == 0.00060)&
+                                  ( impact_Q_C_ded['ro_mal'] == 0.40)&
+                                  (impact_Q_C_ded['del_avg_te'] ==60)]['impact_m'].tolist()
+impactNQCded_VDTE= impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 32 )&
+                                   (impact_NQ_C_ded['epsilon'] == 0.00060)&
+                                   ( impact_NQ_C_ded['ro_mal'] == 0.30)&
+                                   (impact_NQ_C_ded['del_avg_te'] ==60)]['impact_m'].tolist()
+impactQHded_VDTE = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 24)&
+                                  (impact_Q_H_ded['epsilon'] == 0.0001)&
+                                  ( impact_Q_H_ded['ro_mal'] == 0.30)&
+                                  (impact_Q_H_ded['del_avg_te'] ==60)]['impact_m'].tolist()
+impactNQHded_VDTE = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 32) &
+                                    (impact_NQ_H_ded['epsilon'] == 0.00060)&
+                                    (impact_NQ_H_ded['ro_mal'] == 0.30)&
+                                    (impact_NQ_H_ded['del_avg_te'] ==60)
+                                    ]['impact_m'].tolist()
+# plt.bar(["QL1","QL2","QC","QH"],
+#         [impactl1ded_VDTE[0],impactl2ded_VDTE[0],impactQCded_VDTE[0],impactQHded_VDTE[0]],
+#         color=[ 'violet','blue','cyan','tab:orange'])
+
+plt.bar(["NQC","NQH"],
+        [impactNQCded_VDTE[0],impactNQHded_VDTE[0]],
+        color=['tab:green','tab:olive'])
+
+# plt.bar(["QC","NQC"],
+#         [impactQCded_VDTE[0],impactNQCded_VDTE[0]],
+#         color=[ 'cyan','tab:green'])
+plt.ylabel('Impact(USD)')
+plt.ylim(50,70)
 # plt.legend()
-# # plt.show()
+plt.show()
+
+
+
+#endregion
+
+
+impactl1ded_VROMAL = impact_l1_ded[( impact_l1_ded['ro_max'] == 10 )&
+                                   (impact_l1_ded['epsilon'] == 0.00485)&
+                                   (impact_l1_ded['ro_mal'] == 0.30)&
+                                   ( impact_l1_ded['del_avg_te'] < 140)]#
+impactl2ded_VROMAL = impact_l2_ded[( impact_l2_ded['ro_max'] == 10)&
+                                   (impact_l2_ded['epsilon'] == 0.00485)&
+                                   (impact_l2_ded['ro_mal'] == 0.30)&
+                                   ( impact_l2_ded['del_avg_te'] < 140)]
+impactQCded_VROMAL= impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 16 )&
+                                   (impact_Q_C_ded['epsilon'] == 0.0036)&
+                                   (impact_Q_C_ded['ro_mal'] == 0.30)&
+                                   (( impact_NQ_C_ded['del_avg_te']< 140)&( impact_NQ_C_ded['del_avg_te']>=60))]
+impactNQCded_VROMAL = impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 16 )&
+                                      (impact_NQ_C_ded['epsilon'] == 0.00485)&
+                                      (impact_NQ_C_ded['ro_mal'] == 0.30)&
+                                      (( impact_NQ_C_ded['del_avg_te']< 140)&( impact_NQ_C_ded['del_avg_te']>=60))]#&( impact_NQ_C_ded['del_avg_te']< 140)]
+impactQHded_VROMAL = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 10)&
+                                    (impact_Q_H_ded['epsilon'] == 0.00485)&
+                                    (impact_Q_H_ded['ro_mal'] == 0.30)&
+                                    ( impact_Q_H_ded['del_avg_te'] < 140)]
+impactNQHded_VROMAL = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 16) &
+                                      (impact_NQ_H_ded['epsilon'] == 0.0036)&
+                                      (impact_NQ_H_ded['ro_mal'] == 0.40)&
+                                      (( impact_NQ_H_ded['del_avg_te']< 140)&( impact_NQ_H_ded['del_avg_te']>=60))]
+
+# plt.plot(impactl1ded_VROMAL['del_avg_te'],impactl1ded_VROMAL['impact_m'],label = 'L1',linestyle = '--',dashes =(5,1),marker = 'o')
+# plt.plot(impactl2ded_VROMAL['del_avg_te'],impactl2ded_VROMAL['impact_m'],label = 'L2',linestyle = ':',dashes =(5,1),marker = '<')
+# plt.plot(impactQCded_VROMAL['del_avg_te'],impactQCded_VROMAL['impact_m'],label = 'QC',linestyle = '-.',dashes =(5,1),marker = '>')
+# plt.plot(impactNQCded_VROMAL['del_avg_te'],impactNQCded_VROMAL['impact_m'],label = 'NQC',linestyle = '--',dashes =(10,1),marker='o')
+# # plt.plot(impactQHded_VROMAL['del_avg_te'],impactQHded_VROMAL['impact_m'],label = 'QH',linestyle = '--',dashes =(10,2),marker = 'v')
+# # plt.plot(impactNQHded_VROMAL['del_avg_te'],impactNQHded_VROMAL['impact_m'],label = 'NQH',linestyle = '--',dashes =(5,2),marker='D')
+# plt.xlabel(r'Evasion Strength$\delta_{te}$')
+# plt.ylabel('Impact(USD)')
+# plt.legend()
+# plt.show()
+#region bar--plot MS
+
+impactl1ded_VROMAL = impact_l1_ded[( impact_l1_ded['ro_max'] == 10 )&
+                                   (impact_l1_ded['epsilon'] == 0.00485)&
+                                   (impact_l1_ded['ro_mal'] == 0.30)&
+                                   ( impact_l1_ded['del_avg_te'] == 90)]['impact_m'].tolist()#
+impactl2ded_VROMAL = impact_l2_ded[( impact_l2_ded['ro_max'] == 10)&
+                                   (impact_l2_ded['epsilon'] == 0.00485)&
+                                   (impact_l2_ded['ro_mal'] == 0.30)&
+                                   ( impact_l2_ded['del_avg_te'] == 90)]['impact_m'].tolist()
+impactQCded_VROMAL= impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 16 )&
+                                   (impact_Q_C_ded['epsilon'] == 0.0036)&
+                                   (impact_Q_C_ded['ro_mal'] == 0.30)&
+                                   (( impact_NQ_C_ded['del_avg_te']< 140)&( impact_NQ_C_ded['del_avg_te']>=60))]['impact_m'].tolist()
+impactNQCded_VROMAL = impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 16 )&
+                                      (impact_NQ_C_ded['epsilon'] == 0.00485)&
+                                      (impact_NQ_C_ded['ro_mal'] == 0.30)&
+                                      (( impact_NQ_C_ded['del_avg_te']==90))]['impact_m'].tolist()
+impactQHded_VROMAL = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 10)&
+                                    (impact_Q_H_ded['epsilon'] == 0.00485)&
+                                    (impact_Q_H_ded['ro_mal'] == 0.30)&
+                                    ( impact_Q_H_ded['del_avg_te'] == 90)]['impact_m'].tolist()
+impactNQHded_VROMAL = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 16) &
+                                      (impact_NQ_H_ded['epsilon'] == 0.0036)&
+                                      (impact_NQ_H_ded['ro_mal'] == 0.40)&
+                                      (( impact_NQ_H_ded['del_avg_te']==90))]['impact_m'].tolist()
+
+# plt.bar(["QL1","QL2","QC","QH"],
+#         [impactl1ded_VROMAL[0],impactl2ded_VROMAL[0],impactQCded_VROMAL[0],impactQHded_VROMAL[0]],
+#         color=[ 'violet','blue','cyan','tab:orange'])
+
+# plt.bar(["QC","NQC"],
+#         [impactQCded_VROMAL[0],impactNQCded_VROMAL[0]],
+#         color=[ 'cyan','tab:green'])
+# plt.ylabel('Impact(USD)')
+# # plt.ylim(80,160)
+# # plt.legend()
+# plt.show()
+
+
+#endregion
+
+
+impactl1ded_VROMAL = impact_l1_ded[( impact_l1_ded['ro_max'] == 4 )&
+                                   (impact_l1_ded['epsilon'] == 0.0156)&
+                                   (impact_l1_ded['ro_mal'] == 0.30)&
+                                   ( impact_l1_ded['del_avg_te'] < 140)]#
+impactl2ded_VROMAL = impact_l2_ded[( impact_l2_ded['ro_max'] == 4)&
+                                   (impact_l2_ded['epsilon'] == 0.0156)&
+                                   (impact_l2_ded['ro_mal'] == 0.30)&
+                                   ( impact_l2_ded['del_avg_te'] < 140)]
+impactQCded_VROMAL= impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 4 )&
+                                   (impact_Q_C_ded['epsilon'] == 0.00060)&
+                                   (impact_Q_C_ded['ro_mal'] == 0.30)&
+                                   (( impact_Q_C_ded['del_avg_te']< 150)&( impact_Q_C_ded['del_avg_te']>60))]
+impactNQCded_VROMAL = impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 4 )&
+                                      (impact_NQ_C_ded['epsilon'] == 0.00060)&
+                                      (impact_NQ_C_ded['ro_mal'] == 0.30)&
+                                      (( impact_NQ_C_ded['del_avg_te']< 150)&( impact_NQ_C_ded['del_avg_te']>60))]
+impactQHded_VROMAL = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 4)&
+                                    (impact_Q_H_ded['epsilon'] == 0.0156)&
+                                    (impact_Q_H_ded['ro_mal'] == 0.30)&
+                                    ( impact_Q_H_ded['del_avg_te'] < 140)]
+impactNQHded_VROMAL = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 4) &
+                                      (impact_NQ_H_ded['epsilon'] == 0.0156)&
+                                      (impact_NQ_H_ded['ro_mal'] == 0.30)&
+                                      (impact_NQ_H_ded['del_avg_te'] < 140)]
+
+
+#(impact_Q_C_ded['ro_max']==4)&
+
+# plt.plot(impactl1ded_VROMAL['del_avg_te'],impactl1ded_VROMAL['impact_m'],label = 'L1',linestyle = '--',dashes =(5,1),marker = 'o')
+# plt.plot(impactl2ded_VROMAL['del_avg_te'],impactl2ded_VROMAL['impact_m'],label = 'L2',linestyle = ':',dashes =(5,1),marker = '<')
+# plt.plot(impactQCded_VROMAL['del_avg_te'],impactQCded_VROMAL['impact_m'],label = 'QC',linestyle = '-.',dashes =(5,1),marker = '>')
+# plt.plot(impactNQCded_VROMAL['del_avg_te'],impactNQCded_VROMAL['impact_m'],label = 'NQC',linestyle = '--',dashes =(10,1),marker='o')
+# # plt.plot(impactQHded_VROMAL['del_avg_te'],impactQHded_VROMAL['impact_m'],label = 'QH',linestyle = '--',dashes =(10,2),marker = 'v')
+# # plt.plot(impactNQHded_VROMAL['del_avg_te'],impactNQHded_VROMAL['impact_m'],label = 'NQH',linestyle = '--',dashes =(5,2),marker='D')
+# plt.xlabel(r'Evasion Strength ($\delta_{te}$)')
+# plt.ylabel('Impact(USD)')
+# plt.legend()
+# plt.show()
+
+#region bar--plot SA
+impactl1ded_VROMAL = impact_l1_ded[( impact_l1_ded['ro_max'] == 4 )&
+                                   (impact_l1_ded['epsilon'] == 0.0156)&
+                                   (impact_l1_ded['ro_mal'] == 0.30)&
+                                   ( impact_l1_ded['del_avg_te'] == 60)]['impact_m'].tolist()#
+impactl2ded_VROMAL = impact_l2_ded[( impact_l2_ded['ro_max'] == 4)&
+                                   (impact_l2_ded['epsilon'] == 0.0156)&
+                                   (impact_l2_ded['ro_mal'] == 0.30)&
+                                   ( impact_l2_ded['del_avg_te'] == 60)]['impact_m'].tolist()
+impactQCded_VROMAL= impact_Q_C_ded[( impact_Q_C_ded['ro_max'] == 4 )&
+                                   (impact_Q_C_ded['epsilon'] == 0.00060) &
+                                   (impact_Q_C_ded['ro_mal'] == 0.30) &
+                                   (impact_Q_C_ded['del_avg_te'] == 100)]['impact_m'].tolist()
+impactNQCded_VROMAL = impact_NQ_C_ded[( impact_NQ_C_ded['ro_max'] == 4 )&
+                                      (impact_NQ_C_ded['epsilon'] == 0.00060)&
+                                      (impact_NQ_C_ded['ro_mal'] == 0.30)&
+                                      ( impact_NQ_C_ded['del_avg_te']== 100)]['impact_m'].tolist()
+impactQHded_VROMAL = impact_Q_H_ded[( impact_Q_H_ded['ro_max'] == 4)&
+                                    (impact_Q_H_ded['epsilon'] == 0.0156)&
+                                    (impact_Q_H_ded['ro_mal'] == 0.30)&
+                                    ( impact_Q_H_ded['del_avg_te'] == 60)]['impact_m'].tolist()
+impactNQHded_VROMAL = impact_NQ_H_ded[(impact_NQ_H_ded['ro_max'] == 4) &
+                                      (impact_NQ_H_ded['epsilon'] == 0.0156)&
+                                      (impact_NQ_H_ded['ro_mal'] == 0.30)&
+                                      (impact_NQ_H_ded['del_avg_te'] == 60)]['impact_m'].tolist()
+
+# plt.bar(["QL1","QL2","QC","QH"],
+#         [impactl1ded_VROMAL[0],impactl2ded_VROMAL[0],impactQCded_VROMAL[0],impactQHded_VROMAL[0]],
+#         color=[ 'violet','blue','cyan','tab:orange'])
+#
+# plt.bar(["QC","NQC"],
+#         [impactQCded_VROMAL[0],impactNQCded_VROMAL[0]],
+#         color=['cyan', 'tab:green'])#'tab:olive'
+# plt.ylabel('Impact(USD)')
+# plt.ylim(90,115)
+# # plt.legend()
+# plt.show()
+
+#endregion barplot--sa
