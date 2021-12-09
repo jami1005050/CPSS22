@@ -35,7 +35,7 @@ for index, row in tqdm(dataframe_tau_Q.iterrows(),desc="progress in QH"):
         for ro_mal in RO_MAL_ARRAY:
             res_frame = pd.read_csv(
                 '../../data/test_RUC_OPT_BETA/test_RUC_SA/Test_RUC_TE_' + str(del_evg_te) + '_RO_' + str(
-                    ro_mal) + 'dedM4M6.csv')
+                    ro_mal) + 'dedM1M3.csv')
             tier1_anomaly_c, tier2_for_org_c, first_detected_org_c, false_alarm_ca = testing_tau(res_frame, row.tau_max,
                                                                                                  row.tau_min)
 

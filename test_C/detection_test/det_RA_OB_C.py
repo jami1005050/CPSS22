@@ -40,10 +40,10 @@ for index, row in tqdm(dataframe_ded_Q_C.iterrows(),desc='progress QC'):
     for del_evg_te in DEL_AVG_ARRAY_DED_TE:
         file_exists = os.path.exists(
             '../../data/test_RUC_OPT_BETA/test_RUC_RA/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
-                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM4M6.csv')
+                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM1M3.csv')
         if (file_exists == False): continue
         res_frame = pd.read_csv('../../data/test_RUC_OPT_BETA/test_RUC_RA/Test_RUC_TR' + str(int(row.del_avg)) + '_TE_' +
-                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM4M6.csv')
+                                str(del_evg_te) + '_RO_' + str(row.ro_mal) + 'dedM1M3.csv')
         tier1_anomaly_c, tier2_for_org_c, first_detected_org_c, false_alarm_ca = testing_tau(res_frame, row.tau_max,
                                                                                              row.tau_min)
 
