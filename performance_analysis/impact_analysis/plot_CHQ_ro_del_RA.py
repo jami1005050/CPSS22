@@ -200,7 +200,7 @@ impact_nQ_FIX_TR_DEL['impact_C'] = pd.to_numeric(impact_nQ_FIX_TR_DEL['impact_C'
 impact_FIX_TR_DEL['impact_C'] = pd.to_numeric(impact_FIX_TR_DEL['impact_C'])
 p = ax.plot_trisurf(impact_FIX_TR_DEL['tr_del_avg'],
                impact_FIX_TR_DEL['romal'],
-               impact_FIX_TR_DEL['impact_C'],label ='QC',color='tab:olive') #alpha=0.5,
+               impact_FIX_TR_DEL['impact_C'],label ='QC',color='tab:olive', alpha = 0.5) #alpha=0.5,
 # # ax = fig.add_subplot(122, projection='3d')
 # r = ax.plot_trisurf(impact_nQ_FIX_TR_DEL['tr_del_avg'],
 #                impact_nQ_FIX_TR_DEL['romal'],
@@ -210,7 +210,7 @@ p = ax.plot_trisurf(impact_FIX_TR_DEL['tr_del_avg'],
 #
 q= ax.plot_trisurf(impact_nQ_FIX_TR_DEL['tr_del_avg'],
                impact_nQ_FIX_TR_DEL['romal'],  #     cmap=matplotlib.cm.inferno,antialiased=True,
-               impact_nQ_FIX_TR_DEL['impact_C'],label='NQC',color='tab:blue')#alpha=0.5,
+               impact_nQ_FIX_TR_DEL['impact_C'],label='NQC',color='tab:blue', alpha = 0.5)#alpha=0.5,
 p._facecolors2d = p._facecolor3d
 p._edgecolors2d = p._edgecolor3d
 
