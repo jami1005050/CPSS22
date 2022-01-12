@@ -206,7 +206,7 @@ for alpha_max in tqdm(alpha_max_array,desc='progress for Lagrangian TMIN'):
             print("Original List")
             print(neg_merged_list_n_mr)
             neg_merged_list_n_mr_copied = [neg_merged_list_n_mr[i] for i in range(0, len(neg_merged_list_n_mr))]  # Creating a new array
-            neg_merged_list_n_mr_copied.sort(reverse=True)
+            neg_merged_list_n_mr_copied.sort()
             print("Sorted List")
             print(neg_merged_list_n_mr_copied)
             # t_max,tsum_max = calculateTmax_ruc_QR_l1(pos_merged_list_n_copied)
